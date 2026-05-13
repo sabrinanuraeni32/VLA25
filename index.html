@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VLA25 - Velora25</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+
+      body {
+        background-color: #f5e6ff;
+        background-image: radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
+                          radial-gradient(circle at 80% 80%, #c084fc 0%, transparent 50%);
+        color: #4a0080;
+        font-family: 'Quicksand', Arial, sans-serif;
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+        text-align: center;
+        padding: 60px 20px 40px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
+        animation: shimmer 4s ease-in-out infinite;
+      }
+
+      @keyframes shimmer {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(10%, 10%); }
+      }
+
+      .header h1 {
+        color: #d308fa;
+        letter-spacing: 6px;
+        font-size: 48px;
+        text-shadow: 0 0 20px #d308fa88, 0 0 40px #d308fa44;
+        margin: 10px 0;
+      }
+
+      .sub-judul {
+        color: #e8b4ff;
+        letter-spacing: 8px;
+        font-size: 11px;
+        margin: 8px 0;
+      }
+
+      .hero-desc {
+        color: #c9a0e8;
+        font-size: 14px;
+        line-height: 1.8;
+        max-width: 500px;
+        margin: 16px auto 24px;
+      }
+
+      .tombol {
+        display: inline-block;
+        background: linear-gradient(135deg, #9b30d9, #d308fa);
+        color: #ffffff;
+        text-decoration: none;
+        padding: 14px 35px;
+        border-radius: 30px;
+        font-size: 13px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 700;
+        box-shadow: 0 4px 20px #d308fa55;
+        transition: all 0.3s;
+      }
+
+      .tombol:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px #d308fa77;
+      }
+
+      .navbar {
+        background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        padding: 14px 20px;
+        border-bottom: 1px solid #d308fa44;
+        position: relative;
+      }
+
+      .navbar a {
+        color: #e8b4ff;
+        text-decoration: none;
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 5px 10px;
+        border-radius: 20px;
+        transition: all 0.3s;
+      }
+
+      .navbar a:hover {
+        color: #ffffff;
+        background-color: #d308fa44;
+      }
+
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: #e8b4ff;
+        margin: 5px 0;
+        transition: all 0.3s;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+      }
+
+      .konten {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 0 30px;
+      }
+
+      .konten h2 {
+        color: #9b30d9;
+        letter-spacing: 2px;
+        border-bottom: 2px solid #f0a0ff;
+        padding-bottom: 8px;
+        margin-bottom: 24px;
+        font-size: 16px;
+      }
+
+      .stats-grid {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+      }
+
+      .stat-box {
+        background: #ffffff;
+        border: 1px solid #d308fa44;
+        border-radius: 15px;
+        padding: 20px 30px;
+        text-align: center;
+        flex: 1;
+        min-width: 120px;
+        transition: all 0.3s;
+      }
+
+      .stat-box:nth-child(odd) { transform: rotate(-1deg); }
+      .stat-box:nth-child(even) { transform: rotate(1deg); }
+      .stat-box:hover { transform: rotate(0deg) scale(1.05) !important; box-shadow: 0 8px 25px #d308fa33; }
+
+      .stat-num {
+        font-size: 32px;
+        font-weight: 700;
+        color: #d308fa;
+      }
+
+      .stat-label {
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #9b30d9;
+        margin-top: 4px;
+      }
+
+      .pengumuman-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 50px;
+      }
+
+      .kartu-pengumuman {
+        background: #ffffff;
+        border: 1px solid #d308fa44;
+        border-radius: 15px;
+        padding: 14px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px #d308fa11;
+        transition: transform 0.3s;
+      }
+
+      .kartu-pengumuman:nth-child(odd) { transform: rotate(-1.5deg); }
+      .kartu-pengumuman:nth-child(even) { transform: rotate(1deg); }
+      .kartu-pengumuman:hover { transform: rotate(0deg) scale(1.05) !important; box-shadow: 0 8px 25px #d308fa33; }
+
+      .kartu-pengumuman .preview-foto {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+
+      .kartu-pengumuman .preview-foto-placeholder {
+        width: 100%;
+        height: 100px;
+        background: #f0e6ff;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+      }
+
+      .kartu-pengumuman .tanggal {
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #9b30d9;
+        margin-bottom: 4px;
+      }
+
+      .kartu-pengumuman .judul {
+        font-size: 13px;
+        font-weight: 700;
+        color: #d308fa;
+        margin-bottom: 10px;
+        line-height: 1.4;
+      }
+
+      .tombol-more {
+        background: linear-gradient(135deg, #9b30d9, #d308fa);
+        color: #ffffff;
+        border: none;
+        padding: 5px 14px;
+        border-radius: 20px;
+        font-size: 10px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-family: 'Quicksand', Arial, sans-serif;
+        font-weight: 700;
+        transition: all 0.3s;
+      }
+
+      .tombol-more:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px #d308fa44;
+      }
+
+      .spotlight-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 50px;
+      }
+
+      .kartu-spotlight {
+        background: linear-gradient(135deg, #4a0080, #7b2fa8);
+        border: 1px solid #d308fa66;
+        border-radius: 15px;
+        padding: 16px 12px;
+        text-align: center;
+        width: 120px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px #d308fa22;
+        transition: transform 0.3s;
+      }
+
+      .kartu-spotlight:nth-child(odd) { transform: rotate(-2deg); }
+      .kartu-spotlight:nth-child(even) { transform: rotate(1.5deg); }
+      .kartu-spotlight:hover { transform: rotate(0deg) scale(1.05) !important; box-shadow: 0 8px 25px #d308fa44; }
+
+      .spotlight-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #9b30d9, #d308fa);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 10px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #fff;
+        box-shadow: 0 0 15px #d308fa66;
+        overflow: hidden;
+      }
+
+      .spotlight-nama {
+        font-size: 11px;
+        color: #e8b4ff;
+        line-height: 1.4;
+      }
+
+      .spotlight-count {
+        font-size: 10px;
+        color: #d308fa;
+        margin-top: 4px;
+        font-weight: 700;
+      }
+
+      .kosong {
+        color: #9b30d9;
+        font-style: italic;
+        font-size: 13px;
+      }
+
+      @media (max-width: 600px) {
+        .header h1 { font-size: 32px; letter-spacing: 4px; }
+        .hero-desc { font-size: 13px; }
+
+        .hamburger { display: block; }
+
+        .nav-links {
+          display: none;
+          flex-direction: column;
+          gap: 0;
+          width: 100%;
+          padding: 10px 0;
+        }
+
+        .nav-links.aktif { display: flex; }
+
+        .nav-links a {
+          padding: 12px 20px;
+          border-radius: 0;
+          border-bottom: 1px solid #d308fa22;
+          width: 100%;
+          text-align: center;
+        }
+
+        .navbar { justify-content: flex-start; flex-wrap: wrap; padding: 14px 20px; }
+
+        .konten { padding: 0 16px; margin: 24px auto; }
+
+        .stats-grid { gap: 10px; }
+        .stat-box { padding: 14px 10px; min-width: 80px; }
+        .stat-box:nth-child(odd) { transform: rotate(-0.5deg); }
+        .stat-box:nth-child(even) { transform: rotate(0.5deg); }
+        .stat-num { font-size: 22px; }
+
+        .pengumuman-grid { grid-template-columns: 1fr; }
+        .kartu-pengumuman:nth-child(odd) { transform: rotate(-0.8deg); }
+        .kartu-pengumuman:nth-child(even) { transform: rotate(0.8deg); }
+
+        .spotlight-grid { justify-content: center; }
+        .kartu-spotlight { width: 95px; }
+        .kartu-spotlight:nth-child(odd) { transform: rotate(-1deg); }
+        .kartu-spotlight:nth-child(even) { transform: rotate(1deg); }
+      }
+
+      .navbar a.aktif {
+        color: #ffffff;
+        background-color: #d308fa66;
+        border: 1px solid #d308fa88;
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .fade-in {
+        animation: fadeInUp 0.5s ease forwards;
+        opacity: 0;
+      }
+
+      .fade-in:nth-child(1) { animation-delay: 0.05s; }
+      .fade-in:nth-child(2) { animation-delay: 0.10s; }
+      .fade-in:nth-child(3) { animation-delay: 0.15s; }
+      .fade-in:nth-child(4) { animation-delay: 0.20s; }
+      .fade-in:nth-child(5) { animation-delay: 0.25s; }
+      .fade-in:nth-child(6) { animation-delay: 0.30s; }
+      .fade-in:nth-child(7) { animation-delay: 0.35s; }
+      .fade-in:nth-child(8) { animation-delay: 0.40s; }
+      .fade-in:nth-child(9) { animation-delay: 0.45s; }
+      .fade-in:nth-child(10) { animation-delay: 0.50s; }
+      .fade-in:nth-child(n+11) { animation-delay: 0.55s; }
+    </style>
+  </head>
+  <body>
+
+    <div class="header">
+      <img src="logo.jpeg" alt="Logo VLA25" style="width: 100px; border-radius: 50%; margin-bottom: 15px;">
+      <p class="sub-judul">OFFICIAL FAN SITE</p>
+      <h1>VLA25</h1>
+      <p class="sub-judul">VELORA25</p>
+      <p class="hero-desc">Selamat datang di VLA25, agensi virtual berbasis JKT48 yang bernaung di bawah VNC (Voice Note Community). Temukan para member kami yang berbakat di sini! 🌸</p>
+      <a href="members.html" class="tombol">Meet Our Members</a>
+    </div>
+
+    <nav class="navbar">
+      <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="members.html">Members</a>
+        <a href="aktivitas.html">Aktivitas</a>
+        <a href="pengumuman.html">Pengumuman</a>
+        <a href="management.html">Management</a>
+      </div>
+    </nav>
+
+    <div class="konten">
+
+      <h2>📊 Stats</h2>
+      <div class="stats-grid">
+        <div class="stat-box fade-in">
+          <div class="stat-num" id="stat-member">-</div>
+          <div class="stat-label">Member</div>
+        </div>
+        <div class="stat-box fade-in">
+          <div class="stat-num" id="stat-gen">-</div>
+          <div class="stat-label">Generasi</div>
+        </div>
+        <div class="stat-box fade-in">
+          <div class="stat-num">21 Sep</div>
+          <div class="stat-label">Berdiri</div>
+        </div>
+        <div class="stat-box fade-in">
+          <div class="stat-num" id="stat-aktivitas">-</div>
+          <div class="stat-label">Aktivitas</div>
+        </div>
+      </div>
+
+      <h2>📢 Pengumuman Terbaru</h2>
+      <div class="pengumuman-grid" id="list-pengumuman"></div>
+
+      <h2>⭐ Member Spotlight</h2>
+      <div class="spotlight-grid" id="spotlight-grid"></div>
+
+    </div>
+
+    <script>
+      function toggleNav() {
+        const nav = document.getElementById('nav-links');
+        nav.classList.toggle('aktif');
+      }
+
+      // Active navbar
+      (function() {
+        const path = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-links a').forEach(a => {
+          const href = a.getAttribute('href');
+          if (href === path) a.classList.add('aktif');
+        });
+      })();
+
+
+      const SHEET_MEMBER = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=0&single=true&output=csv";
+      const SHEET_PENGUMUMAN = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=975723668&single=true&output=tsv";
+      const SHEET_AKTIVITAS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=1433986273&single=true&output=csv";
+
+      function inisial(nama) {
+        const bagian = nama.replace(/[^a-zA-Z\s]/g, '').trim().split(' ');
+        return (bagian[0]?.[0] || '') + (bagian[1]?.[0] || '');
+      }
+
+      fetch(SHEET_MEMBER)
+        .then(res => res.text())
+        .then(csv => {
+          const baris = csv.trim().split('\n').slice(1);
+          const gens = new Set();
+          let count = 0;
+          const memberFoto = {};
+
+          baris.forEach(b => {
+            const kolom = b.split(',');
+            const gen = kolom[0]?.trim();
+            const nama = kolom[1]?.trim();
+            const stageName = kolom[2]?.trim();
+            const foto = kolom[6]?.trim();
+            if (!nama) return;
+            count++;
+            gens.add(gen);
+            memberFoto[nama.toLowerCase()] = { foto, stageName, namaLengkap: nama };
+            if (stageName) memberFoto[stageName.toLowerCase()] = { foto, stageName, namaLengkap: nama };
+          });
+
+          document.getElementById('stat-member').textContent = count;
+          document.getElementById('stat-gen').textContent = gens.size;
+
+          fetch(SHEET_AKTIVITAS)
+            .then(res => res.text())
+            .then(csv => {
+              const baris = csv.trim().split('\n').slice(1).filter(b => b.trim());
+              document.getElementById('stat-aktivitas').textContent = baris.length;
+
+              const frekuensi = {};
+              baris.forEach(b => {
+                const kolom = b.split(',');
+                const memberKolom = kolom[2]?.trim();
+                if (!memberKolom) return;
+                memberKolom.split('&').forEach(m => {
+                  const nama = m.trim();
+                  const namaKey = nama.toLowerCase();
+                  if (nama && memberFoto[namaKey]) frekuensi[namaKey] = (frekuensi[namaKey] || 0) + 1;
+                });
+              });
+
+              const sorted = Object.entries(frekuensi)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3);
+
+              const grid = document.getElementById('spotlight-grid');
+              if (sorted.length === 0) {
+                grid.innerHTML = '<p class="kosong">Belum ada data aktivitas.</p>';
+                return;
+              }
+
+              sorted.forEach(([namaKey, jumlah]) => {
+                const info = memberFoto[namaKey] || {};
+                const foto = info.foto;
+                const stageName = info.stageName || namaKey;
+                const namaLengkap = info.namaLengkap || namaKey;
+
+                const kartu = document.createElement('div');
+                kartu.className = 'kartu-spotlight fade-in';
+                kartu.innerHTML = `
+                  <div class="spotlight-avatar">
+                    ${foto
+                      ? `<img src="idcmember/${foto}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;object-position:center;">`
+                      : inisial(stageName).toUpperCase()
+                    }
+                  </div>
+                  <div class="spotlight-nama">${stageName}</div>
+                  <div class="spotlight-count">${jumlah}x cover</div>
+                `;
+                kartu.onclick = () => window.location = `profil.html?nama=${encodeURIComponent(namaLengkap)}`;
+                grid.appendChild(kartu);
+              });
+            });
+        });
+
+      fetch(SHEET_PENGUMUMAN)
+        .then(res => res.text())
+        .then(tsv => {
+          const baris = tsv.trim().split('\n').slice(1);
+          const container = document.getElementById('list-pengumuman');
+
+          if (baris.length === 0) {
+            container.innerHTML = '<p class="kosong">Belum ada pengumuman.</p>';
+            return;
+          }
+
+          const terbaru = [...baris].reverse().slice(0, 3);
+
+          terbaru.forEach(b => {
+            const kolom = b.split('\t');
+            const tanggal = kolom[0]?.trim();
+            const judul = kolom[1]?.trim();
+            const foto = kolom[3]?.trim();
+            if (!judul) return;
+
+            const kartu = document.createElement('div');
+            kartu.className = 'kartu-pengumuman fade-in';
+            kartu.innerHTML = `
+              ${foto
+                ? `<img src="foto-pengumuman/${foto}" class="preview-foto" alt="${judul}">`
+                : `<div class="preview-foto-placeholder">📢</div>`
+              }
+              <div class="tanggal">${tanggal || ''}</div>
+              <div class="judul">${judul}</div>
+              <button class="tombol-more" onclick="window.location='detail-pengumuman.html?judul=${encodeURIComponent(judul)}'">Selengkapnya</button>
+            `;
+            container.appendChild(kartu);
+          });
+        });
+    </script>
+
+  </body>
+</html>

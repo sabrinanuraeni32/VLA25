@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Members - VLA25</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+
+      body {
+        background-color: #f5e6ff;
+        background-image: radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
+                          radial-gradient(circle at 80% 80%, #c084fc 0%, transparent 50%);
+        color: #4a0080;
+        font-family: 'Quicksand', Arial, sans-serif;
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      h2 {
+        color: #9b30d9;
+        letter-spacing: 2px;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+        text-align: center;
+        padding: 60px 20px 40px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
+        animation: shimmer 4s ease-in-out infinite;
+      }
+
+      @keyframes shimmer {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(10%, 10%); }
+      }
+
+      .header h1 {
+        color: #d308fa;
+        letter-spacing: 6px;
+        font-size: 48px;
+        text-shadow: 0 0 20px #d308fa88;
+        margin: 10px 0;
+      }
+
+      .sub-judul {
+        color: #e8b4ff;
+        letter-spacing: 8px;
+        font-size: 11px;
+        margin: 8px 0;
+      }
+
+      /* NAVBAR */
+      .navbar {
+        background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        padding: 14px 20px;
+        border-bottom: 1px solid #d308fa44;
+        position: relative;
+      }
+
+      .navbar a {
+        color: #e8b4ff;
+        text-decoration: none;
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 5px 10px;
+        border-radius: 20px;
+        transition: all 0.3s;
+      }
+
+      .navbar a:hover {
+        color: #ffffff;
+        background-color: #d308fa44;
+      }
+
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: #e8b4ff;
+        margin: 5px 0;
+        transition: all 0.3s;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+      }
+
+      /* KONTEN */
+      .konten {
+        padding: 40px 30px;
+      }
+
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 40px;
+      }
+
+      .kartu {
+        background: linear-gradient(135deg, #4a0080, #7b2fa8);
+        border: 1px solid #d308fa66;
+        border-radius: 15px;
+        padding: 20px 15px;
+        text-align: center;
+        width: 140px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px #d308fa22;
+      }
+
+      .kartu:nth-child(odd) { transform: rotate(-2deg); }
+      .kartu:nth-child(even) { transform: rotate(1.5deg); }
+      .kartu:hover { transform: rotate(0deg) scale(1.05) !important; box-shadow: 0 8px 25px #d308fa44; border-color: #d308fa; }
+
+      .avatar {
+        background: linear-gradient(135deg, #9b30d9, #d308fa);
+        color: #ffffff;
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 10px;
+        font-size: 14px;
+        font-weight: 700;
+        box-shadow: 0 0 15px #d308fa66;
+        overflow: hidden;
+      }
+
+      .nama-member {
+        font-size: 11px;
+        color: #e8b4ff;
+        line-height: 1.4;
+      }
+
+      /* SEARCH & FILTER */
+      .filter-area {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+        padding: 16px 20px;
+        background: linear-gradient(135deg, #f9f0ff, #f0e0ff);
+        border: 1px solid #d308fa44;
+        border-radius: 15px;
+      }
+
+      .search-input {
+        flex: 1;
+        min-width: 180px;
+        padding: 9px 16px;
+        border: 1px solid #d308fa66;
+        border-radius: 20px;
+        background: #ffffff;
+        color: #4a0080;
+        font-family: 'Quicksand', Arial, sans-serif;
+        font-size: 13px;
+        outline: none;
+        transition: all 0.3s;
+      }
+
+      .search-input:focus {
+        border-color: #d308fa;
+        box-shadow: 0 0 10px #d308fa22;
+      }
+
+      .search-input::placeholder { color: #c084fc; }
+
+      .filter-btn {
+        background: linear-gradient(135deg, #f0e0ff, #e8b4ff);
+        border: 1px solid #d308fa66;
+        color: #4a0080;
+        padding: 9px 18px;
+        border-radius: 20px;
+        font-family: 'Quicksand', Arial, sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .filter-btn:hover, .filter-btn.aktif {
+        background: linear-gradient(135deg, #9b30d9, #d308fa);
+        color: #ffffff;
+        border-color: #d308fa;
+        box-shadow: 0 4px 15px #d308fa33;
+      }
+
+      .section-member {
+        margin-bottom: 40px;
+      }
+
+      .section-member.tersembunyi {
+        display: none;
+      }
+
+      .tidak-ditemukan {
+        color: #9b30d9;
+        font-style: italic;
+        padding: 20px 0;
+        font-size: 13px;
+      }
+
+      /* MOBILE */
+      @media (max-width: 600px) {
+        .header h1 { font-size: 32px; letter-spacing: 4px; }
+
+        .filter-area { gap: 8px; padding: 12px 14px; }
+        .search-input { font-size: 12px; padding: 8px 14px; }
+        .filter-btn { font-size: 11px; padding: 8px 14px; }
+
+        .hamburger { display: block; }
+
+        .nav-links {
+          display: none;
+          flex-direction: column;
+          gap: 0;
+          width: 100%;
+          padding: 10px 0;
+        }
+
+        .nav-links.aktif { display: flex; }
+
+        .nav-links a {
+          padding: 12px 20px;
+          border-radius: 0;
+          border-bottom: 1px solid #d308fa22;
+          width: 100%;
+          text-align: center;
+        }
+
+        .navbar { justify-content: flex-start; flex-wrap: wrap; padding: 14px 20px; }
+
+        .konten { padding: 24px 16px; }
+
+        .grid { gap: 10px; justify-content: center; }
+
+        .kartu {
+          width: 100px;
+          padding: 14px 10px;
+          transform: rotate(0deg) !important;
+        }
+
+        .kartu:hover { transform: scale(1.05) !important; }
+
+        .avatar { width: 44px; height: 44px; }
+
+        .nama-member { font-size: 10px; }
+
+        h2 { font-size: 14px; }
+      }
+
+      .navbar a.aktif {
+        color: #ffffff;
+        background-color: #d308fa66;
+        border: 1px solid #d308fa88;
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .fade-in {
+        animation: fadeInUp 0.5s ease forwards;
+        opacity: 0;
+      }
+
+      .fade-in:nth-child(1) { animation-delay: 0.05s; }
+      .fade-in:nth-child(2) { animation-delay: 0.10s; }
+      .fade-in:nth-child(3) { animation-delay: 0.15s; }
+      .fade-in:nth-child(4) { animation-delay: 0.20s; }
+      .fade-in:nth-child(5) { animation-delay: 0.25s; }
+      .fade-in:nth-child(6) { animation-delay: 0.30s; }
+      .fade-in:nth-child(7) { animation-delay: 0.35s; }
+      .fade-in:nth-child(8) { animation-delay: 0.40s; }
+      .fade-in:nth-child(9) { animation-delay: 0.45s; }
+      .fade-in:nth-child(10) { animation-delay: 0.50s; }
+      .fade-in:nth-child(n+11) { animation-delay: 0.55s; }
+    </style>
+  </head>
+  <body>
+
+    <div class="header">
+      <img src="logo.jpeg" alt="Logo VLA25" style="width: 100px; border-radius: 50%; margin-bottom: 15px;">
+      <p class="sub-judul">OFFICIAL FAN SITE</p>
+      <h1>VLA25</h1>
+      <p class="sub-judul">VELORA25</p>
+    </div>
+
+    <nav class="navbar">
+      <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="members.html">Members</a>
+        <a href="aktivitas.html">Aktivitas</a>
+        <a href="pengumuman.html">Pengumuman</a>
+        <a href="management.html">Management</a>
+      </div>
+    </nav>
+
+    <div class="konten">
+
+      <div class="filter-area">
+        <input class="search-input" type="text" id="search-input" placeholder="🔍 Cari nama member..." oninput="filterMember()">
+        <button class="filter-btn aktif" id="btn-all" onclick="setFilter('all')">Semua</button>
+        <button class="filter-btn" id="btn-gen1" onclick="setFilter('1')">Gen 1</button>
+        <button class="filter-btn" id="btn-gen2" onclick="setFilter('2')">Gen 2</button>
+        <button class="filter-btn" id="btn-gen3" onclick="setFilter('3')">Gen 3</button>
+      </div>
+
+      <div class="section-member" id="section-gen1">
+        <h2>Member Gen 1</h2>
+        <div class="grid" id="grid-gen1"></div>
+      </div>
+
+      <div class="section-member" id="section-gen2">
+        <h2>Member Gen 2</h2>
+        <div class="grid" id="grid-gen2"></div>
+      </div>
+
+      <div class="section-member" id="section-gen3">
+        <h2>Member Gen 3</h2>
+        <div class="grid" id="grid-gen3"></div>
+      </div>
+
+    </div>
+
+    <script>
+      function toggleNav() {
+        const nav = document.getElementById('nav-links');
+        nav.classList.toggle('aktif');
+      }
+
+      // Active navbar
+      (function() {
+        const path = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-links a').forEach(a => {
+          const href = a.getAttribute('href');
+          if (href === path) a.classList.add('aktif');
+        });
+      })();
+
+
+      const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=0&single=true&output=csv";
+
+      function inisial(nama) {
+        const bagian = nama.replace(/[^a-zA-Z\s]/g, '').trim().split(' ');
+        return (bagian[0]?.[0] || '') + (bagian[1]?.[0] || '');
+      }
+
+      function buatKartu(nama, foto) {
+        const avatarContent = foto
+          ? `<img src="idcmember/${foto}" style="width:55px;height:55px;border-radius:50%;object-fit:cover;object-position:center;">`
+          : inisial(nama).toUpperCase();
+
+        return `
+          <div class="kartu fade-in" onclick="window.location='profil.html?nama=${encodeURIComponent(nama)}'">
+            <div class="avatar">${avatarContent}</div>
+            <p class="nama-member">${nama}</p>
+          </div>
+        `;
+      }
+
+      function isiGrid(idGrid, daftarMember) {
+        const grid = document.getElementById(idGrid);
+        grid.innerHTML = daftarMember.map(m => buatKartu(m.nama, m.foto)).join('');
+      }
+
+      let semuaMember = [];
+      let filterAktif = 'all';
+
+      function setFilter(gen) {
+        filterAktif = gen;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('aktif'));
+        document.getElementById('btn-' + (gen === 'all' ? 'all' : 'gen' + gen)).classList.add('aktif');
+        filterMember();
+      }
+
+      function filterMember() {
+        const keyword = document.getElementById('search-input').value.toLowerCase().trim();
+
+        ['1', '2', '3'].forEach(gen => {
+          const section = document.getElementById('section-gen' + gen);
+          const grid = document.getElementById('grid-gen' + gen);
+
+          if (gen === '3') {
+            section.classList.toggle('tersembunyi', filterAktif !== 'all' && filterAktif !== '3');
+            return;
+          }
+
+          const filtered = semuaMember.filter(m =>
+            m.gen === gen &&
+            (filterAktif === 'all' || filterAktif === gen) &&
+            m.nama.toLowerCase().includes(keyword)
+          );
+
+          if (filterAktif !== 'all' && filterAktif !== gen) {
+            section.classList.add('tersembunyi');
+            return;
+          }
+
+          section.classList.remove('tersembunyi');
+
+          if (filtered.length === 0) {
+            grid.innerHTML = '<p class="tidak-ditemukan">Tidak ada member yang cocok.</p>';
+          } else {
+            grid.innerHTML = filtered.map(m => buatKartu(m.nama, m.foto)).join('');
+          }
+        });
+      }
+
+      fetch(SHEET_URL)
+        .then(res => res.text())
+        .then(csv => {
+          const baris = csv.trim().split('\n').slice(1);
+
+          baris.forEach(baris => {
+            const kolom = baris.split(',');
+            const gen = kolom[0]?.trim();
+            const nama = kolom[1]?.trim();
+            const foto = kolom[6]?.trim();
+            if (!nama) return;
+            if (['1','2','3'].includes(gen)) semuaMember.push({ nama, foto, gen });
+          });
+
+          isiGrid('grid-gen1', semuaMember.filter(m => m.gen === '1'));
+          isiGrid('grid-gen2', semuaMember.filter(m => m.gen === '2'));
+          document.getElementById('grid-gen3').innerHTML = '<p style="color: #9b30d9; font-style: italic;">Coming Soon...</p>';
+        })
+        .catch(err => console.error('Gagal load data:', err));
+    </script>
+
+  </body>
+</html>

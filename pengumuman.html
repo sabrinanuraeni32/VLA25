@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pengumuman - VLA25</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+
+      body {
+        background-color: #f5e6ff;
+        background-image: radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
+                          radial-gradient(circle at 80% 80%, #c084fc 0%, transparent 50%);
+        color: #4a0080;
+        font-family: 'Quicksand', Arial, sans-serif;
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+        text-align: center;
+        padding: 60px 20px 40px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
+        animation: shimmer 4s ease-in-out infinite;
+      }
+
+      @keyframes shimmer {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(10%, 10%); }
+      }
+
+      .header h1 {
+        color: #d308fa;
+        letter-spacing: 6px;
+        font-size: 48px;
+        text-shadow: 0 0 20px #d308fa88;
+        margin: 10px 0;
+      }
+
+      .sub-judul {
+        color: #e8b4ff;
+        letter-spacing: 8px;
+        font-size: 11px;
+        margin: 8px 0;
+      }
+
+      .navbar {
+        background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        padding: 14px 20px;
+        border-bottom: 1px solid #d308fa44;
+        position: relative;
+      }
+
+      .navbar a {
+        color: #e8b4ff;
+        text-decoration: none;
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 5px 10px;
+        border-radius: 20px;
+        transition: all 0.3s;
+      }
+
+      .navbar a:hover {
+        color: #ffffff;
+        background-color: #d308fa44;
+      }
+
+      .hamburger {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: #e8b4ff;
+        margin: 5px 0;
+        transition: all 0.3s;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+      }
+
+      .konten {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 0 30px;
+      }
+
+      .konten h2 {
+        color: #9b30d9;
+        letter-spacing: 2px;
+        border-bottom: 2px solid #f0a0ff;
+        padding-bottom: 8px;
+        margin-bottom: 30px;
+      }
+
+      .kartu-pengumuman {
+        background: #ffffff;
+        border: 1px solid #d308fa44;
+        border-radius: 15px;
+        padding: 16px;
+        margin-bottom: 16px;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px #d308fa11;
+      }
+
+      .kartu-pengumuman:hover {
+        box-shadow: 0 8px 25px #d308fa22;
+        border-color: #d308fa88;
+      }
+
+      .kartu-preview {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .preview-foto {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 10px;
+        flex-shrink: 0;
+      }
+
+      .preview-foto-placeholder {
+        width: 80px;
+        height: 80px;
+        background-color: #f0e6ff;
+        border-radius: 10px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #9b30d9;
+        font-size: 24px;
+      }
+
+      .preview-info {
+        flex: 1;
+      }
+
+      .pengumuman-tanggal {
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #9b30d9;
+        margin-bottom: 4px;
+      }
+
+      .pengumuman-judul {
+        font-size: 16px;
+        font-weight: 700;
+        color: #d308fa;
+        margin-bottom: 8px;
+      }
+
+      .tombol-more {
+        background: linear-gradient(135deg, #9b30d9, #d308fa);
+        color: #ffffff;
+        border: none;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 11px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-family: 'Quicksand', Arial, sans-serif;
+        font-weight: 700;
+        transition: all 0.3s;
+      }
+
+      .tombol-more:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px #d308fa44;
+      }
+
+      .kosong {
+        text-align: center;
+        color: #9b30d9;
+        font-style: italic;
+        padding: 40px;
+      }
+
+      /* MOBILE */
+      @media (max-width: 600px) {
+        .header h1 { font-size: 32px; letter-spacing: 4px; }
+
+        .hamburger { display: block; }
+
+        .nav-links {
+          display: none;
+          flex-direction: column;
+          gap: 0;
+          width: 100%;
+          padding: 10px 0;
+        }
+
+        .nav-links.aktif { display: flex; }
+
+        .nav-links a {
+          padding: 12px 20px;
+          border-radius: 0;
+          border-bottom: 1px solid #d308fa22;
+          width: 100%;
+          text-align: center;
+        }
+
+        .navbar { justify-content: flex-start; flex-wrap: wrap; padding: 14px 20px; }
+
+        .konten { padding: 0 16px; margin: 24px auto; }
+
+        .preview-foto, .preview-foto-placeholder {
+          width: 60px;
+          height: 60px;
+          font-size: 18px;
+        }
+
+        .pengumuman-judul { font-size: 14px; }
+        .pengumuman-tanggal { font-size: 10px; }
+        .tombol-more { font-size: 10px; padding: 5px 12px; }
+      }
+
+      .navbar a.aktif {
+        color: #ffffff;
+        background-color: #d308fa66;
+        border: 1px solid #d308fa88;
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .fade-in {
+        animation: fadeInUp 0.5s ease forwards;
+        opacity: 0;
+      }
+
+      .fade-in:nth-child(1) { animation-delay: 0.05s; }
+      .fade-in:nth-child(2) { animation-delay: 0.10s; }
+      .fade-in:nth-child(3) { animation-delay: 0.15s; }
+      .fade-in:nth-child(4) { animation-delay: 0.20s; }
+      .fade-in:nth-child(5) { animation-delay: 0.25s; }
+      .fade-in:nth-child(6) { animation-delay: 0.30s; }
+      .fade-in:nth-child(7) { animation-delay: 0.35s; }
+      .fade-in:nth-child(8) { animation-delay: 0.40s; }
+      .fade-in:nth-child(9) { animation-delay: 0.45s; }
+      .fade-in:nth-child(10) { animation-delay: 0.50s; }
+      .fade-in:nth-child(n+11) { animation-delay: 0.55s; }
+    </style>
+  </head>
+  <body>
+
+    <div class="header">
+      <img src="logo.jpeg" alt="Logo VLA25" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;">
+      <p class="sub-judul">OFFICIAL FAN SITE</p>
+      <h1>VLA25</h1>
+      <p class="sub-judul">VELORA25</p>
+    </div>
+
+    <nav class="navbar">
+      <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="members.html">Members</a>
+        <a href="aktivitas.html">Aktivitas</a>
+        <a href="pengumuman.html">Pengumuman</a>
+        <a href="management.html">Management</a>
+      </div>
+    </nav>
+
+    <div class="konten">
+      <h2>Pengumuman</h2>
+      <div id="list-pengumuman"></div>
+    </div>
+
+    <script>
+      function toggleNav() {
+        const nav = document.getElementById('nav-links');
+        nav.classList.toggle('aktif');
+      }
+
+      // Active navbar
+      (function() {
+        const path = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-links a').forEach(a => {
+          const href = a.getAttribute('href');
+          if (href === path) a.classList.add('aktif');
+        });
+      })();
+
+
+      const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=975723668&single=true&output=tsv";
+
+      fetch(SHEET_URL)
+        .then(res => res.text())
+        .then(csv => {
+          const baris = csv.trim().split('\n').slice(1);
+          const container = document.getElementById('list-pengumuman');
+
+          if (baris.length === 0) {
+            container.innerHTML = '<div class="kosong">Belum ada pengumuman.</div>';
+            return;
+          }
+
+          baris.reverse().forEach(b => {
+            const kolom = b.split('\t');
+            const tanggal = kolom[0]?.trim();
+            const judul = kolom[1]?.trim();
+            const foto = kolom[3]?.trim();
+
+            if (!judul) return;
+
+            const kartu = document.createElement('div');
+            kartu.className = 'kartu-pengumuman fade-in';
+            kartu.innerHTML = `
+              <div class="kartu-preview">
+                ${foto
+                  ? `<img src="foto-pengumuman/${foto}" class="preview-foto" alt="${judul}">`
+                  : `<div class="preview-foto-placeholder">📢</div>`
+                }
+                <div class="preview-info">
+                  <div class="pengumuman-tanggal">${tanggal || ''}</div>
+                  <div class="pengumuman-judul">${judul}</div>
+                  <button class="tombol-more" onclick="window.location='detail-pengumuman.html?judul=${encodeURIComponent(judul)}'">Selengkapnya</button>
+                </div>
+              </div>
+            `;
+            container.appendChild(kartu);
+          });
+        });
+    </script>
+
+  </body>
+</html>
