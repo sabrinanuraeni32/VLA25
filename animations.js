@@ -125,38 +125,52 @@
   };
 
   /* ── STATS COUNTER ANIMATION ── */
+  const animatedStats = new WeakSet(); // track elemen yang sudah dianimasikan
+
   function animateCounter(el, target, duration) {
-    if (isNaN(target)) return; // skip kalau bukan angka
+    if (isNaN(target) || target <= 0) return;
+    if (animatedStats.has(el)) return; // jangan ulang
+    animatedStats.add(el);
     const start = performance.now();
     function update(now) {
       const elapsed = now - start;
       const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
       el.textContent = Math.round(eased * target);
       if (progress < 1) requestAnimationFrame(update);
+      else el.textContent = target; // pastikan angka akhir tepat
     }
     requestAnimationFrame(update);
   }
 
-  // Observer khusus untuk stat-num
-  const statObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
+  // MutationObserver: pantau perubahan teks pada stat-num
+  // Ini lebih reliable daripada setTimeout karena trigger tepat saat angka diisi
+  function watchStatEl(el) {
+    if (animatedStats.has(el)) return;
+    const mo = new MutationObserver(() => {
       const val = parseInt(el.textContent, 10);
       if (!isNaN(val) && val > 0) {
-        animateCounter(el, val, 1200);
-        statObserver.unobserve(el);
+        mo.disconnect();
+        animateCounter(el, val, 1100);
       }
     });
-  }, { threshold: 0.5 });
-
-  // Observer ulang setelah fetch (stat angka diisi JS)
-  function observeStats() {
-    document.querySelectorAll('.stat-num').forEach(el => statObserver.observe(el));
+    mo.observe(el, { childList: true, characterData: true, subtree: true });
+    // Kalau sudah ada isinya saat kita attach
+    const val = parseInt(el.textContent, 10);
+    if (!isNaN(val) && val > 0) {
+      mo.disconnect();
+      animateCounter(el, val, 1100);
+    }
   }
-  setTimeout(observeStats, 500);
-  setTimeout(observeStats, 1500); // fallback kalau fetch lambat
+
+  function observeStats() {
+    document.querySelectorAll('.stat-num').forEach(watchStatEl);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', observeStats);
+  } else {
+    observeStats();
+  }
 
   /* ── HEADER LOGO CLASS ── */
   const logo = document.querySelector('.header img');
