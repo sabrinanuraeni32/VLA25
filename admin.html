@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin - VLA25</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+
+    body {
+      background-color: #f5e6ff;
+      background-image: radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, #c084fc 0%, transparent 50%);
+      color: #4a0080;
+      font-family: 'Quicksand', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+      text-align: center;
+      padding: 60px 20px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
+      animation: shimmer 4s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(10%, 10%); }
+    }
+
+    .header h1 {
+      color: #d308fa;
+      letter-spacing: 6px;
+      font-size: 48px;
+      text-shadow: 0 0 20px #d308fa88;
+      margin: 10px 0;
+    }
+
+    .sub-judul {
+      color: #e8b4ff;
+      letter-spacing: 8px;
+      font-size: 11px;
+      margin: 8px 0;
+    }
+
+    .navbar {
+      background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 14px 20px;
+      border-bottom: 1px solid #d308fa44;
+      position: relative;
+    }
+
+    .navbar a {
+      color: #e8b4ff;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 20px;
+      transition: all 0.3s;
+    }
+
+    .navbar a:hover {
+      color: #fff;
+      background: #d308fa44;
+    }
+
+    .konten {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 30px;
+    }
+
+    /* LOGIN AREA */
+    #login-area {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    #login-area p {
+      color: #9b30d9;
+      font-size: 13px;
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    /* FORM AREA */
+    #form-area { display: none; }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #4a0080, #7b2fa8);
+      border: 1px solid #d308fa44;
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin-bottom: 24px;
+    }
+
+    .user-info img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid #d308fa66;
+    }
+
+    .user-info span {
+      color: #e8b4ff;
+      font-size: 13px;
+      flex: 1;
+    }
+
+    .logout-btn {
+      background: transparent;
+      border: 1px solid #d308fa66;
+      color: #e8b4ff;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-family: 'Quicksand', Arial, sans-serif;
+      font-size: 11px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .logout-btn:hover {
+      background: #d308fa33;
+      border-color: #d308fa;
+      color: #fff;
+    }
+
+    .form-box {
+      background: #ffffff;
+      border: 1px solid #d308fa44;
+      border-radius: 15px;
+      padding: 28px;
+      box-shadow: 0 4px 20px #d308fa11;
+      margin-bottom: 20px;
+    }
+
+    .form-box h2 {
+      color: #9b30d9;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-bottom: 2px solid #f0a0ff;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #9b30d9;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .field input[type="text"],
+    .field textarea {
+      width: 100%;
+      box-sizing: border-box;
+      background: #fdf5ff;
+      border: 1px solid #d308fa44;
+      border-radius: 10px;
+      color: #4a0080;
+      font-family: 'Quicksand', Arial, sans-serif;
+      font-size: 13px;
+      padding: 10px 14px;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    .field input[type="text"]:focus,
+    .field textarea:focus {
+      border-color: #d308fa;
+      box-shadow: 0 0 0 3px #d308fa22;
+    }
+
+    .field input[type="text"]::placeholder,
+    .field textarea::placeholder {
+      color: #c084fc88;
+    }
+
+    .field textarea {
+      min-height: 180px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #b06ad4;
+      margin-top: 5px;
+      line-height: 1.6;
+    }
+
+    .tombol {
+      display: inline-block;
+      background: linear-gradient(135deg, #9b30d9, #d308fa);
+      color: #ffffff;
+      border: none;
+      padding: 14px 35px;
+      border-radius: 30px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      box-shadow: 0 4px 20px #d308fa55;
+      cursor: pointer;
+      font-family: 'Quicksand', Arial, sans-serif;
+      transition: all 0.3s;
+      width: 100%;
+    }
+
+    .tombol:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px #d308fa77;
+    }
+
+    .tombol:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .tombol-login {
+      display: inline-block;
+      background: linear-gradient(135deg, #9b30d9, #d308fa);
+      color: #ffffff;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 30px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      box-shadow: 0 4px 20px #d308fa55;
+      cursor: pointer;
+      font-family: 'Quicksand', Arial, sans-serif;
+      transition: all 0.3s;
+    }
+
+    .tombol-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px #d308fa77;
+    }
+
+    /* STATUS */
+    .status-box {
+      display: none;
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 13px;
+      margin-top: 16px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .status-box.sukses {
+      background: #e8fff4;
+      border: 1px solid #4ade80;
+      color: #15803d;
+    }
+
+    .status-box.error {
+      background: #fff0f0;
+      border: 1px solid #f87171;
+      color: #b91c1c;
+    }
+
+    .status-box.loading {
+      background: #f5e6ff;
+      border: 1px solid #d308fa44;
+      color: #9b30d9;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 32px; letter-spacing: 4px; }
+      .konten { padding: 0 16px; margin: 24px auto; }
+      .form-box { padding: 20px 16px; }
+    }
+  </style>
+  <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+
+  <div class="header">
+    <img src="logo.jpeg" alt="Logo VLA25" style="width:100px;height:100px;border-radius:50%;object-fit:cover;margin-bottom:15px;">
+    <p class="sub-judul">OFFICIAL FAN SITE</p>
+    <h1>VLA25</h1>
+    <p class="sub-judul">ADMIN PANEL</p>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-links" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="members.html">Members</a>
+      <a href="aktivitas.html">Aktivitas</a>
+      <a href="pengumuman.html">Pengumuman</a>
+      <a href="management.html">Management</a>
+    </div>
+  </nav>
+
+  <div class="konten">
+
+    <!-- LOGIN -->
+    <div id="login-area">
+      <p>Login dengan akun Google yang punya akses ke Google Sheets VLA25.</p>
+      <button class="tombol-login" onclick="loginGoogle()">🔐 Login dengan Google</button>
+    </div>
+
+    <!-- FORM -->
+    <div id="form-area">
+
+      <div class="user-info" id="user-info">
+        <img id="user-foto" src="" alt="foto">
+        <span id="user-nama">-</span>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+
+      <div class="form-box">
+        <h2>✦ Tambah Pengumuman</h2>
+
+        <div class="field">
+          <label>Tanggal</label>
+          <input type="text" id="inp-tanggal" placeholder="Contoh: 16 Mei 2026">
+        </div>
+
+        <div class="field">
+          <label>Judul</label>
+          <input type="text" id="inp-judul" placeholder="Judul pengumuman...">
+        </div>
+
+        <div class="field">
+          <label>Isi Pengumuman</label>
+          <textarea id="inp-isi" placeholder="Tulis isi pengumuman di sini...&#10;&#10;Pisah paragraf dengan baris kosong (Enter 2x).&#10;Otomatis dikonversi ke format || saat publish."></textarea>
+          <p class="hint">💡 Enter 2x = paragraf baru. Tulis bebas aja!</p>
+        </div>
+
+        <div class="field">
+          <label>Nama File Foto (opsional)</label>
+          <input type="text" id="inp-foto" placeholder="Contoh: hiring.jpg">
+          <p class="hint">Upload foto ke folder foto-pengumuman/ dulu, baru isi nama filenya di sini.</p>
+        </div>
+
+        <button class="tombol" id="btn-publish" onclick="publish()">Publish Pengumuman ✦</button>
+
+        <div class="status-box" id="status-box"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Google Identity Services -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <script>
+    const CLIENT_ID = '76550141173-fff1k2vl6qqp15iff4ifbc3cq5vod3el.apps.googleusercontent.com';
+    const SPREADSHEET_ID = '1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6';
+    const SHEET_NAME = 'Pengumuman';
+    const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
+
+    let tokenClient;
+    let accessToken = null;
+
+    window.onload = function () {
+      google.accounts.id.initialize({ client_id: CLIENT_ID });
+
+      tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: (resp) => {
+          if (resp.error) { showStatus('Login gagal: ' + resp.error, 'error'); return; }
+          accessToken = resp.access_token;
+          tampilkanForm();
+        }
+      });
+
+      // Cek token tersimpan
+      const saved = sessionStorage.getItem('vla_token');
+      if (saved) {
+        accessToken = saved;
+        tampilkanForm();
+      }
+    };
+
+    function loginGoogle() {
+      tokenClient.requestAccessToken({ prompt: 'consent' });
+    }
+
+    function tampilkanForm() {
+      sessionStorage.setItem('vla_token', accessToken);
+      document.getElementById('login-area').style.display = 'none';
+      document.getElementById('form-area').style.display = 'block';
+
+      // Ambil info user
+      fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: 'Bearer ' + accessToken }
+      })
+      .then(r => r.json())
+      .then(u => {
+        document.getElementById('user-nama').textContent = u.name || u.email;
+        if (u.picture) document.getElementById('user-foto').src = u.picture;
+      });
+    }
+
+    function logout() {
+      accessToken = null;
+      sessionStorage.removeItem('vla_token');
+      document.getElementById('login-area').style.display = 'block';
+      document.getElementById('form-area').style.display = 'none';
+    }
+
+    function konversiIsi(teks) {
+      return teks
+        .split(/\n{2,}/)
+        .map(p => p.replace(/\n/g, ' ').trim())
+        .filter(p => p.length > 0)
+        .join(' || ');
+    }
+
+    function showStatus(pesan, tipe) {
+      const box = document.getElementById('status-box');
+      box.textContent = pesan;
+      box.className = 'status-box ' + tipe;
+      box.style.display = 'block';
+    }
+
+    async function publish() {
+      const tanggal = document.getElementById('inp-tanggal').value.trim();
+      const judul   = document.getElementById('inp-judul').value.trim();
+      const isi     = document.getElementById('inp-isi').value.trim();
+      const foto    = document.getElementById('inp-foto').value.trim();
+
+      if (!judul || !isi) {
+        showStatus('Judul dan isi wajib diisi!', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('btn-publish');
+      btn.disabled = true;
+      showStatus('Mempublish pengumuman...', 'loading');
+
+      const isiKonversi = konversiIsi(isi);
+      const baris = [[tanggal, judul, isiKonversi, foto]];
+
+      try {
+        const res = await fetch(
+          `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}!A:D:append?valueInputOption=USER_ENTERED`,
+          {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer ' + accessToken,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ values: baris })
+          }
+        );
+
+        if (res.ok) {
+          showStatus('✓ Pengumuman berhasil dipublish!', 'sukses');
+          document.getElementById('inp-tanggal').value = '';
+          document.getElementById('inp-judul').value = '';
+          document.getElementById('inp-isi').value = '';
+          document.getElementById('inp-foto').value = '';
+        } else {
+          const err = await res.json();
+          showStatus('Gagal: ' + (err.error?.message || 'Unknown error'), 'error');
+        }
+      } catch (e) {
+        showStatus('Error: ' + e.message, 'error');
+      }
+
+      btn.disabled = false;
+    }
+  </script>
+
+  <script src="animations.js"></script>
+</body>
+</html>
