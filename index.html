@@ -461,7 +461,7 @@
             const foto = kolom[6]?.trim();
             if (!nama) return;
             count++;
-            gens.add(gen);
+            if (['1','2','3','4','5'].includes(gen)) gens.add(gen);
             memberFoto[nama.toLowerCase()] = { foto, stageName, namaLengkap: nama };
             if (stageName) memberFoto[stageName.toLowerCase()] = { foto, stageName, namaLengkap: nama };
           });
