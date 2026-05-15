@@ -390,11 +390,6 @@
           const section = document.getElementById('section-gen' + gen);
           const grid = document.getElementById('grid-gen' + gen);
 
-          if (gen === '3') {
-            section.classList.toggle('tersembunyi', filterAktif !== 'all' && filterAktif !== '3');
-            return;
-          }
-
           const filtered = semuaMember.filter(m =>
             m.gen === gen &&
             (filterAktif === 'all' || filterAktif === gen) &&
@@ -432,7 +427,7 @@
 
           isiGrid('grid-gen1', semuaMember.filter(m => m.gen === '1'));
           isiGrid('grid-gen2', semuaMember.filter(m => m.gen === '2'));
-          document.getElementById('grid-gen3').innerHTML = '<p style="color: #9b30d9; font-style: italic;">Coming Soon...</p>';
+          isiGrid('grid-gen3', semuaMember.filter(m => m.gen === '3'));
         })
         .catch(err => console.error('Gagal load data:', err));
     </script>
