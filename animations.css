@@ -20,6 +20,16 @@ body.page-exit {
   to   { opacity: 0; transform: translateY(-8px); }
 }
 
+/* ── HEADER BANNER FOTO ── */
+.header {
+  background-image:
+    linear-gradient(135deg, #2d005799 0%, #4a008099 40%, #7b2fa899 100%),
+    url('banner.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 /* ── HEADER: LOGO PULSE + TITLE GLOW ── */
 .header-logo {
   animation: logoPulse 3s ease-in-out infinite;
