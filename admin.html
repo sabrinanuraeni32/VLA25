@@ -470,7 +470,7 @@
 
       try {
         const res = await fetch(
-          `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}!A:D:append?valueInputOption=USER_ENTERED`,
+          `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(SHEET_NAME + '!A:D')}:append?valueInputOption=USER_ENTERED`,
           {
             method: 'POST',
             headers: {
