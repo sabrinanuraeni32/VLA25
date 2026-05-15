@@ -166,7 +166,7 @@
           padding: 10px 0;
         }
 
-        .nav-links.aktif { display: flex; }
+        
 
         .nav-links a {
           padding: 12px 20px;
@@ -194,29 +194,9 @@
         border: 1px solid #d308fa88;
       }
 
-      @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to   { opacity: 1; transform: translateY(0); }
-      }
-
-      .fade-in {
-        animation: fadeInUp 0.5s ease forwards;
-        opacity: 0;
-      }
-
-      .fade-in:nth-child(1) { animation-delay: 0.05s; }
-      .fade-in:nth-child(2) { animation-delay: 0.10s; }
-      .fade-in:nth-child(3) { animation-delay: 0.15s; }
-      .fade-in:nth-child(4) { animation-delay: 0.20s; }
-      .fade-in:nth-child(5) { animation-delay: 0.25s; }
-      .fade-in:nth-child(6) { animation-delay: 0.30s; }
-      .fade-in:nth-child(7) { animation-delay: 0.35s; }
-      .fade-in:nth-child(8) { animation-delay: 0.40s; }
-      .fade-in:nth-child(9) { animation-delay: 0.45s; }
-      .fade-in:nth-child(10) { animation-delay: 0.50s; }
-      .fade-in:nth-child(n+11) { animation-delay: 0.55s; }
-    </style>
-  </head>
+      </style>
+      <link rel="stylesheet" href="animations.css">
+</head>
   <body>
 
     <div class="header">
@@ -226,7 +206,7 @@
     </div>
 
     <nav class="navbar">
-      <button class="hamburger" onclick="toggleNav()" aria-label="Menu">
+      <button class="hamburger" aria-label="Menu">
         <span></span>
         <span></span>
         <span></span>
@@ -249,19 +229,7 @@
     </div>
 
     <script>
-      function toggleNav() {
-        const nav = document.getElementById('nav-links');
-        nav.classList.toggle('aktif');
-      }
 
-      // Active navbar
-      (function() {
-        const path = window.location.pathname.split('/').pop() || 'index.html';
-        document.querySelectorAll('.nav-links a').forEach(a => {
-          const href = a.getAttribute('href');
-          if (href === path) a.classList.add('aktif');
-        });
-      })();
 
 
       const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=975723668&single=true&output=tsv";
@@ -297,5 +265,6 @@
         });
     </script>
 
-  </body>
+    <script src="animations.js"></script>
+</body>
 </html>
