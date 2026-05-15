@@ -143,23 +143,35 @@
     requestAnimationFrame(update);
   }
 
+  function isAngkaMurni(teks) { return /^\d+$/.test(teks.trim()); }
+
   // MutationObserver: pantau perubahan teks pada stat-num
-  // Ini lebih reliable daripada setTimeout karena trigger tepat saat angka diisi
   function watchStatEl(el) {
     if (animatedStats.has(el)) return;
+    // Kalau isi awal sudah ada dan bukan angka murni (misal "21 Sep"), skip selamanya
+    const isiAwal = el.textContent.trim();
+    if (isiAwal && !isAngkaMurni(isiAwal) && isiAwal !== '-') {
+      animatedStats.add(el);
+      return;
+    }
     const mo = new MutationObserver(() => {
-      const val = parseInt(el.textContent, 10);
+      const teks = el.textContent.trim();
+      if (!teks || teks === '-') return;
+      if (!isAngkaMurni(teks)) {
+        mo.disconnect();
+        animatedStats.add(el);
+        return;
+      }
+      const val = parseInt(teks, 10);
       if (!isNaN(val) && val > 0) {
         mo.disconnect();
         animateCounter(el, val, 1100);
       }
     });
     mo.observe(el, { childList: true, characterData: true, subtree: true });
-    // Kalau sudah ada isinya saat kita attach
-    const val = parseInt(el.textContent, 10);
-    if (!isNaN(val) && val > 0) {
-      mo.disconnect();
-      animateCounter(el, val, 1100);
+    if (isiAwal && isAngkaMurni(isiAwal)) {
+      const val = parseInt(isiAwal, 10);
+      if (!isNaN(val) && val > 0) { mo.disconnect(); animateCounter(el, val, 1100); }
     }
   }
 
