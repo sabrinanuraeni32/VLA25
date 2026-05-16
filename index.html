@@ -519,6 +519,7 @@ const SHEET_MEMBER = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHd
                 return;
               }
 
+              grid.innerHTML = '';
               sorted.forEach(([namaKey, jumlah]) => {
                 const info = memberFoto[namaKey] || {};
                 const foto = info.foto;
@@ -556,6 +557,7 @@ const SHEET_MEMBER = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHd
 
           const terbaru = [...baris].reverse().slice(0, 3);
 
+          container.innerHTML = '';
           terbaru.forEach(b => {
             const kolom = b.split('\t');
             const tanggal = kolom[0]?.trim();
