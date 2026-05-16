@@ -310,6 +310,7 @@
             return;
           }
 
+          container.innerHTML = '';
           baris.reverse().forEach(b => {
             const kolom = b.split('\t');
             const tanggal = kolom[0]?.trim();

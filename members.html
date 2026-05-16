@@ -433,6 +433,7 @@ const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-
             if (['1','2','3'].includes(gen)) semuaMember.push({ nama, foto, gen });
           });
 
+          ['grid-gen1','grid-gen2','grid-gen3'].forEach(id => document.getElementById(id).innerHTML = '');
           isiGrid('grid-gen1', semuaMember.filter(m => m.gen === '1'));
           isiGrid('grid-gen2', semuaMember.filter(m => m.gen === '2'));
           isiGrid('grid-gen3', semuaMember.filter(m => m.gen === '3'));
