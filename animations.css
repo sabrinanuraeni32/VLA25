@@ -272,7 +272,7 @@ body.page-exit {
 .header {
   background-image:
     linear-gradient(135deg, #2d005799 0%, #4a008099 40%, #7b2fa899 100%),
-    url('banner-mobile.jpg');
+    url('header-mobile.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -281,7 +281,7 @@ body.page-exit {
   .header {
     background-image:
       linear-gradient(135deg, #2d005799 0%, #4a008099 40%, #7b2fa899 100%),
-      url('banner.jpg');
+      url('header-dekstop.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
