@@ -1,334 +1,300 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Members - VLA25</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="id">
+<head>
+  <title>Members - VLA25</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Daftar lengkap member VLA25 (Velora25) Gen 1, Gen 2, dan Gen 3. Virtual agency berbasis JKT48.">
   <meta name="keywords" content="VLA25, Velora25, VNC, virtual agency, JKT48, fan site, cover lagu">
   <meta name="author" content="VLA25">
-
-  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="VLA25">
   <meta property="og:title" content="Members - VLA25">
-  <meta property="og:description" content="Daftar lengkap member VLA25 (Velora25) Gen 1, Gen 2, dan Gen 3. Virtual agency berbasis JKT48.">
+  <meta property="og:description" content="Daftar lengkap member VLA25 (Velora25) Gen 1, Gen 2, dan Gen 3.">
   <meta property="og:url" content="https://velora25.netlify.app/members.html">
   <meta property="og:image" content="https://velora25.netlify.app/logo.jpeg">
-  <meta property="og:image:width" content="400">
-  <meta property="og:image:height" content="400">
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Members - VLA25">
-  <meta name="twitter:description" content="Daftar lengkap member VLA25 (Velora25) Gen 1, Gen 2, dan Gen 3. Virtual agency berbasis JKT48.">
+  <meta name="twitter:description" content="Daftar lengkap member VLA25 (Velora25) Gen 1, Gen 2, dan Gen 3.">
   <meta name="twitter:image" content="https://velora25.netlify.app/logo.jpeg">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/jpeg" href="logo.jpeg">
   <link rel="apple-touch-icon" href="logo.jpeg">
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="animations.css">
 
-      body {
-        background-color: #f5e6ff;
-        background-image: radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
-                          radial-gradient(circle at 80% 80%, #c084fc 0%, transparent 50%);
-        color: #4a0080;
-        font-family: 'Quicksand', Arial, sans-serif;
-        margin: 0;
-        min-height: 100vh;
-      }
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      h2 {
-        color: #9b30d9;
-        letter-spacing: 2px;
-      }
+    body {
+      background-color: #f5e6ff;
+      background-image:
+        radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, #c084fc 0%, transparent 50%);
+      color: #4a0080;
+      font-family: 'Quicksand', Arial, sans-serif;
+      min-height: 100vh;
+    }
 
-      .header {
-        background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
-        text-align: center;
-        padding: 60px 20px 40px;
-        position: relative;
-        overflow: hidden;
-      }
+    /* ══ HEADER ══ */
+    .header {
+      width: 1200px; height: 400px; max-width: 100%; margin: 0 auto;
+      background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+      text-align: center; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 60px 20px 40px; position: relative; overflow: hidden;
+    }
+    .header::before {
+      content: ''; position: absolute; top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
+      animation: shimmer 4s ease-in-out infinite; pointer-events: none;
+    }
+    @keyframes shimmer {
+      0%, 100% { transform: translate(0, 0); }
+      50%       { transform: translate(10%, 10%); }
+    }
+    .header-logo {
+      width: 100px; height: 100px; border-radius: 50%; object-fit: cover;
+      margin-bottom: 15px; animation: logoPulse 3s ease-in-out infinite;
+      position: relative; z-index: 1;
+    }
+    @keyframes logoPulse {
+      0%, 100% { transform: scale(1);     box-shadow: 0 0 0 0 #d308fa44; }
+      50%       { transform: scale(1.06); box-shadow: 0 0 0 14px #d308fa00; }
+    }
+    .header .sub-judul {
+      color: #e8b4ff; letter-spacing: 8px; font-size: 11px;
+      margin: 6px 0; position: relative; z-index: 1;
+    }
+    .header h1 {
+      color: #d308fa; letter-spacing: 6px; font-size: 48px; font-weight: 700;
+      animation: titleGlow 2.5s ease-in-out infinite alternate;
+      margin: 8px 0; position: relative; z-index: 1;
+    }
+    @keyframes titleGlow {
+      from { text-shadow: 0 0 10px #d308fa66, 0 0 30px #d308fa33; }
+      to   { text-shadow: 0 0 25px #d308facc, 0 0 60px #d308fa88; }
+    }
 
-      .header::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
-        animation: shimmer 4s ease-in-out infinite;
-      }
+    /* ══ NAVBAR ══ */
+    .navbar {
+      background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
+      display: flex; justify-content: center;
+      padding: 0 20px; border-bottom: 1px solid #d308fa44;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1440px; width: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0;
+    }
+    .nav-brand { color: #fff; font-size: 18px; font-weight: 700; letter-spacing: 4px; text-decoration: none; }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .nav-links a {
+      color: #e8b4ff; text-decoration: none; font-size: 12px;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 20px;
+      transition: all 0.3s; border: 1px solid transparent; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 50%;
+      width: 0; height: 2px; background: #d308fa; border-radius: 2px;
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+    .nav-links a:hover { color: #fff; background: #d308fa22; }
+    .nav-links a:hover::after, .nav-links a.aktif::after { width: 80%; left: 10%; }
+    .nav-links a.aktif { color: #fff; background: #d308fa66; border-color: #d308fa88; }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: #e8b4ff; margin: 5px 0; transition: all 0.3s; border-radius: 2px;
+    }
+    .hamburger.terbuka span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.terbuka span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.terbuka span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-      @keyframes shimmer {
-        0%, 100% { transform: translate(0, 0); }
-        50% { transform: translate(10%, 10%); }
-      }
+    /* ══ KONTEN ══ */
+    .konten {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 40px 40px;
+    }
 
-      .header h1 {
-        color: #d308fa;
-        letter-spacing: 6px;
-        font-size: 48px;
-        text-shadow: 0 0 20px #d308fa88;
-        margin: 10px 0;
-      }
+    /* ── Filter & Search ── */
+    .filter-area {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+      padding: 18px 22px;
+      background: linear-gradient(135deg, #f9f0ff, #f0e0ff);
+      border: 1px solid #d308fa44;
+      border-radius: 16px;
+    }
+    .search-input {
+      flex: 1; min-width: 200px;
+      padding: 10px 18px;
+      border: 1px solid #d308fa66;
+      border-radius: 20px;
+      background: #fff;
+      color: #4a0080;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 13px;
+      outline: none;
+      transition: all 0.3s;
+    }
+    .search-input:focus {
+      border-color: #d308fa;
+      box-shadow: 0 0 0 3px #d308fa22, 0 0 15px #d308fa11;
+      transform: scaleX(1.01);
+    }
+    .search-input::placeholder { color: #c084fc; }
 
-      .sub-judul {
-        color: #e8b4ff;
-        letter-spacing: 8px;
-        font-size: 11px;
-        margin: 8px 0;
-      }
+    .filter-btn {
+      background: linear-gradient(135deg, #f0e0ff, #e8b4ff);
+      border: 1px solid #d308fa66;
+      color: #4a0080;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      cursor: pointer; transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .filter-btn:hover, .filter-btn.aktif {
+      background: linear-gradient(135deg, #9b30d9, #d308fa);
+      color: #fff; border-color: #d308fa;
+      box-shadow: 0 4px 15px #d308fa33;
+    }
 
-      /* NAVBAR */
-      .navbar {
-        background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        padding: 14px 20px;
-        border-bottom: 1px solid #d308fa44;
-        position: relative;
-      }
+    /* ── Section & Grid ── */
+    .section-member { margin-bottom: 48px; }
+    .section-member.tersembunyi { display: none; }
 
-      .navbar a {
-        color: #e8b4ff;
-        text-decoration: none;
-        font-size: 12px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        padding: 5px 10px;
-        border-radius: 20px;
-        transition: all 0.3s;
-      }
+    .section-member h2 {
+      color: #4a0080; font-size: 18px; font-weight: 700;
+      letter-spacing: 2px; border-bottom: 2px solid #f0a0ff;
+      padding-bottom: 10px; margin-bottom: 24px;
+    }
 
-      .navbar a:hover {
-        color: #ffffff;
-        background-color: #d308fa44;
-      }
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
 
-      .hamburger {
-        display: none;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 5px;
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-      }
+    .kartu {
+      background: linear-gradient(135deg, #4a0080, #7b2fa8);
+      border: 1px solid #d308fa66;
+      border-radius: 15px;
+      padding: 20px 15px;
+      text-align: center;
+      width: 140px;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(.22,.68,0,1.4),
+                  box-shadow 0.3s ease, border-color 0.3s;
+      box-shadow: 0 4px 15px #d308fa22;
+      will-change: transform;
+    }
+    .kartu:nth-child(odd)  { transform: rotate(-2deg); }
+    .kartu:nth-child(even) { transform: rotate(1.5deg); }
+    .kartu:hover {
+      transform: rotate(0deg) scale(1.05) !important;
+      box-shadow: 0 10px 28px #d308fa44;
+      border-color: #d308fa;
+    }
 
-      .hamburger span {
-        display: block;
-        width: 24px;
-        height: 2px;
-        background: #e8b4ff;
-        margin: 5px 0;
-        transition: all 0.3s;
-      }
+    .avatar {
+      background: linear-gradient(135deg, #9b30d9, #d308fa);
+      color: #fff;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 10px;
+      font-size: 14px; font-weight: 700;
+      box-shadow: 0 0 15px #d308fa66;
+      overflow: hidden;
+    }
+    .avatar img {
+      width: 58px; height: 58px;
+      border-radius: 50%; object-fit: cover; object-position: center;
+    }
 
+    .nama-member {
+      font-size: 11px; color: #e8b4ff; line-height: 1.4;
+    }
+
+    .tidak-ditemukan {
+      color: #9b30d9; font-style: italic; font-size: 13px; padding: 16px 0;
+    }
+
+    /* ══ FOOTER ══ */
+    footer {
+      background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+      text-align: center; padding: 48px 20px; margin-top: 60px;
+      position: relative; overflow: hidden; border-top: 1px solid #d308fa44;
+    }
+    footer::before {
+      content: ''; position: absolute; top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, #d308fa11 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .footer-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 2px solid #d308fa66; }
+    .footer-nama { color: #d308fa; font-size: 20px; font-weight: 700; letter-spacing: 4px; margin-bottom: 4px; }
+    .footer-sub  { color: #e8b4ff; font-size: 10px; letter-spacing: 6px; margin-bottom: 20px; }
+    .footer-sosmed { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
+    .footer-sosmed a {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid #d308fa66; color: #e8b4ff; text-decoration: none; transition: all 0.3s;
+    }
+    .footer-sosmed a:hover { background: #d308fa33; border-color: #d308fa; color: #fff; transform: translateY(-3px); }
+    .footer-copy { color: #9b30d966; font-size: 11px; letter-spacing: 1px; }
+
+    /* ══ MOBILE ══ */
+    @media (max-width: 768px) {
+      .header h1 { font-size: 36px; }
+      .hamburger { display: block; }
       .nav-links {
-        display: flex;
-        gap: 30px;
-        align-items: center;
+        display: none; flex-direction: column; gap: 0;
+        width: 100%; max-height: 0; overflow: hidden; opacity: 0;
+        transition: max-height 0.35s cubic-bezier(.4,0,.2,1), opacity 0.3s;
       }
-
-      /* KONTEN */
-      .konten {
-        padding: 40px 30px;
-      }
-
-      .grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        margin-bottom: 40px;
-      }
-
-      .kartu {
-        background: linear-gradient(135deg, #4a0080, #7b2fa8);
-        border: 1px solid #d308fa66;
-        border-radius: 15px;
-        padding: 20px 15px;
-        text-align: center;
-        width: 140px;
-        cursor: pointer;
-        transition: all 0.3s;
-        box-shadow: 0 4px 15px #d308fa22;
-      }
-
-      .kartu:nth-child(odd) { transform: rotate(-2deg); }
-      .kartu:nth-child(even) { transform: rotate(1.5deg); }
-      .kartu:hover { transform: rotate(0deg) scale(1.05) !important; box-shadow: 0 8px 25px #d308fa44; border-color: #d308fa; }
-
-      .avatar {
-        background: linear-gradient(135deg, #9b30d9, #d308fa);
-        color: #ffffff;
-        width: 55px;
-        height: 55px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 10px;
-        font-size: 14px;
-        font-weight: 700;
-        box-shadow: 0 0 15px #d308fa66;
-        overflow: hidden;
-      }
-
-      .nama-member {
-        font-size: 11px;
-        color: #e8b4ff;
-        line-height: 1.4;
-      }
-
-      /* SEARCH & FILTER */
-      .filter-area {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-        flex-wrap: wrap;
-        margin-bottom: 30px;
-        padding: 16px 20px;
-        background: linear-gradient(135deg, #f9f0ff, #f0e0ff);
-        border: 1px solid #d308fa44;
-        border-radius: 15px;
-      }
-
-      .search-input {
-        flex: 1;
-        min-width: 180px;
-        padding: 9px 16px;
-        border: 1px solid #d308fa66;
-        border-radius: 20px;
-        background: #ffffff;
-        color: #4a0080;
-        font-family: 'Quicksand', Arial, sans-serif;
-        font-size: 13px;
-        outline: none;
-        transition: all 0.3s;
-      }
-
-      .search-input:focus {
-        border-color: #d308fa;
-        box-shadow: 0 0 10px #d308fa22;
-      }
-
-      .search-input::placeholder { color: #c084fc; }
-
-      .filter-btn {
-        background: linear-gradient(135deg, #f0e0ff, #e8b4ff);
-        border: 1px solid #d308fa66;
-        color: #4a0080;
-        padding: 9px 18px;
-        border-radius: 20px;
-        font-family: 'Quicksand', Arial, sans-serif;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        cursor: pointer;
-        transition: all 0.3s;
-      }
-
-      .filter-btn:hover, .filter-btn.aktif {
-        background: linear-gradient(135deg, #9b30d9, #d308fa);
-        color: #ffffff;
-        border-color: #d308fa;
-        box-shadow: 0 4px 15px #d308fa33;
-      }
-
-      .section-member {
-        margin-bottom: 40px;
-      }
-
-      .section-member.tersembunyi {
-        display: none;
-      }
-
-      .tidak-ditemukan {
-        color: #9b30d9;
-        font-style: italic;
-        padding: 20px 0;
-        font-size: 13px;
-      }
-
-      /* MOBILE */
-      @media (max-width: 600px) {
-        .header h1 { font-size: 32px; letter-spacing: 4px; }
-
-        .filter-area { gap: 8px; padding: 12px 14px; }
-        .search-input { font-size: 12px; padding: 8px 14px; }
-        .filter-btn { font-size: 11px; padding: 8px 14px; }
-
-        .hamburger { display: block; }
-
-        .nav-links {
-          display: none;
-          flex-direction: column;
-          gap: 0;
-          width: 100%;
-          padding: 10px 0;
-        }
-
-        
-
-        .nav-links a {
-          padding: 12px 20px;
-          border-radius: 0;
-          border-bottom: 1px solid #d308fa22;
-          width: 100%;
-          text-align: center;
-        }
-
-        .navbar { justify-content: flex-start; flex-wrap: wrap; padding: 14px 20px; }
-
-        .konten { padding: 24px 16px; }
-
-        .grid { gap: 10px; justify-content: center; }
-
-        .kartu {
-          width: 100px;
-          padding: 14px 10px;
-          transform: rotate(0deg) !important;
-        }
-
-        .kartu:hover { transform: scale(1.05) !important; }
-
-        .avatar { width: 44px; height: 44px; }
-
-        .nama-member { font-size: 10px; }
-
-        h2 { font-size: 14px; }
-      }
-
-      .navbar a.aktif {
-        color: #ffffff;
-        background-color: #d308fa66;
-        border: 1px solid #d308fa88;
-      }
-
-      </style>
-      <link rel="stylesheet" href="animations.css">
+      .nav-links.aktif { display: flex; max-height: 400px; opacity: 1; }
+      .nav-links a { border-radius: 0; border-bottom: 1px solid #d308fa22; padding: 12px 20px; width: 100%; text-align: center; }
+      .nav-inner { flex-wrap: wrap; }
+      .konten { padding: 24px 16px; }
+      .filter-area { gap: 8px; padding: 14px 16px; }
+      .search-input { font-size: 12px; min-width: 150px; }
+      .filter-btn { font-size: 11px; padding: 8px 14px; }
+      .grid { gap: 10px; justify-content: center; }
+      .kartu { width: 100px; padding: 14px 10px; }
+      .kartu:nth-child(odd), .kartu:nth-child(even) { transform: rotate(0deg); }
+      .kartu:hover { transform: scale(1.05) !important; }
+      .avatar { width: 46px; height: 46px; }
+      .avatar img { width: 46px; height: 46px; }
+      .nama-member { font-size: 10px; }
+    }
+  </style>
 </head>
-  <body>
+<body>
 
-    <div class="header">
-      <img src="logo.jpeg" alt="Logo VLA25" style="width: 100px; border-radius: 50%; margin-bottom: 15px;">
-      <p class="sub-judul">OFFICIAL FAN SITE</p>
-      <h1>VLA25</h1>
-      <p class="sub-judul">VELORA25</p>
-    </div>
+  <!-- HEADER -->
+  <div class="header">
+    <img src="logo.jpeg" alt="Logo VLA25" class="header-logo">
+    <p class="sub-judul">OFFICIAL FAN SITE</p>
+    <h1>VLA25</h1>
+    <p class="sub-judul">VELORA25</p>
+  </div>
 
-    <nav class="navbar">
-      <button class="hamburger" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">VLA25</a>
+      <button class="hamburger" aria-label="Menu" id="hamburger">
+        <span></span><span></span><span></span>
       </button>
       <div class="nav-links" id="nav-links">
         <a href="index.html">Home</a>
@@ -338,147 +304,173 @@
         <a href="pengumuman.html">Pengumuman</a>
         <a href="management.html">Management</a>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <div class="konten">
+  <!-- KONTEN -->
+  <div class="konten">
 
-      <div class="filter-area">
-        <input class="search-input" type="text" id="search-input" placeholder="🔍 Cari nama member..." oninput="filterMember()">
-        <button class="filter-btn aktif" id="btn-all" onclick="setFilter('all')">Semua</button>
-        <button class="filter-btn" id="btn-gen1" onclick="setFilter('1')">Gen 1</button>
-        <button class="filter-btn" id="btn-gen2" onclick="setFilter('2')">Gen 2</button>
-        <button class="filter-btn" id="btn-gen3" onclick="setFilter('3')">Gen 3</button>
-      </div>
-
-      <div class="section-member" id="section-gen1">
-        <h2>Member Gen 1</h2>
-        <div class="grid" id="grid-gen1"></div>
-      </div>
-
-      <div class="section-member" id="section-gen2">
-        <h2>Member Gen 2</h2>
-        <div class="grid" id="grid-gen2"></div>
-      </div>
-
-      <div class="section-member" id="section-gen3">
-        <h2>Member Gen 3</h2>
-        <div class="grid" id="grid-gen3"></div>
-      </div>
-
+    <div class="filter-area">
+      <input class="search-input" type="text" id="search-input" placeholder="🔍 Cari nama member...">
+      <button class="filter-btn aktif" id="btn-all">Semua</button>
+      <button class="filter-btn" id="btn-gen1">Gen 1</button>
+      <button class="filter-btn" id="btn-gen2">Gen 2</button>
+      <button class="filter-btn" id="btn-gen3">Gen 3</button>
     </div>
 
-    <script>
+    <div class="section-member" id="section-gen1">
+      <h2>⭐ Member Gen 1</h2>
+      <div class="grid" id="grid-gen1">
+        ${Array(4).fill(0).map(() => `<div class="kartu skeleton" style="height:120px;"></div>`).join('')}
+      </div>
+    </div>
 
+    <div class="section-member" id="section-gen2">
+      <h2>✨ Member Gen 2</h2>
+      <div class="grid" id="grid-gen2">
+        ${Array(4).fill(0).map(() => `<div class="kartu skeleton" style="height:120px;"></div>`).join('')}
+      </div>
+    </div>
 
+    <div class="section-member" id="section-gen3">
+      <h2>🌸 Member Gen 3</h2>
+      <div class="grid" id="grid-gen3">
+        ${Array(4).fill(0).map(() => `<div class="kartu skeleton" style="height:120px;"></div>`).join('')}
+      </div>
+    </div>
 
-      
-      // SKELETON
-      ['grid-gen1','grid-gen2','grid-gen3'].forEach(id => {
-        document.getElementById(id).innerHTML = Array(4).fill(0).map((_,i) =>
-          `<div class="kartu skeleton" style="width:140px;height:120px;"></div>`
-        ).join('');
-      });
+  </div>
 
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=0&single=true&output=csv";
-
-      function inisial(nama) {
-        const bagian = nama.replace(/[^a-zA-Z\s]/g, '').trim().split(' ');
-        return (bagian[0]?.[0] || '') + (bagian[1]?.[0] || '');
-      }
-
-      function buatKartu(nama, foto) {
-        const avatarContent = foto
-          ? `<img src="idcmember/${foto}" style="width:55px;height:55px;border-radius:50%;object-fit:cover;object-position:center;">`
-          : inisial(nama).toUpperCase();
-
-        return `
-          <div class="kartu fade-in" onclick="window.location='profil.html?nama=${encodeURIComponent(nama)}'">
-            <div class="avatar">${avatarContent}</div>
-            <p class="nama-member">${nama}</p>
-          </div>
-        `;
-      }
-
-      function isiGrid(idGrid, daftarMember) {
-        const grid = document.getElementById(idGrid);
-        grid.innerHTML = daftarMember.map(m => buatKartu(m.nama, m.foto)).join('');
-      }
-
-      let semuaMember = [];
-      let filterAktif = 'all';
-
-      function setFilter(gen) {
-        filterAktif = gen;
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('aktif'));
-        document.getElementById('btn-' + (gen === 'all' ? 'all' : 'gen' + gen)).classList.add('aktif');
-        filterMember();
-      }
-
-      function filterMember() {
-        const keyword = document.getElementById('search-input').value.toLowerCase().trim();
-
-        ['1', '2', '3'].forEach(gen => {
-          const section = document.getElementById('section-gen' + gen);
-          const grid = document.getElementById('grid-gen' + gen);
-
-          const filtered = semuaMember.filter(m =>
-            m.gen === gen &&
-            (filterAktif === 'all' || filterAktif === gen) &&
-            m.nama.toLowerCase().includes(keyword)
-          );
-
-          if (filterAktif !== 'all' && filterAktif !== gen) {
-            section.classList.add('tersembunyi');
-            return;
-          }
-
-          section.classList.remove('tersembunyi');
-
-          if (filtered.length === 0) {
-            grid.innerHTML = '<p class="tidak-ditemukan">Tidak ada member yang cocok.</p>';
-          } else {
-            grid.innerHTML = filtered.map(m => buatKartu(m.nama, m.foto)).join('');
-          }
-        });
-      }
-
-      fetch(SHEET_URL)
-        .then(res => res.text())
-        .then(csv => {
-          const baris = csv.trim().split('\n').slice(1);
-
-          baris.forEach(baris => {
-            const kolom = baris.split(',');
-            const gen = kolom[0]?.trim();
-            const nama = kolom[1]?.trim();
-            const foto = kolom[6]?.trim();
-            if (!nama) return;
-            if (['1','2','3'].includes(gen)) semuaMember.push({ nama, foto, gen });
-          });
-
-          ['grid-gen1','grid-gen2','grid-gen3'].forEach(id => document.getElementById(id).innerHTML = '');
-          isiGrid('grid-gen1', semuaMember.filter(m => m.gen === '1'));
-          isiGrid('grid-gen2', semuaMember.filter(m => m.gen === '2'));
-          isiGrid('grid-gen3', semuaMember.filter(m => m.gen === '3'));
-        })
-        .catch(err => console.error('Gagal load data:', err));
-    </script>
-
-    <script src="animations.js"></script>
-
-  <footer class="footer">
+  <!-- FOOTER -->
+  <footer>
     <img src="logo.jpeg" alt="Logo VLA25" class="footer-logo">
     <div class="footer-nama">VLA25</div>
     <div class="footer-sub">VELORA25</div>
     <div class="footer-sosmed">
       <a href="https://www.tiktok.com/@velora25agency" target="_blank" title="TikTok">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/>
+        </svg>
       </a>
       <a href="https://whatsapp.com/channel/0029Vb6IoDd2ER6mPn09Jt2e" target="_blank" title="WhatsApp">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
       </a>
     </div>
     <div class="footer-copy">© 2025 VLA25 · Velora25 · VNC</div>
   </footer>
+
+  <script>
+    /* ── SCROLL REVEAL (re-run setelah data dimuat) ── */
+    function initReveal() {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+      document.querySelectorAll('.kartu:not(.skeleton)').forEach(el => {
+        if (el.classList.contains('reveal')) return;
+        el.classList.add('reveal');
+        const p = el.parentElement;
+        if (p && !p.classList.contains('reveal-group')) p.classList.add('reveal-group');
+        obs.observe(el);
+      });
+    }
+
+    /* ── DATA ── */
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=0&single=true&output=csv";
+    let semuaMember = [];
+    let filterAktif = 'all';
+
+    function inisial(nama) {
+      const b = nama.replace(/[^a-zA-Z\s]/g,'').trim().split(' ');
+      return ((b[0]?.[0]||'') + (b[1]?.[0]||'')).toUpperCase();
+    }
+
+    function buatKartu(m) {
+      const el = document.createElement('div');
+      el.className = 'kartu';
+      el.innerHTML = `
+        <div class="avatar">
+          ${m.foto
+            ? `<img src="idcmember/${m.foto}" alt="${m.nama}">`
+            : inisial(m.nama)
+          }
+        </div>
+        <p class="nama-member">${m.nama}</p>
+      `;
+      el.addEventListener('click', () => {
+        window.location = `profil.html?nama=${encodeURIComponent(m.nama)}`;
+      });
+      return el;
+    }
+
+    function renderGrid(gen) {
+      const keyword = document.getElementById('search-input').value.toLowerCase().trim();
+      const section = document.getElementById('section-gen' + gen);
+      const grid    = document.getElementById('grid-gen' + gen);
+
+      if (filterAktif !== 'all' && filterAktif !== gen) {
+        section.classList.add('tersembunyi');
+        return;
+      }
+      section.classList.remove('tersembunyi');
+
+      const filtered = semuaMember.filter(m =>
+        m.gen === gen && m.nama.toLowerCase().includes(keyword)
+      );
+
+      grid.innerHTML = '';
+      if (!filtered.length) {
+        grid.innerHTML = '<p class="tidak-ditemukan">Tidak ada member yang cocok.</p>';
+        return;
+      }
+      filtered.forEach(m => grid.appendChild(buatKartu(m)));
+      setTimeout(initReveal, 80);
+    }
+
+    function renderSemua() {
+      ['1','2','3'].forEach(renderGrid);
+    }
+
+    function setFilter(gen) {
+      filterAktif = gen;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('aktif'));
+      document.getElementById(gen === 'all' ? 'btn-all' : 'btn-gen' + gen).classList.add('aktif');
+      renderSemua();
+    }
+
+    /* ── Filter buttons ── */
+    document.getElementById('btn-all').addEventListener('click',  () => setFilter('all'));
+    document.getElementById('btn-gen1').addEventListener('click', () => setFilter('1'));
+    document.getElementById('btn-gen2').addEventListener('click', () => setFilter('2'));
+    document.getElementById('btn-gen3').addEventListener('click', () => setFilter('3'));
+    document.getElementById('search-input').addEventListener('input', renderSemua);
+
+    /* ── Fetch ── */
+    fetch(SHEET_URL)
+      .then(r => r.text())
+      .then(csv => {
+        const baris = csv.trim().split('\n').slice(1);
+        baris.forEach(b => {
+          const k    = b.split(',');
+          const gen  = k[0]?.trim();
+          const nama = k[1]?.trim();
+          const foto = k[6]?.trim();
+          if (!nama || !['1','2','3'].includes(gen)) return;
+          semuaMember.push({ nama, foto, gen });
+        });
+        renderSemua();
+      })
+      .catch(() => {
+        ['1','2','3'].forEach(gen => {
+          document.getElementById('grid-gen' + gen).innerHTML =
+            '<p class="tidak-ditemukan">Gagal memuat data member.</p>';
+        });
+      });
+  </script>
+
+  <script src="animations.js"></script>
 </body>
 </html>

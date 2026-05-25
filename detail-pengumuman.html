@@ -1,215 +1,372 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Pengumuman - VLA25</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+<html lang="id">
+<head>
+  <title>Pengumuman - VLA25</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Detail pengumuman VLA25 (Velora25).">
+  <meta name="author" content="VLA25">
+  <link rel="icon" type="image/jpeg" href="logo.jpeg">
+  <link rel="apple-touch-icon" href="logo.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="animations.css">
 
-      body {
-        background-color: #f5e6ff;
-        background-image: radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
-                          radial-gradient(circle at 80% 80%, #c084fc 0%, transparent 50%);
-        color: #4a0080;
-        font-family: 'Quicksand', Arial, sans-serif;
-        margin: 0;
-        min-height: 100vh;
-      }
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      .header {
-        background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
-        text-align: center;
-        padding: 60px 20px 40px;
-        position: relative;
-        overflow: hidden;
-      }
+    body {
+      background-color: #f5e6ff;
+      background-image:
+        radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, #c084fc 0%, transparent 50%);
+      color: #4a0080;
+      font-family: 'Quicksand', Arial, sans-serif;
+      min-height: 100vh;
+    }
 
-      .header::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
-        animation: shimmer 4s ease-in-out infinite;
-      }
+    /* ══ HEADER ══ */
+    .header {
+      width: 1200px;
+      height: 400px;
+      max-width: 100%;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
+      animation: shimmer 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes shimmer {
+      0%, 100% { transform: translate(0, 0); }
+      50%       { transform: translate(10%, 10%); }
+    }
+    .header-logo {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      animation: logoPulse 3s ease-in-out infinite;
+      position: relative; z-index: 1;
+    }
+    @keyframes logoPulse {
+      0%, 100% { transform: scale(1);     box-shadow: 0 0 0 0 #d308fa44; }
+      50%       { transform: scale(1.06); box-shadow: 0 0 0 14px #d308fa00; }
+    }
+    .header .sub-judul {
+      color: #e8b4ff;
+      letter-spacing: 8px;
+      font-size: 11px;
+      margin: 6px 0;
+      position: relative; z-index: 1;
+    }
+    .header h1 {
+      color: #d308fa;
+      letter-spacing: 6px;
+      font-size: 48px;
+      font-weight: 700;
+      animation: titleGlow 2.5s ease-in-out infinite alternate;
+      margin: 8px 0;
+      position: relative; z-index: 1;
+    }
+    @keyframes titleGlow {
+      from { text-shadow: 0 0 10px #d308fa66, 0 0 30px #d308fa33; }
+      to   { text-shadow: 0 0 25px #d308facc, 0 0 60px #d308fa88; }
+    }
+    .header-back {
+      color: #e8b4ff;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-decoration: none;
+      position: relative; z-index: 1;
+      margin-top: 8px;
+      transition: color 0.3s;
+      display: inline-block;
+    }
+    .header-back:hover { color: #fff; }
 
-      @keyframes shimmer {
-        0%, 100% { transform: translate(0, 0); }
-        50% { transform: translate(10%, 10%); }
-      }
+    /* ══ NAVBAR ══ */
+    .navbar {
+      background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
+      display: flex;
+      justify-content: center;
+      padding: 0 20px;
+      border-bottom: 1px solid #d308fa44;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1440px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+    }
+    .nav-brand {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #e8b4ff;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      width: 0; height: 2px;
+      background: #d308fa;
+      border-radius: 2px;
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+    .nav-links a:hover { color: #ffffff; background: #d308fa22; }
+    .nav-links a:hover::after,
+    .nav-links a.aktif::after { width: 80%; left: 10%; }
+    .nav-links a.aktif {
+      color: #ffffff;
+      background: #d308fa66;
+      border-color: #d308fa88;
+    }
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: #e8b4ff;
+      margin: 5px 0;
+      transition: all 0.3s;
+      border-radius: 2px;
+    }
+    .hamburger.terbuka span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.terbuka span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.terbuka span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-      .header a {
-        color: #e8b4ff;
-        font-size: 12px;
-        letter-spacing: 2px;
-        text-decoration: none;
-        display: block;
-        margin-bottom: 10px;
-      }
+    /* ══ KONTEN ══ */
+    .konten-wrap {
+      max-width: 1440px;
+      margin: 48px auto;
+      padding: 0 40px;
+    }
 
-      .header a:hover { color: #ffffff; }
+    /* Breadcrumb */
+    .breadcrumb {
+      font-size: 12px;
+      color: #9b30d9;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+    }
+    .breadcrumb a {
+      color: #9b30d9;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .breadcrumb a:hover { color: #d308fa; }
+    .breadcrumb span { margin: 0 6px; }
 
-      .header h1 {
-        color: #d308fa;
-        letter-spacing: 6px;
-        font-size: 48px;
-        text-shadow: 0 0 20px #d308fa88;
-        margin: 10px 0 0;
-      }
+    .konten {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid #d308fa44;
+      border-radius: 15px;
+      padding: 36px;
+      box-shadow: 0 4px 20px #d308fa11;
+      animation: kontenEntrance 0.5s cubic-bezier(.22,.68,0,1.2) both;
+    }
+    @keyframes kontenEntrance {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-      .navbar {
-        background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        padding: 14px 20px;
-        border-bottom: 1px solid #d308fa44;
-        position: relative;
-      }
+    .pengumuman-foto {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 28px;
+    }
 
-      .navbar a {
-        color: #e8b4ff;
-        text-decoration: none;
-        font-size: 12px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        padding: 5px 10px;
-        border-radius: 20px;
-        transition: all 0.3s;
-      }
+    .pengumuman-tanggal {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #9b30d9;
+      margin-bottom: 10px;
+    }
 
-      .navbar a:hover {
-        color: #ffffff;
-        background-color: #d308fa44;
-      }
+    .pengumuman-judul {
+      font-size: 26px;
+      font-weight: 700;
+      color: #d308fa;
+      margin-bottom: 24px;
+      line-height: 1.3;
+    }
 
-      .hamburger {
-        display: none;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 5px;
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-      }
+    .divider {
+      height: 2px;
+      background: linear-gradient(90deg, #d308fa44, transparent);
+      border: none;
+      margin-bottom: 24px;
+      border-radius: 2px;
+    }
 
-      .hamburger span {
-        display: block;
-        width: 24px;
-        height: 2px;
-        background: #e8b4ff;
-        margin: 5px 0;
-        transition: all 0.3s;
-      }
+    .pengumuman-isi {
+      font-size: 14px;
+      color: #4a0080;
+      line-height: 1.9;
+      white-space: pre-line;
+    }
 
+    /* Skeleton konten */
+    .skeleton-line {
+      height: 14px;
+      background: #e8d5f5;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      animation: skeletonPulse 1.4s ease-in-out infinite;
+    }
+    @keyframes skeletonPulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.35; }
+    }
+    .skeleton-line:nth-child(2) { width: 80%; animation-delay: 0.1s; }
+    .skeleton-line:nth-child(3) { width: 90%; animation-delay: 0.2s; }
+    .skeleton-line:nth-child(4) { width: 70%; animation-delay: 0.3s; }
+
+    /* Tombol kembali */
+    .tombol-kembali {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 32px;
+      padding: 10px 22px;
+      background: linear-gradient(135deg, #9b30d9, #d308fa);
+      color: #fff;
+      border-radius: 30px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.3s, box-shadow 0.3s;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .tombol-kembali:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px #d308fa44;
+    }
+
+    /* ══ FOOTER ══ */
+    footer {
+      background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+      text-align: center;
+      padding: 48px 20px;
+      margin-top: 60px;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid #d308fa44;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, #d308fa11 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .footer-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 2px solid #d308fa66; }
+    .footer-nama { color: #d308fa; font-size: 20px; font-weight: 700; letter-spacing: 4px; margin-bottom: 4px; }
+    .footer-sub  { color: #e8b4ff; font-size: 10px; letter-spacing: 6px; margin-bottom: 20px; }
+    .footer-sosmed { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
+    .footer-sosmed a {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid #d308fa66;
+      color: #e8b4ff;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .footer-sosmed a:hover { background: #d308fa33; border-color: #d308fa; color: #fff; transform: translateY(-3px); }
+    .footer-copy { color: #9b30d966; font-size: 11px; letter-spacing: 1px; }
+
+    /* ══ MOBILE ══ */
+    @media (max-width: 768px) {
+      .header h1 { font-size: 36px; }
+      .hamburger { display: block; }
       .nav-links {
-        display: flex;
-        gap: 30px;
-        align-items: center;
-      }
-
-      .konten {
-        max-width: 800px;
-        margin: 40px auto;
-        background: #ffffff;
-        border: 1px solid #d308fa44;
-        border-radius: 15px;
-        padding: 30px;
-        box-shadow: 0 4px 15px #d308fa11;
-      }
-
-      .pengumuman-foto {
+        display: none;
+        flex-direction: column;
+        gap: 0;
         width: 100%;
-        max-height: 400px;
-        object-fit: cover;
-        border-radius: 10px;
-        margin-bottom: 24px;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.35s cubic-bezier(.4,0,.2,1), opacity 0.3s;
       }
-
-      .pengumuman-tanggal {
-        font-size: 11px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: #9b30d9;
-        margin-bottom: 8px;
-      }
-
-      .pengumuman-judul {
-        font-size: 24px;
-        font-weight: 700;
-        color: #d308fa;
-        margin-bottom: 20px;
-      }
-
-      .pengumuman-isi {
-        font-size: 14px;
-        color: #4a0080;
-        line-height: 1.8;
-        white-space: pre-line;
-      }
-
-      /* MOBILE */
-      @media (max-width: 600px) {
-        .header h1 { font-size: 32px; letter-spacing: 4px; }
-
-        .hamburger { display: block; }
-
-        .nav-links {
-          display: none;
-          flex-direction: column;
-          gap: 0;
-          width: 100%;
-          padding: 10px 0;
-        }
-
-        
-
-        .nav-links a {
-          padding: 12px 20px;
-          border-radius: 0;
-          border-bottom: 1px solid #d308fa22;
-          width: 100%;
-          text-align: center;
-        }
-
-        .navbar { justify-content: flex-start; flex-wrap: wrap; padding: 14px 20px; }
-
-        .konten {
-          margin: 16px;
-          padding: 20px 16px;
-        }
-
-        .pengumuman-judul { font-size: 18px; }
-        .pengumuman-isi { font-size: 13px; }
-        .pengumuman-foto { max-height: 220px; }
-      }
-
-      .navbar a.aktif {
-        color: #ffffff;
-        background-color: #d308fa66;
-        border: 1px solid #d308fa88;
-      }
-
-      </style>
-      <link rel="stylesheet" href="animations.css">
+      .nav-links.aktif { display: flex; max-height: 400px; opacity: 1; }
+      .nav-links a { border-radius: 0; border-bottom: 1px solid #d308fa22; padding: 12px 20px; width: 100%; text-align: center; }
+      .nav-inner { flex-wrap: wrap; }
+      .konten-wrap { padding: 0 16px; margin: 24px auto; }
+      .konten { padding: 20px 18px; }
+      .pengumuman-judul { font-size: 20px; }
+      .pengumuman-isi  { font-size: 13px; }
+      .pengumuman-foto { max-height: 220px; }
+    }
+  </style>
 </head>
-  <body>
+<body>
 
-    <div class="header">
-      <img src="logo.jpeg" alt="Logo VLA25" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;">
-      <a href="pengumuman.html">← Kembali ke Pengumuman</a>
-      <h1>VLA25</h1>
-    </div>
+  <!-- HEADER -->
+  <div class="header">
+    <img src="logo.jpeg" alt="Logo VLA25" class="header-logo">
+    <p class="sub-judul">OFFICIAL FAN SITE</p>
+    <h1>VLA25</h1>
+    <p class="sub-judul">VELORA25</p>
+    <a href="pengumuman.html" class="header-back">← Kembali ke Pengumuman</a>
+  </div>
 
-    <nav class="navbar">
-      <button class="hamburger" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">VLA25</a>
+      <button class="hamburger" aria-label="Menu" id="hamburger">
+        <span></span><span></span><span></span>
       </button>
       <div class="nav-links" id="nav-links">
         <a href="index.html">Home</a>
@@ -219,67 +376,106 @@
         <a href="pengumuman.html">Pengumuman</a>
         <a href="management.html">Management</a>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <div class="konten fade-in">
-      <div class="pengumuman-tanggal" id="tanggal">-</div>
-      <div class="pengumuman-judul" id="judul">-</div>
-      <div id="foto-container"></div>
-      <div class="pengumuman-isi" id="isi">-</div>
+  <!-- KONTEN -->
+  <div class="konten-wrap">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <a href="pengumuman.html">Pengumuman</a>
+      <span>›</span>
+      <span id="breadcrumb-judul">Detail</span>
     </div>
 
-    <script>
+    <div class="konten" id="konten-box">
+      <!-- Skeleton loading -->
+      <div class="skeleton-line" style="width:40%;height:11px;margin-bottom:16px;"></div>
+      <div class="skeleton-line" style="width:75%;height:26px;margin-bottom:28px;"></div>
+      <div class="skeleton-line" style="width:100%;height:180px;border-radius:10px;margin-bottom:28px;"></div>
+      <div class="skeleton-line"></div>
+      <div class="skeleton-line"></div>
+      <div class="skeleton-line"></div>
+      <div class="skeleton-line"></div>
+    </div>
+  </div>
 
-
-
-      const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=975723668&single=true&output=tsv";
-
-      const params = new URLSearchParams(window.location.search);
-      const judulCari = params.get('judul');
-
-      fetch(SHEET_URL)
-        .then(res => res.text())
-        .then(csv => {
-          const baris = csv.trim().split('\n').slice(1);
-
-          baris.forEach(b => {
-            const kolom = b.split('\t');
-            const tanggal = kolom[0]?.trim();
-            const judul = kolom[1]?.trim();
-            const isi = kolom[2]?.trim();
-            const foto = kolom[3]?.trim();
-
-            if (judul === judulCari) {
-              document.getElementById('tanggal').textContent = tanggal || '';
-              document.getElementById('judul').textContent = judul;
-              document.getElementById('isi').innerHTML = (isi || '').split('||').join('<br><br>');
-              document.title = judul + ' - VLA25';
-
-              if (foto) {
-                document.getElementById('foto-container').innerHTML = `
-                  <img src="foto-pengumuman/${foto}" class="pengumuman-foto" alt="${judul}">
-                `;
-              }
-            }
-          });
-        });
-    </script>
-
-    <script src="animations.js"></script>
-
-  <footer class="footer">
+  <!-- FOOTER -->
+  <footer>
     <img src="logo.jpeg" alt="Logo VLA25" class="footer-logo">
     <div class="footer-nama">VLA25</div>
     <div class="footer-sub">VELORA25</div>
     <div class="footer-sosmed">
       <a href="https://www.tiktok.com/@velora25agency" target="_blank" title="TikTok">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/>
+        </svg>
       </a>
       <a href="https://whatsapp.com/channel/0029Vb6IoDd2ER6mPn09Jt2e" target="_blank" title="WhatsApp">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
       </a>
     </div>
     <div class="footer-copy">© 2025 VLA25 · Velora25 · VNC</div>
   </footer>
+
+  <script>
+    /* ── FETCH DETAIL PENGUMUMAN ── */
+    const SHEET_URL  = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=975723668&single=true&output=tsv";
+    const params     = new URLSearchParams(window.location.search);
+    const judulCari  = params.get('judul');
+    const box        = document.getElementById('konten-box');
+
+    fetch(SHEET_URL)
+      .then(r => r.text())
+      .then(tsv => {
+        const baris = tsv.trim().split('\n').slice(1);
+        let found   = false;
+
+        baris.forEach(b => {
+          const k      = b.split('\t');
+          const tgl    = k[0]?.trim() || '';
+          const judul  = k[1]?.trim() || '';
+          const isi    = k[2]?.trim() || '';
+          const foto   = k[3]?.trim() || '';
+
+          if (judul !== judulCari) return;
+          found = true;
+
+          document.title = judul + ' - VLA25';
+          document.getElementById('breadcrumb-judul').textContent = judul;
+
+          box.innerHTML = `
+            ${foto ? `<img src="foto-pengumuman/${foto}" class="pengumuman-foto" alt="${judul}">` : ''}
+            <div class="pengumuman-tanggal">${tgl}</div>
+            <div class="pengumuman-judul">${judul}</div>
+            <hr class="divider">
+            <div class="pengumuman-isi">${(isi || '').split('||').join('<br><br>')}</div>
+            <a href="pengumuman.html" class="tombol-kembali">← Kembali ke Pengumuman</a>
+          `;
+        });
+
+        if (!found) {
+          box.innerHTML = `
+            <div style="text-align:center;padding:40px 0;color:#9b30d9;font-style:italic;">
+              Pengumuman tidak ditemukan.
+            </div>
+            <a href="pengumuman.html" class="tombol-kembali" style="margin:0 auto;display:table;">← Kembali</a>
+          `;
+        }
+      })
+      .catch(() => {
+        box.innerHTML = `
+          <div style="text-align:center;padding:40px 0;color:#9b30d9;font-style:italic;">
+            Gagal memuat pengumuman.
+          </div>
+          <a href="pengumuman.html" class="tombol-kembali" style="margin:0 auto;display:table;">← Kembali</a>
+        `;
+      });
+  </script>
+
+  <script src="animations.js"></script>
 </body>
 </html>

@@ -1,398 +1,554 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>VLA25 - Velora25</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="tBEExZUXO5K1kjz-3NOAZghOgN0QB-lxw1BUnBDMLx4" />
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+<html lang="id">
+<head>
+  <title>VLA25 - Velora25</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="tBEExZUXO5K1kjz-3NOAZghOgN0QB-lxw1BUnBDMLx4" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="animations.css">
 
-      body {
-        background-color: #f5e6ff;
-        background-image: radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
-                          radial-gradient(circle at 80% 80%, #c084fc 0%, transparent 50%);
-        color: #4a0080;
-        font-family: 'Quicksand', Arial, sans-serif;
-        margin: 0;
-        min-height: 100vh;
-      }
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      .header {
-        background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
-        text-align: center;
-        padding: 60px 20px 40px;
-        position: relative;
-        overflow: hidden;
-      }
+    body {
+      background-color: #f5e6ff;
+      background-image:
+        radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, #c084fc 0%, transparent 50%);
+      color: #4a0080;
+      font-family: 'Quicksand', Arial, sans-serif;
+      min-height: 100vh;
+    }
 
-      .header::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
-        animation: shimmer 4s ease-in-out infinite;
-      }
+    /* ══════════════════════════════
+       HEADER — 1200x400, TIDAK DIUBAH
+    ══════════════════════════════ */
+    .header {
+      width: 1200px;
+      height: 400px;
+      max-width: 100%;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px 40px;
+      position: relative;
+      overflow: hidden;
+    }
 
-      @keyframes shimmer {
-        0%, 100% { transform: translate(0, 0); }
-        50% { transform: translate(10%, 10%); }
-      }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
+      animation: shimmer 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes shimmer {
+      0%, 100% { transform: translate(0, 0); }
+      50%       { transform: translate(10%, 10%); }
+    }
 
-      .header h1 {
-        color: #d308fa;
-        letter-spacing: 6px;
-        font-size: 48px;
-        text-shadow: 0 0 20px #d308fa88, 0 0 40px #d308fa44;
-        margin: 10px 0;
-      }
+    .header-logo {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      object-fit: cover;
+      animation: logoPulse 3s ease-in-out infinite;
+      position: relative; z-index: 1;
+    }
+    @keyframes logoPulse {
+      0%, 100% { transform: scale(1);     box-shadow: 0 0 0 0 #d308fa44; }
+      50%       { transform: scale(1.06); box-shadow: 0 0 0 14px #d308fa00; }
+    }
 
-      .sub-judul {
-        color: #e8b4ff;
-        letter-spacing: 8px;
-        font-size: 11px;
-        margin: 8px 0;
-      }
+    .header .sub-judul {
+      color: #e8b4ff;
+      letter-spacing: 8px;
+      font-size: 11px;
+      margin: 6px 0;
+      position: relative; z-index: 1;
+    }
 
-      .hero-desc {
-        color: #c9a0e8;
-        font-size: 14px;
-        line-height: 1.8;
-        max-width: 500px;
-        margin: 16px auto 24px;
-      }
+    .header h1 {
+      color: #d308fa;
+      letter-spacing: 6px;
+      font-size: 48px;
+      font-weight: 700;
+      text-shadow: 0 0 20px #d308fa88, 0 0 40px #d308fa44;
+      animation: titleGlow 2.5s ease-in-out infinite alternate;
+      margin: 8px 0;
+      position: relative; z-index: 1;
+    }
+    @keyframes titleGlow {
+      from { text-shadow: 0 0 10px #d308fa66, 0 0 30px #d308fa33; }
+      to   { text-shadow: 0 0 25px #d308facc, 0 0 60px #d308fa88, 0 0 90px #d308fa44; }
+    }
 
-      .tombol {
-        display: inline-block;
-        background: linear-gradient(135deg, #9b30d9, #d308fa);
-        color: #ffffff;
-        text-decoration: none;
-        padding: 14px 35px;
-        border-radius: 30px;
-        font-size: 13px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        font-weight: 700;
-        box-shadow: 0 4px 20px #d308fa55;
-        transition: all 0.3s;
-      }
+    .hero-desc {
+      color: #c9a0e8;
+      font-size: 14px;
+      line-height: 1.8;
+      max-width: 500px;
+      margin: 14px auto 22px;
+      position: relative; z-index: 1;
+    }
 
-      .tombol:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 30px #d308fa77;
-      }
+    .tombol {
+      display: inline-block;
+      background: linear-gradient(135deg, #9b30d9, #d308fa);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 14px 35px;
+      border-radius: 30px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      box-shadow: 0 4px 20px #d308fa55;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative; z-index: 1;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .tombol:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px #d308fa77;
+    }
 
-      .navbar {
-        background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        padding: 14px 20px;
-        border-bottom: 1px solid #d308fa44;
-        position: relative;
-      }
+    /* ══════════════════════════════
+       NAVBAR
+    ══════════════════════════════ */
+    .navbar {
+      background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
+      display: flex;
+      justify-content: center;
+      padding: 0 20px;
+      border-bottom: 1px solid #d308fa44;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-      .navbar a {
-        color: #e8b4ff;
-        text-decoration: none;
-        font-size: 12px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        padding: 5px 10px;
-        border-radius: 20px;
-        transition: all 0.3s;
-      }
+    .nav-inner {
+      max-width: 1440px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+    }
 
-      .navbar a:hover {
-        color: #ffffff;
-        background-color: #d308fa44;
-      }
+    .nav-brand {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-decoration: none;
+    }
 
-      .hamburger {
-        display: none;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 5px;
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-      }
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
 
-      .hamburger span {
-        display: block;
-        width: 24px;
-        height: 2px;
-        background: #e8b4ff;
-        margin: 5px 0;
-        transition: all 0.3s;
-      }
+    .nav-links a {
+      color: #e8b4ff;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all 0.3s;
+      position: relative;
+      border: 1px solid transparent;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      width: 0; height: 2px;
+      background: #d308fa;
+      border-radius: 2px;
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+    .nav-links a:hover { color: #ffffff; background: #d308fa22; }
+    .nav-links a:hover::after,
+    .nav-links a.aktif::after { width: 80%; left: 10%; }
+    .nav-links a.aktif {
+      color: #ffffff;
+      background: #d308fa66;
+      border-color: #d308fa88;
+    }
 
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: #e8b4ff;
+      margin: 5px 0;
+      transition: all 0.3s;
+      border-radius: 2px;
+    }
+    .hamburger.terbuka span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.terbuka span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.terbuka span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ══════════════════════════════
+       KONTEN UTAMA
+    ══════════════════════════════ */
+    .konten {
+      max-width: 1440px;
+      margin: 48px auto;
+      padding: 0 40px;
+    }
+
+    .konten h2 {
+      color: #4a0080;
+      letter-spacing: 2px;
+      font-size: 20px;
+      font-weight: 700;
+      border-bottom: 2px solid #f0a0ff;
+      padding-bottom: 10px;
+      margin-bottom: 28px;
+    }
+
+    /* ── STATS ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 60px;
+    }
+
+    .stat-box {
+      background: #ffffff;
+      border: 1px solid #d308fa44;
+      border-radius: 15px;
+      padding: 28px 20px;
+      text-align: center;
+      transition: transform 0.3s cubic-bezier(.22,.68,0,1.4), box-shadow 0.3s ease;
+      will-change: transform;
+    }
+    .stat-box:nth-child(odd)  { transform: rotate(-1deg); }
+    .stat-box:nth-child(even) { transform: rotate(1deg); }
+    .stat-box:hover {
+      transform: rotate(0deg) scale(1.05) !important;
+      box-shadow: 0 8px 28px #d308fa33;
+    }
+
+    .stat-num {
+      font-size: 36px;
+      font-weight: 700;
+      color: #d308fa;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #9b30d9;
+    }
+
+    /* ── PENGUMUMAN ── */
+    .pengumuman-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 60px;
+    }
+
+    .kartu-pengumuman {
+      background: #ffffff;
+      border: 1px solid #d308fa44;
+      border-radius: 15px;
+      padding: 14px;
+      transition: transform 0.3s cubic-bezier(.22,.68,0,1.4),
+                  box-shadow 0.3s ease,
+                  border-color 0.3s ease;
+      will-change: transform;
+      cursor: pointer;
+    }
+    .kartu-pengumuman:nth-child(odd)  { transform: rotate(-1.5deg); }
+    .kartu-pengumuman:nth-child(even) { transform: rotate(1deg); }
+    .kartu-pengumuman:hover {
+      transform: rotate(0deg) scale(1.05) !important;
+      box-shadow: 0 8px 28px #d308fa33;
+      border-color: #d308fa88 !important;
+    }
+
+    .kartu-pengumuman .preview-foto {
+      width: 100%; height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .kartu-pengumuman .preview-placeholder {
+      width: 100%; height: 100px;
+      background: #f0e6ff;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    .kartu-pengumuman .tanggal {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #9b30d9;
+      margin-bottom: 4px;
+    }
+    .kartu-pengumuman .judul-card {
+      font-size: 13px;
+      font-weight: 700;
+      color: #d308fa;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+
+    .tombol-more {
+      background: linear-gradient(135deg, #9b30d9, #d308fa);
+      color: #ffffff;
+      border: none;
+      padding: 5px 16px;
+      border-radius: 20px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: tombolPulse 2s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
+    .tombol-more:hover {
+      animation: none;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px #d308fa55;
+    }
+    @keyframes tombolPulse {
+      0%, 100% { box-shadow: 0 4px 15px #d308fa33; }
+      50%       { box-shadow: 0 4px 25px #d308fa77; }
+    }
+
+    /* ── SPOTLIGHT ── */
+    .spotlight-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 60px;
+    }
+
+    .kartu-spotlight {
+      background: linear-gradient(135deg, #4a0080, #7b2fa8);
+      border: 1px solid #d308fa66;
+      border-radius: 15px;
+      padding: 16px 12px;
+      text-align: center;
+      width: 120px;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(.22,.68,0,1.4), box-shadow 0.3s ease;
+      will-change: transform;
+      text-decoration: none;
+    }
+    .kartu-spotlight:nth-child(odd)  { transform: rotate(-2deg); }
+    .kartu-spotlight:nth-child(even) { transform: rotate(1.5deg); }
+    .kartu-spotlight:hover {
+      transform: rotate(0deg) scale(1.05) !important;
+      box-shadow: 0 8px 28px #d308fa44;
+    }
+
+    .spotlight-avatar {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #9b30d9, #d308fa);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 0 15px #d308fa66;
+      overflow: hidden;
+    }
+    .spotlight-avatar img {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .spotlight-nama {
+      font-size: 11px;
+      color: #e8b4ff;
+      line-height: 1.4;
+    }
+    .spotlight-count {
+      font-size: 10px;
+      color: #d308fa;
+      margin-top: 4px;
+      font-weight: 700;
+    }
+
+    .kosong {
+      color: #9b30d9;
+      font-style: italic;
+      font-size: 13px;
+    }
+
+    /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
+    footer {
+      background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+      text-align: center;
+      padding: 48px 20px;
+      margin-top: 60px;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid #d308fa44;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, #d308fa11 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .footer-logo {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 12px;
+      border: 2px solid #d308fa66;
+    }
+    .footer-nama {
+      color: #d308fa;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      margin-bottom: 4px;
+    }
+    .footer-sub {
+      color: #e8b4ff;
+      font-size: 10px;
+      letter-spacing: 6px;
+      margin-bottom: 20px;
+    }
+    .footer-sosmed {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .footer-sosmed a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid #d308fa66;
+      color: #e8b4ff;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .footer-sosmed a:hover {
+      background: #d308fa33;
+      border-color: #d308fa;
+      color: #fff;
+      transform: translateY(-3px);
+    }
+    .footer-copy {
+      color: #9b30d966;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    /* ══════════════════════════════
+       MOBILE
+    ══════════════════════════════ */
+    @media (max-width: 768px) {
+      .konten { padding: 0 20px; margin: 28px auto; }
+
+      .header h1 { font-size: 36px; }
+      .hero-desc { font-size: 13px; }
+
+      .hamburger { display: block; }
       .nav-links {
-        display: flex;
-        gap: 30px;
-        align-items: center;
-      }
-
-      .konten {
-        max-width: 900px;
-        margin: 40px auto;
-        padding: 0 30px;
-      }
-
-      .konten h2 {
-        color: #9b30d9;
-        letter-spacing: 2px;
-        border-bottom: 2px solid #f0a0ff;
-        padding-bottom: 8px;
-        margin-bottom: 24px;
-        font-size: 16px;
-      }
-
-      .stats-grid {
-        display: flex;
-        gap: 16px;
-        flex-wrap: wrap;
-        margin-bottom: 50px;
-      }
-
-      .stat-box {
-        background: #ffffff;
-        border: 1px solid #d308fa44;
-        border-radius: 15px;
-        padding: 20px 30px;
-        text-align: center;
-        flex: 1;
-        min-width: 120px;
-        transition: all 0.3s;
-      }
-
-      .stat-box:nth-child(odd) { transform: rotate(-1deg); }
-      .stat-box:nth-child(even) { transform: rotate(1deg); }
-      .stat-box:hover { transform: rotate(0deg) scale(1.05) !important; box-shadow: 0 8px 25px #d308fa33; }
-
-      .stat-num {
-        font-size: 32px;
-        font-weight: 700;
-        color: #d308fa;
-      }
-
-      .stat-label {
-        font-size: 11px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: #9b30d9;
-        margin-top: 4px;
-      }
-
-      .pengumuman-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 16px;
-        margin-bottom: 50px;
-      }
-
-      .kartu-pengumuman {
-        background: #ffffff;
-        border: 1px solid #d308fa44;
-        border-radius: 15px;
-        padding: 14px;
-        cursor: pointer;
-        box-shadow: 0 4px 15px #d308fa11;
-        transition: transform 0.3s;
-      }
-
-      .kartu-pengumuman:nth-child(odd) { transform: rotate(-1.5deg); }
-      .kartu-pengumuman:nth-child(even) { transform: rotate(1deg); }
-      .kartu-pengumuman:hover { transform: rotate(0deg) scale(1.05) !important; box-shadow: 0 8px 25px #d308fa33; }
-
-      .kartu-pengumuman .preview-foto {
-        width: 100%;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 8px;
-        margin-bottom: 10px;
-      }
-
-      .kartu-pengumuman .preview-foto-placeholder {
-        width: 100%;
-        height: 100px;
-        background: #f0e6ff;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 28px;
-      }
-
-      .kartu-pengumuman .tanggal {
-        font-size: 10px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: #9b30d9;
-        margin-bottom: 4px;
-      }
-
-      .kartu-pengumuman .judul {
-        font-size: 13px;
-        font-weight: 700;
-        color: #d308fa;
-        margin-bottom: 10px;
-        line-height: 1.4;
-      }
-
-      .tombol-more {
-        background: linear-gradient(135deg, #9b30d9, #d308fa);
-        color: #ffffff;
-        border: none;
-        padding: 5px 14px;
-        border-radius: 20px;
-        font-size: 10px;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        cursor: pointer;
-        font-family: 'Quicksand', Arial, sans-serif;
-        font-weight: 700;
-        transition: all 0.3s;
-      }
-
-      .tombol-more:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px #d308fa44;
-      }
-
-      .spotlight-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        margin-bottom: 50px;
-      }
-
-      .kartu-spotlight {
-        background: linear-gradient(135deg, #4a0080, #7b2fa8);
-        border: 1px solid #d308fa66;
-        border-radius: 15px;
-        padding: 16px 12px;
-        text-align: center;
-        width: 120px;
-        cursor: pointer;
-        box-shadow: 0 4px 15px #d308fa22;
-        transition: transform 0.3s;
-      }
-
-      .kartu-spotlight:nth-child(odd) { transform: rotate(-2deg); }
-      .kartu-spotlight:nth-child(even) { transform: rotate(1.5deg); }
-      .kartu-spotlight:hover { transform: rotate(0deg) scale(1.05) !important; box-shadow: 0 8px 25px #d308fa44; }
-
-      .spotlight-avatar {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #9b30d9, #d308fa);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 10px;
-        font-size: 14px;
-        font-weight: 700;
-        color: #fff;
-        box-shadow: 0 0 15px #d308fa66;
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        max-height: 0;
         overflow: hidden;
+        width: 100%;
+        opacity: 0;
+        transition: max-height 0.35s cubic-bezier(.4,0,.2,1), opacity 0.3s ease;
       }
-
-      .spotlight-nama {
-        font-size: 11px;
-        color: #e8b4ff;
-        line-height: 1.4;
+      .nav-links.aktif { display: flex; max-height: 400px; opacity: 1; }
+      .nav-links a {
+        border-radius: 0;
+        border-bottom: 1px solid #d308fa22;
+        padding: 12px 20px;
+        width: 100%;
+        text-align: center;
       }
+      .nav-inner { flex-wrap: wrap; }
 
-      .spotlight-count {
-        font-size: 10px;
-        color: #d308fa;
-        margin-top: 4px;
-        font-weight: 700;
-      }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-box:nth-child(odd)  { transform: rotate(-0.5deg); }
+      .stat-box:nth-child(even) { transform: rotate(0.5deg); }
+      .stat-num { font-size: 26px; }
 
-      .kosong {
-        color: #9b30d9;
-        font-style: italic;
-        font-size: 13px;
-      }
+      .pengumuman-grid { grid-template-columns: 1fr; }
+      .kartu-pengumuman:nth-child(odd)  { transform: rotate(-0.8deg); }
+      .kartu-pengumuman:nth-child(even) { transform: rotate(0.8deg); }
 
-      @media (max-width: 600px) {
-        .header h1 { font-size: 32px; letter-spacing: 4px; }
-        .hero-desc { font-size: 13px; }
-
-        .hamburger { display: block; }
-
-        .nav-links {
-          display: none;
-          flex-direction: column;
-          gap: 0;
-          width: 100%;
-          padding: 10px 0;
-        }
-
-        
-
-        .nav-links a {
-          padding: 12px 20px;
-          border-radius: 0;
-          border-bottom: 1px solid #d308fa22;
-          width: 100%;
-          text-align: center;
-        }
-
-        .navbar { justify-content: flex-start; flex-wrap: wrap; padding: 14px 20px; }
-
-        .konten { padding: 0 16px; margin: 24px auto; }
-
-        .stats-grid { gap: 10px; }
-        .stat-box { padding: 14px 10px; min-width: 80px; }
-        .stat-box:nth-child(odd) { transform: rotate(-0.5deg); }
-        .stat-box:nth-child(even) { transform: rotate(0.5deg); }
-        .stat-num { font-size: 22px; }
-
-        .pengumuman-grid { grid-template-columns: 1fr; }
-        .kartu-pengumuman:nth-child(odd) { transform: rotate(-0.8deg); }
-        .kartu-pengumuman:nth-child(even) { transform: rotate(0.8deg); }
-
-        .spotlight-grid { justify-content: center; }
-        .kartu-spotlight { width: 95px; }
-        .kartu-spotlight:nth-child(odd) { transform: rotate(-1deg); }
-        .kartu-spotlight:nth-child(even) { transform: rotate(1deg); }
-      }
-
-      .navbar a.aktif {
-        color: #ffffff;
-        background-color: #d308fa66;
-        border: 1px solid #d308fa88;
-      }
-
-      </style>
-      <link rel="stylesheet" href="animations.css">
+      .spotlight-grid { justify-content: center; }
+      .kartu-spotlight { width: 100px; }
+    }
+  </style>
 </head>
-  <body>
+<body>
 
-    <div class="header">
-      <img src="logo.jpeg" alt="Logo VLA25" style="width: 100px; border-radius: 50%; margin-bottom: 15px;">
-      <p class="sub-judul">OFFICIAL FAN SITE</p>
-      <h1>VLA25</h1>
-      <p class="sub-judul">VELORA25</p>
-      <p class="hero-desc">Selamat datang di VLA25, agensi virtual berbasis JKT48 yang bernaung di bawah VNC (Voice Note Community). Temukan para member kami yang berbakat di sini! 🌸</p>
-      <a href="members.html" class="tombol">Meet Our Members</a>
-    </div>
+  <!-- ══════════════════════
+       HEADER — 1200×400
+       TIDAK DIUBAH
+  ══════════════════════ -->
+  <div class="header">
+    <img src="logo.jpeg" alt="Logo VLA25" class="header-logo">
+    <p class="sub-judul">OFFICIAL FAN SITE</p>
+    <h1>VLA25</h1>
+    <p class="sub-judul">VELORA25</p>
+    <p class="hero-desc">Selamat datang di VLA25, agensi virtual berbasis JKT48 yang bernaung di bawah VNC (Voice Note Community). Temukan para member kami yang berbakat di sini! 🌸</p>
+    <a href="members.html" class="tombol">Meet Our Members</a>
+  </div>
 
-    <nav class="navbar">
-      <button class="hamburger" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
+  <!-- ══════════════════════
+       NAVBAR
+  ══════════════════════ -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">VLA25</a>
+
+      <button class="hamburger" aria-label="Menu" id="hamburger">
+        <span></span><span></span><span></span>
       </button>
+
       <div class="nav-links" id="nav-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -401,18 +557,131 @@
         <a href="pengumuman.html">Pengumuman</a>
         <a href="management.html">Management</a>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <div class="konten">
+  <!-- ══════════════════════
+       KONTEN UTAMA
+  ══════════════════════ -->
+  <div class="konten">
 
-      <h2>📊 Stats</h2>
-      <div class="stats-grid" id="stats-grid">
+    <!-- Stats -->
+    <h2>📊 Stats</h2>
+    <div class="stats-grid reveal-group" id="stats-grid">
+      <div class="stat-box skeleton" style="height:90px;"></div>
+      <div class="stat-box skeleton" style="height:90px;"></div>
+      <div class="stat-box skeleton" style="height:90px;"></div>
+      <div class="stat-box skeleton" style="height:90px;"></div>
+    </div>
+
+    <!-- Pengumuman -->
+    <h2>📢 Pengumuman Terbaru</h2>
+    <div class="pengumuman-grid reveal-group" id="list-pengumuman">
+      <div class="kartu-pengumuman skeleton" style="height:160px;"></div>
+      <div class="kartu-pengumuman skeleton" style="height:160px;"></div>
+      <div class="kartu-pengumuman skeleton" style="height:160px;"></div>
+    </div>
+
+    <!-- Spotlight -->
+    <h2>⭐ Member Spotlight</h2>
+    <div class="spotlight-grid reveal-group" id="spotlight-grid">
+      <div class="kartu-spotlight skeleton" style="height:140px;"></div>
+      <div class="kartu-spotlight skeleton" style="height:140px;"></div>
+      <div class="kartu-spotlight skeleton" style="height:140px;"></div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════
+       FOOTER
+  ══════════════════════ -->
+  <footer>
+    <img src="logo.jpeg" alt="Logo VLA25" class="footer-logo">
+    <div class="footer-nama">VLA25</div>
+    <div class="footer-sub">VELORA25</div>
+    <div class="footer-sosmed">
+      <a href="https://www.tiktok.com/@velora25agency" target="_blank" title="TikTok">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/>
+        </svg>
+      </a>
+      <a href="https://whatsapp.com/channel/0029Vb6IoDd2ER6mPn09Jt2e" target="_blank" title="WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+      </a>
+    </div>
+    <div class="footer-copy">© 2025 VLA25 · Velora25 · VNC</div>
+  </footer>
+
+  <script>
+    /* ── COUNTER ANIMATION (dibutuhkan untuk stats) ── */
+    function animateCounter(el, target, duration = 1100) {
+      if (isNaN(target) || target <= 0) return;
+      const start = performance.now();
+      function update(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased    = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(update);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(update);
+    }
+
+    /* ── SCROLL REVEAL (re-run setelah data dimuat) ── */
+    function initReveal() {
+      document.querySelectorAll('.stat-box:not(.skeleton), .kartu-pengumuman:not(.skeleton), .kartu-spotlight:not(.skeleton)').forEach(el => {
+        if (el.classList.contains('reveal')) return;
+        el.classList.add('reveal');
+        const p = el.parentElement;
+        if (p && !p.classList.contains('reveal-group')) p.classList.add('reveal-group');
+      });
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el));
+    }
+    setTimeout(initReveal, 200);
+
+    /* ══════════════════════════════
+       GOOGLE SHEETS DATA FETCH
+    ══════════════════════════════ */
+    const SHEET_MEMBER     = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=0&single=true&output=csv";
+    const SHEET_PENGUMUMAN = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=975723668&single=true&output=tsv";
+    const SHEET_AKTIVITAS  = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=1433986273&single=true&output=csv";
+
+    function inisial(nama) {
+      const b = nama.replace(/[^a-zA-Z\s]/g,'').trim().split(' ');
+      return ((b[0]?.[0]||'') + (b[1]?.[0]||'')).toUpperCase();
+    }
+
+    /* ── Fetch Member → Stats + Spotlight ── */
+    fetch(SHEET_MEMBER).then(r => r.text()).then(csv => {
+      const baris = csv.trim().split('\n').slice(1);
+      const gens  = new Set();
+      let count   = 0;
+      const memberFoto = {};
+
+      baris.forEach(b => {
+        const k = b.split(',');
+        const gen = k[0]?.trim(), nama = k[1]?.trim(), stage = k[2]?.trim(), foto = k[6]?.trim();
+        if (!nama) return;
+        count++;
+        if (['1','2','3','4','5'].includes(gen)) gens.add(gen);
+        const info = { foto: foto||'', stageName: stage||nama, namaLengkap: nama };
+        memberFoto[nama.toLowerCase()] = info;
+        if (stage) memberFoto[stage.toLowerCase()] = info;
+      });
+
+      /* Render Stats */
+      document.getElementById('stats-grid').innerHTML = `
         <div class="stat-box fade-in">
-          <div class="stat-num" id="stat-member">-</div>
+          <div class="stat-num" id="stat-member">0</div>
           <div class="stat-label">Member</div>
         </div>
         <div class="stat-box fade-in">
-          <div class="stat-num" id="stat-gen">-</div>
+          <div class="stat-num" id="stat-gen">0</div>
           <div class="stat-label">Generasi</div>
         </div>
         <div class="stat-box fade-in">
@@ -420,183 +689,93 @@
           <div class="stat-label">Berdiri</div>
         </div>
         <div class="stat-box fade-in">
-          <div class="stat-num" id="stat-aktivitas">-</div>
+          <div class="stat-num" id="stat-aktivitas">—</div>
           <div class="stat-label">Aktivitas</div>
         </div>
-      </div>
+      `;
+      animateCounter(document.getElementById('stat-member'), count);
+      animateCounter(document.getElementById('stat-gen'), gens.size);
+      setTimeout(initReveal, 100);
 
-      <h2>📢 Pengumuman Terbaru</h2>
-      <div class="pengumuman-grid" id="list-pengumuman"></div>
+      /* ── Fetch Aktivitas ── */
+      fetch(SHEET_AKTIVITAS).then(r => r.text()).then(csv => {
+        const baris = csv.trim().split('\n').slice(1).filter(b => b.trim());
+        animateCounter(document.getElementById('stat-aktivitas'), baris.length);
 
-      <h2>⭐ Member Spotlight</h2>
-      <div class="spotlight-grid" id="spotlight-grid"></div>
+        const frekuensi = {};
+        baris.forEach(b => {
+          const k = b.split(','), m = k[2]?.trim();
+          if (!m) return;
+          m.split('&').forEach(nm => {
+            const key = nm.trim().toLowerCase();
+            if (key && memberFoto[key]) frekuensi[key] = (frekuensi[key]||0) + 1;
+          });
+        });
 
-    </div>
+        const sorted = Object.entries(frekuensi).sort((a,b) => b[1]-a[1]).slice(0, 6);
+        const grid   = document.getElementById('spotlight-grid');
 
-    <script>
+        if (!sorted.length) {
+          grid.innerHTML = '<p class="kosong">Belum ada data aktivitas.</p>';
+          return;
+        }
+        grid.innerHTML = '';
+        sorted.forEach(([key, jml]) => {
+          const info = memberFoto[key] || { foto:'', stageName: key, namaLengkap: key };
+          const el   = document.createElement('a');
+          el.className = 'kartu-spotlight';
+          el.href      = `profil.html?nama=${encodeURIComponent(info.namaLengkap)}`;
+          el.innerHTML = `
+            <div class="spotlight-avatar">
+              ${info.foto
+                ? `<img src="idcmember/${info.foto}" alt="${info.stageName}">`
+                : inisial(info.stageName)
+              }
+            </div>
+            <div class="spotlight-nama">${info.stageName}</div>
+            <div class="spotlight-count">${jml}x cover</div>
+          `;
+          grid.appendChild(el);
+        });
+        setTimeout(initReveal, 100);
+      });
+    });
 
+    /* ── Fetch Pengumuman ── */
+    fetch(SHEET_PENGUMUMAN).then(r => r.text()).then(tsv => {
+      const baris   = tsv.trim().split('\n').slice(1).filter(b => b.trim());
+      const terbaru = [...baris].reverse().slice(0, 3);
+      const cont    = document.getElementById('list-pengumuman');
 
-
-      // SKELETON STATS
-document.getElementById('stats-grid').innerHTML = `
-  <div class="stat-box skeleton" style="min-width:120px;height:80px;"></div>
-  <div class="stat-box skeleton" style="min-width:120px;height:80px;"></div>
-  <div class="stat-box skeleton" style="min-width:120px;height:80px;"></div>
-  <div class="stat-box skeleton" style="min-width:120px;height:80px;"></div>
-`;
-
-// SKELETON PENGUMUMAN
-document.getElementById('list-pengumuman').innerHTML = `
-  <div class="kartu-pengumuman skeleton" style="height:140px;"></div>
-  <div class="kartu-pengumuman skeleton" style="height:140px;"></div>
-  <div class="kartu-pengumuman skeleton" style="height:140px;"></div>
-`;
-
-// SKELETON SPOTLIGHT
-document.getElementById('spotlight-grid').innerHTML = `
-  <div class="kartu-spotlight skeleton" style="width:120px;height:140px;"></div>
-  <div class="kartu-spotlight skeleton" style="width:120px;height:140px;"></div>
-  <div class="kartu-spotlight skeleton" style="width:120px;height:140px;"></div>
-`;
-
-const SHEET_MEMBER = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=0&single=true&output=csv";
-      const SHEET_PENGUMUMAN = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=975723668&single=true&output=tsv";
-      const SHEET_AKTIVITAS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=1433986273&single=true&output=csv";
-
-      function inisial(nama) {
-        const bagian = nama.replace(/[^a-zA-Z\s]/g, '').trim().split(' ');
-        return (bagian[0]?.[0] || '') + (bagian[1]?.[0] || '');
+      if (!terbaru.length) {
+        cont.innerHTML = '<p class="kosong">Belum ada pengumuman.</p>';
+        return;
       }
+      cont.innerHTML = '';
+      terbaru.forEach(b => {
+        const k      = b.split('\t');
+        const tgl    = k[0]?.trim()||'';
+        const judul  = k[1]?.trim()||'';
+        const foto   = k[3]?.trim()||'';
+        if (!judul) return;
 
-      fetch(SHEET_MEMBER)
-        .then(res => res.text())
-        .then(csv => {
-          const baris = csv.trim().split('\n').slice(1);
-          const gens = new Set();
-          let count = 0;
-          const memberFoto = {};
-
-          baris.forEach(b => {
-            const kolom = b.split(',');
-            const gen = kolom[0]?.trim();
-            const nama = kolom[1]?.trim();
-            const stageName = kolom[2]?.trim();
-            const foto = kolom[6]?.trim();
-            if (!nama) return;
-            count++;
-            if (['1','2','3','4','5'].includes(gen)) gens.add(gen);
-            memberFoto[nama.toLowerCase()] = { foto, stageName, namaLengkap: nama };
-            if (stageName) memberFoto[stageName.toLowerCase()] = { foto, stageName, namaLengkap: nama };
-          });
-
-          document.getElementById('stats-grid').innerHTML = `<div class='stat-box fade-in'><div class='stat-num' id='stat-member'>${count}</div><div class='stat-label'>Member</div></div><div class='stat-box fade-in'><div class='stat-num' id='stat-gen'></div><div class='stat-label'>Generasi</div></div><div class='stat-box fade-in'><div class='stat-num'>21 Sep</div><div class='stat-label'>Berdiri</div></div><div class='stat-box fade-in'><div class='stat-num' id='stat-aktivitas'>-</div><div class='stat-label'>Aktivitas</div></div>`;
-          document.getElementById('stat-gen') && (document.getElementById('stat-gen').textContent = gens.size);
-
-          fetch(SHEET_AKTIVITAS)
-            .then(res => res.text())
-            .then(csv => {
-              const baris = csv.trim().split('\n').slice(1).filter(b => b.trim());
-              document.getElementById('stat-aktivitas').textContent = baris.length;
-
-              const frekuensi = {};
-              baris.forEach(b => {
-                const kolom = b.split(',');
-                const memberKolom = kolom[2]?.trim();
-                if (!memberKolom) return;
-                memberKolom.split('&').forEach(m => {
-                  const nama = m.trim();
-                  const namaKey = nama.toLowerCase();
-                  if (nama && memberFoto[namaKey]) frekuensi[namaKey] = (frekuensi[namaKey] || 0) + 1;
-                });
-              });
-
-              const sorted = Object.entries(frekuensi)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 3);
-
-              const grid = document.getElementById('spotlight-grid');
-              if (sorted.length === 0) {
-                grid.innerHTML = '<p class="kosong">Belum ada data aktivitas.</p>';
-                return;
-              }
-
-              grid.innerHTML = '';
-              sorted.forEach(([namaKey, jumlah]) => {
-                const info = memberFoto[namaKey] || {};
-                const foto = info.foto;
-                const stageName = info.stageName || namaKey;
-                const namaLengkap = info.namaLengkap || namaKey;
-
-                const kartu = document.createElement('div');
-                kartu.className = 'kartu-spotlight fade-in';
-                kartu.innerHTML = `
-                  <div class="spotlight-avatar">
-                    ${foto
-                      ? `<img src="idcmember/${foto}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;object-position:center;">`
-                      : inisial(stageName).toUpperCase()
-                    }
-                  </div>
-                  <div class="spotlight-nama">${stageName}</div>
-                  <div class="spotlight-count">${jumlah}x cover</div>
-                `;
-                kartu.onclick = () => window.location = `profil.html?nama=${encodeURIComponent(namaLengkap)}`;
-                grid.appendChild(kartu);
-              });
-            });
-        });
-
-      fetch(SHEET_PENGUMUMAN)
-        .then(res => res.text())
-        .then(tsv => {
-          const baris = tsv.trim().split('\n').slice(1);
-          const container = document.getElementById('list-pengumuman');
-
-          if (baris.length === 0) {
-            container.innerHTML = '<p class="kosong">Belum ada pengumuman.</p>';
-            return;
+        const el = document.createElement('div');
+        el.className = 'kartu-pengumuman';
+        el.innerHTML = `
+          ${foto
+            ? `<img src="foto-pengumuman/${foto}" class="preview-foto" alt="${judul}">`
+            : `<div class="preview-placeholder">📢</div>`
           }
+          <div class="tanggal">${tgl}</div>
+          <div class="judul-card">${judul}</div>
+          <button class="tombol-more" onclick="window.location='detail-pengumuman.html?judul=${encodeURIComponent(judul)}'">Selengkapnya</button>
+        `;
+        cont.appendChild(el);
+      });
+      setTimeout(initReveal, 100);
+    });
+  </script>
 
-          const terbaru = [...baris].reverse().slice(0, 3);
-
-          container.innerHTML = '';
-          terbaru.forEach(b => {
-            const kolom = b.split('\t');
-            const tanggal = kolom[0]?.trim();
-            const judul = kolom[1]?.trim();
-            const foto = kolom[3]?.trim();
-            if (!judul) return;
-
-            const kartu = document.createElement('div');
-            kartu.className = 'kartu-pengumuman fade-in';
-            kartu.innerHTML = `
-              ${foto
-                ? `<img src="foto-pengumuman/${foto}" class="preview-foto" alt="${judul}">`
-                : `<div class="preview-foto-placeholder">📢</div>`
-              }
-              <div class="tanggal">${tanggal || ''}</div>
-              <div class="judul">${judul}</div>
-              <button class="tombol-more" onclick="window.location='detail-pengumuman.html?judul=${encodeURIComponent(judul)}'">Selengkapnya</button>
-            `;
-            container.appendChild(kartu);
-          });
-        });
-    </script>
-
-    <script src="animations.js"></script>
-
-  <footer class="footer">
-    <img src="logo.jpeg" alt="Logo VLA25" class="footer-logo">
-    <div class="footer-nama">VLA25</div>
-    <div class="footer-sub">VELORA25</div>
-    <div class="footer-sosmed">
-      <a href="https://www.tiktok.com/@velora25agency" target="_blank" title="TikTok">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/></svg>
-      </a>
-      <a href="https://whatsapp.com/channel/0029Vb6IoDd2ER6mPn09Jt2e" target="_blank" title="WhatsApp">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-      </a>
-    </div>
-    <div class="footer-copy">© 2025 VLA25 · Velora25 · VNC</div>
-  </footer>
+  <script src="animations.js"></script>
 </body>
 </html>
