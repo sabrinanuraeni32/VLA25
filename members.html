@@ -37,8 +37,8 @@
 
     /* ══ HEADER ══ */
     .header {
-      min-height: 400px;
-      background: linear-gradient(135deg, #2d005799 0%, #4a008099 40%, #7b2fa899 100%), url('header-mobile.jpeg') center/cover no-repeat;
+      height: 400px;
+      background-color: #4a0080;
       text-align: center; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       padding: 60px 20px 40px; position: relative; overflow: hidden;
@@ -231,7 +231,7 @@
 
     /* ══ FOOTER ══ */
     footer {
-      background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+      background-color: #4a0080;
       text-align: center; padding: 48px 20px; margin-top: 60px;
       position: relative; overflow: hidden; border-top: 1px solid #d308fa44;
     }
@@ -255,11 +255,6 @@
 
     /* ══ MOBILE ══ */
     @media (max-width: 768px) {
-      .header { width: 100vw !important; height: 100vw !important; min-height: unset !important; max-height: 100vw !important; overflow: hidden !important; box-sizing: border-box !important; padding: 12px 16px !important; }
-      .header img[src="logo.jpeg"] { width: 55px !important; height: 55px !important; margin-bottom: 4px !important; }
-      .header h1 { font-size: 22px !important; letter-spacing: 3px !important; margin: 2px 0 !important; }
-      .header .sub-judul { font-size: 8px !important; letter-spacing: 4px !important; margin: 2px 0 !important; }
-      .header a { font-size: 10px !important; margin-bottom: 4px !important; }
       .header h1 { font-size: 36px; }
       .hamburger { display: block; }
       .nav-links {
