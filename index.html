@@ -468,7 +468,7 @@
       letter-spacing: 1px;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 600px) {
       .konten { padding: 0 20px; margin: 28px auto; }
 
       .header {
@@ -758,19 +758,5 @@
   </script>
 
   <script src="animations.js"></script>
-  <script>
-    /* hamburger - reinit after all scripts loaded */
-    (function() {
-      var btn = document.getElementById('hamburger');
-      var nav = document.getElementById('nav-links');
-      if (btn && nav) {
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          btn.classList.toggle('terbuka');
-          nav.classList.toggle('aktif');
-        });
-      }
-    })();
-  </script>
 </body>
 </html>
