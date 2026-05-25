@@ -466,20 +466,23 @@
       .konten { padding: 0 20px; margin: 28px auto; }
 
       .header {
-        width: 100vw;
-        height: 100vw;
-        min-height: unset;
-        padding: 16px 20px;
+        width: 100vw !important;
+        height: 100vw !important;
+        min-height: unset !important;
+        max-height: 100vw !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+        padding: 12px 16px !important;
+        gap: 2px !important;
         background:
           linear-gradient(135deg, #2d005799 0%, #4a008099 40%, #7b2fa899 100%),
           url('header-mobile.jpeg') center/cover no-repeat;
-        overflow: hidden;
       }
-      .header-logo { width: 70px; height: 70px; margin-bottom: 6px; }
-      .header .sub-judul { font-size: 9px; letter-spacing: 5px; margin: 3px 0; }
-      .header h1 { font-size: 28px; letter-spacing: 4px; margin: 4px 0; }
-      .hero-desc { font-size: 11px; line-height: 1.5; margin: 6px auto 10px; max-width: 90%; }
-      .tombol { padding: 10px 24px; font-size: 11px; letter-spacing: 1px; }
+      .header-logo { width: 55px !important; height: 55px !important; margin-bottom: 4px !important; }
+      .header .sub-judul { font-size: 8px !important; letter-spacing: 4px !important; margin: 2px 0 !important; }
+      .header h1 { font-size: 22px !important; letter-spacing: 3px !important; margin: 2px 0 !important; }
+      .hero-desc { font-size: 10px !important; line-height: 1.4 !important; margin: 4px auto 8px !important; max-width: 85% !important; }
+      .tombol { padding: 8px 20px !important; font-size: 10px !important; letter-spacing: 1px !important; }
 
       .hamburger { display: block; }
       .nav-links {
