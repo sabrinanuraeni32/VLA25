@@ -37,11 +37,12 @@
     .header::before {
       content: '';
       position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
+      inset: 0;           /* ← ikutin batas header aja */
       background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
       animation: shimmer 4s ease-in-out infinite;
       pointer-events: none;
+      overflow: hidden;
+      border-radius: inherit;
     }
     @keyframes shimmer {
       0%, 100% { transform: translate(0, 0); }
