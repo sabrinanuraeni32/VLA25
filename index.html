@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="animations.css">
 
   <style>
-    /* ── RESET & BASE ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -22,9 +21,6 @@
       min-height: 100vh;
     }
 
-    /* ══════════════════════════════
-       HEADER — 1200x400, TIDAK DIUBAH
-    ══════════════════════════════ */
     .header {
       min-height: 400px;
       background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
@@ -33,9 +29,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 60px 20px 40px;
+      padding: 60px 20px 60px;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .header::before {
@@ -118,9 +114,6 @@
       box-shadow: 0 8px 30px #d308fa77;
     }
 
-    /* ══════════════════════════════
-       NAVBAR
-    ══════════════════════════════ */
     .navbar {
       background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
       display: flex;
@@ -204,9 +197,6 @@
     .hamburger.terbuka span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .hamburger.terbuka span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* ══════════════════════════════
-       KONTEN UTAMA
-    ══════════════════════════════ */
     .konten {
       max-width: 1440px;
       margin: 48px auto;
@@ -223,7 +213,6 @@
       margin-bottom: 28px;
     }
 
-    /* ── STATS ── */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -261,7 +250,6 @@
       color: #9b30d9;
     }
 
-    /* ── PENGUMUMAN ── */
     .pengumuman-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -344,7 +332,6 @@
       50%       { box-shadow: 0 4px 25px #d308fa77; }
     }
 
-    /* ── SPOTLIGHT ── */
     .spotlight-grid {
       display: flex;
       flex-wrap: wrap;
@@ -407,9 +394,6 @@
       font-size: 13px;
     }
 
-    /* ══════════════════════════════
-       FOOTER
-    ══════════════════════════════ */
     footer {
       background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
       text-align: center;
@@ -476,14 +460,12 @@
       letter-spacing: 1px;
     }
 
-    /* ══════════════════════════════
-       MOBILE
-    ══════════════════════════════ */
     @media (max-width: 768px) {
       .konten { padding: 0 20px; margin: 28px auto; }
 
       .header h1 { font-size: 36px; }
       .hero-desc { font-size: 13px; }
+      .header { padding: 60px 20px 70px; }
 
       .hamburger { display: block; }
       .nav-links {
@@ -522,10 +504,6 @@
 </head>
 <body>
 
-  <!-- ══════════════════════
-       HEADER — 1200×400
-       TIDAK DIUBAH
-  ══════════════════════ -->
   <div class="header">
     <img src="logo.jpeg" alt="Logo VLA25" class="header-logo">
     <p class="sub-judul">OFFICIAL FAN SITE</p>
@@ -535,9 +513,6 @@
     <a href="members.html" class="tombol">Meet Our Members</a>
   </div>
 
-  <!-- ══════════════════════
-       NAVBAR
-  ══════════════════════ -->
   <nav class="navbar">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">VLA25</a>
@@ -557,12 +532,8 @@
     </div>
   </nav>
 
-  <!-- ══════════════════════
-       KONTEN UTAMA
-  ══════════════════════ -->
   <div class="konten">
 
-    <!-- Stats -->
     <h2>📊 Stats</h2>
     <div class="stats-grid reveal-group" id="stats-grid">
       <div class="stat-box skeleton" style="height:90px;"></div>
@@ -571,7 +542,6 @@
       <div class="stat-box skeleton" style="height:90px;"></div>
     </div>
 
-    <!-- Pengumuman -->
     <h2>📢 Pengumuman Terbaru</h2>
     <div class="pengumuman-grid reveal-group" id="list-pengumuman">
       <div class="kartu-pengumuman skeleton" style="height:160px;"></div>
@@ -579,7 +549,6 @@
       <div class="kartu-pengumuman skeleton" style="height:160px;"></div>
     </div>
 
-    <!-- Spotlight -->
     <h2>⭐ Member Spotlight</h2>
     <div class="spotlight-grid reveal-group" id="spotlight-grid">
       <div class="kartu-spotlight skeleton" style="height:140px;"></div>
@@ -589,9 +558,6 @@
 
   </div>
 
-  <!-- ══════════════════════
-       FOOTER
-  ══════════════════════ -->
   <footer>
     <img src="logo.jpeg" alt="Logo VLA25" class="footer-logo">
     <div class="footer-nama">VLA25</div>
@@ -612,7 +578,6 @@
   </footer>
 
   <script>
-    /* ── COUNTER ANIMATION (dibutuhkan untuk stats) ── */
     function animateCounter(el, target, duration = 1100) {
       if (isNaN(target) || target <= 0) return;
       const start = performance.now();
@@ -626,7 +591,6 @@
       requestAnimationFrame(update);
     }
 
-    /* ── SCROLL REVEAL (re-run setelah data dimuat) ── */
     function initReveal() {
       document.querySelectorAll('.stat-box:not(.skeleton), .kartu-pengumuman:not(.skeleton), .kartu-spotlight:not(.skeleton)').forEach(el => {
         if (el.classList.contains('reveal')) return;
@@ -641,9 +605,6 @@
     }
     setTimeout(initReveal, 200);
 
-    /* ══════════════════════════════
-       GOOGLE SHEETS DATA FETCH
-    ══════════════════════════════ */
     const SHEET_MEMBER     = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=0&single=true&output=csv";
     const SHEET_PENGUMUMAN = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=975723668&single=true&output=tsv";
     const SHEET_AKTIVITAS  = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=1433986273&single=true&output=csv";
@@ -653,7 +614,6 @@
       return ((b[0]?.[0]||'') + (b[1]?.[0]||'')).toUpperCase();
     }
 
-    /* ── Fetch Member → Stats + Spotlight ── */
     fetch(SHEET_MEMBER).then(r => r.text()).then(csv => {
       const baris = csv.trim().split('\n').slice(1);
       const gens  = new Set();
@@ -671,7 +631,6 @@
         if (stage) memberFoto[stage.toLowerCase()] = info;
       });
 
-      /* Render Stats */
       document.getElementById('stats-grid').innerHTML = `
         <div class="stat-box fade-in">
           <div class="stat-num" id="stat-member">0</div>
@@ -694,7 +653,6 @@
       animateCounter(document.getElementById('stat-gen'), gens.size);
       setTimeout(initReveal, 100);
 
-      /* ── Fetch Aktivitas ── */
       fetch(SHEET_AKTIVITAS).then(r => r.text()).then(csv => {
         const baris = csv.trim().split('\n').slice(1).filter(b => b.trim());
         animateCounter(document.getElementById('stat-aktivitas'), baris.length);
@@ -738,7 +696,6 @@
       });
     });
 
-    /* ── Fetch Pengumuman ── */
     fetch(SHEET_PENGUMUMAN).then(r => r.text()).then(tsv => {
       const baris   = tsv.trim().split('\n').slice(1).filter(b => b.trim());
       const terbaru = [...baris].reverse().slice(0, 3);
@@ -770,6 +727,12 @@
         cont.appendChild(el);
       });
       setTimeout(initReveal, 100);
+    });
+
+    /* hamburger */
+    document.getElementById('hamburger').addEventListener('click', function() {
+      this.classList.toggle('terbuka');
+      document.getElementById('nav-links').classList.toggle('aktif');
     });
   </script>
 
