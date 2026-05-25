@@ -466,15 +466,20 @@
       .konten { padding: 0 20px; margin: 28px auto; }
 
       .header {
-        padding: 0 20px;
+        width: 100vw;
+        height: 100vw;
         min-height: unset;
-        aspect-ratio: 1 / 1;
+        padding: 16px 20px;
         background:
           linear-gradient(135deg, #2d005799 0%, #4a008099 40%, #7b2fa899 100%),
           url('header-mobile.jpeg') center/cover no-repeat;
+        overflow: hidden;
       }
-      .header h1 { font-size: 36px; }
-      .hero-desc { font-size: 13px; }
+      .header-logo { width: 70px; height: 70px; margin-bottom: 6px; }
+      .header .sub-judul { font-size: 9px; letter-spacing: 5px; margin: 3px 0; }
+      .header h1 { font-size: 28px; letter-spacing: 4px; margin: 4px 0; }
+      .hero-desc { font-size: 11px; line-height: 1.5; margin: 6px auto 10px; max-width: 90%; }
+      .tombol { padding: 10px 24px; font-size: 11px; letter-spacing: 1px; }
 
       .hamburger { display: block; }
       .nav-links {
