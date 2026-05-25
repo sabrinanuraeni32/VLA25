@@ -23,7 +23,9 @@
 
     .header {
       min-height: 400px;
-      background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+      background: 
+        linear-gradient(135deg, #2d005799 0%, #4a008099 40%, #7b2fa899 100%),
+        url('header-dekstop.jpeg') center/cover no-repeat;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -37,12 +39,11 @@
     .header::before {
       content: '';
       position: absolute;
-      inset: 0;           /* ← ikutin batas header aja */
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
       background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
       animation: shimmer 4s ease-in-out infinite;
       pointer-events: none;
-      overflow: hidden;
-      border-radius: inherit;
     }
     @keyframes shimmer {
       0%, 100% { transform: translate(0, 0); }
@@ -464,9 +465,14 @@
     @media (max-width: 768px) {
       .konten { padding: 0 20px; margin: 28px auto; }
 
+      .header {
+        padding: 60px 20px 70px;
+        background:
+          linear-gradient(135deg, #2d005799 0%, #4a008099 40%, #7b2fa899 100%),
+          url('header-mobile.jpeg') center/cover no-repeat;
+      }
       .header h1 { font-size: 36px; }
       .hero-desc { font-size: 13px; }
-      .header { padding: 60px 20px 70px; }
 
       .hamburger { display: block; }
       .nav-links {
