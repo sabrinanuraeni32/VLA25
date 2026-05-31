@@ -273,6 +273,10 @@
           <td>Face Claim</td>
           <td id="faceclaim">-</td>
         </tr>
+        <tr>
+          <td>TikTok</td>
+          <td id="tiktok">-</td>
+        </tr>
       </table>
     </div>
 
@@ -299,6 +303,7 @@
             const dob = kolom[4]?.trim();
             const status = kolom[5]?.trim();
             const foto = kolom[6]?.trim();
+            const tiktok = kolom[7]?.trim();
 
             if (fullName === namaCari) {
               document.getElementById('stage-name').textContent = stageName || fullName;
@@ -307,6 +312,12 @@
               document.getElementById('status').textContent = status || '-';
               document.getElementById('dob').textContent = dob || '?';
               document.getElementById('faceclaim').textContent = faceclaim || '?';
+              const tiktokEl = document.getElementById('tiktok');
+            if (tiktok) {
+             tiktokEl.innerHTML = `<a href="${tiktok}" target="_blank" style="color:#d308fa; text-decoration:none;">🎵 Lihat TikTok</a>`;
+            } else {
+             tiktokEl.textContent = '-';
+            }
               document.title = (stageName || fullName) + ' - VLA25';
 
               const fotoEl = document.getElementById('foto');
