@@ -313,7 +313,7 @@
               document.getElementById('dob').textContent = dob || '?';
               document.getElementById('faceclaim').textContent = faceclaim || '?';
               const tiktokEl = document.getElementById('tiktok');
-            if (tiktok) {
+            if (tiktok && tiktok !== '-') {
              tiktokEl.innerHTML = `<a href="${tiktok}" target="_blank" style="color:#d308fa; text-decoration:none;">🎵 Lihat TikTok</a>`;
             } else {
              tiktokEl.textContent = '-';
