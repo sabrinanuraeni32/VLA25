@@ -1,249 +1,228 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Profil Member - VLA25</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+<html lang="id">
+<head>
+  <title>Profil Member - VLA25</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/jpeg" href="logo.jpeg">
+  <link rel="apple-touch-icon" href="logo.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="animations.css">
 
-      body {
-        background-color: #f5e6ff;
-        background-image: radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
-                          radial-gradient(circle at 80% 80%, #c084fc 0%, transparent 50%);
-        color: #4a0080;
-        font-family: 'Quicksand', Arial, sans-serif;
-        margin: 0;
-        min-height: 100vh;
-      }
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      .header {
-        background-color: #4a0080;
-        text-align: center;
-        padding: 60px 20px 40px;
-        position: relative;
-        overflow: hidden;
-      }
+    body {
+      background-color: #f5e6ff;
+      background-image: radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, #c084fc 0%, transparent 50%);
+      color: #4a0080;
+      font-family: 'Quicksand', Arial, sans-serif;
+      min-height: 100vh;
+    }
 
-      .header::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
-        animation: shimmer 4s ease-in-out infinite;
-      }
+    /* ══ HEADER ══ */
+    .header {
+      height: 400px;
+      background-color: #4a0080;
+      text-align: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 60px 20px 40px;
+      position: relative; overflow: hidden;
+    }
+    .header::before {
+      content: ''; position: absolute; top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
+      animation: shimmer 4s ease-in-out infinite; pointer-events: none;
+    }
+    @keyframes shimmer {
+      0%, 100% { transform: translate(0, 0); }
+      50%       { transform: translate(10%, 10%); }
+    }
+    .header-logo {
+      width: 100px; height: 100px; border-radius: 50%; object-fit: cover;
+      margin-bottom: 15px; animation: logoPulse 3s ease-in-out infinite;
+      position: relative; z-index: 1;
+    }
+    @keyframes logoPulse {
+      0%, 100% { transform: scale(1);     box-shadow: 0 0 0 0 #d308fa44; }
+      50%       { transform: scale(1.06); box-shadow: 0 0 0 14px #d308fa00; }
+    }
+    .header .sub-judul {
+      color: #e8b4ff; letter-spacing: 8px; font-size: 11px;
+      margin: 6px 0; position: relative; z-index: 1;
+    }
+    .header h1 {
+      color: #d308fa; letter-spacing: 6px; font-size: 48px; font-weight: 700;
+      animation: titleGlow 2.5s ease-in-out infinite alternate;
+      margin: 8px 0; position: relative; z-index: 1;
+    }
+    @keyframes titleGlow {
+      from { text-shadow: 0 0 10px #d308fa66, 0 0 30px #d308fa33; }
+      to   { text-shadow: 0 0 25px #d308facc, 0 0 60px #d308fa88; }
+    }
+    .header-back {
+      color: #e8b4ff; font-size: 12px; letter-spacing: 2px;
+      text-decoration: none; position: relative; z-index: 1;
+      margin-top: 8px; transition: color 0.3s; display: inline-block;
+    }
+    .header-back:hover { color: #fff; }
 
-      @keyframes shimmer {
-        0%, 100% { transform: translate(0, 0); }
-        50% { transform: translate(10%, 10%); }
-      }
+    /* ══ NAVBAR ══ */
+    .navbar {
+      background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
+      display: flex; justify-content: center;
+      padding: 0 20px; border-bottom: 1px solid #d308fa44;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1440px; width: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0;
+    }
+    .nav-brand { color: #fff; font-size: 18px; font-weight: 700; letter-spacing: 4px; text-decoration: none; }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .nav-links a {
+      color: #e8b4ff; text-decoration: none; font-size: 12px;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 20px;
+      transition: all 0.3s; border: 1px solid transparent; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 50%;
+      width: 0; height: 2px; background: #d308fa; border-radius: 2px;
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+    .nav-links a:hover { color: #fff; background: #d308fa22; }
+    .nav-links a:hover::after, .nav-links a.aktif::after { width: 80%; left: 10%; }
+    .nav-links a.aktif { color: #fff; background: #d308fa66; border-color: #d308fa88; }
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: #e8b4ff; margin: 5px 0; transition: all 0.3s; border-radius: 2px;
+    }
+    .hamburger.terbuka span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.terbuka span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.terbuka span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-      .header a {
-        color: #e8b4ff;
-        font-size: 12px;
-        letter-spacing: 2px;
-        text-decoration: none;
-        display: block;
-        margin-bottom: 10px;
-      }
+    /* ══ PROFIL ══ */
+    .profil-box {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px;
+      border: 1px solid #9b30d9;
+      border-radius: 15px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 20px #d308fa11;
+    }
 
-      .header a:hover { color: #ffffff; }
+    .foto-placeholder {
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      background-color: #4a0080;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 40px; color: #f0a0ff;
+      overflow: hidden;
+    }
 
-      .header h1 {
-        color: #d308fa;
-        letter-spacing: 6px;
-        font-size: 48px;
-        text-shadow: 0 0 20px #d308fa88;
-        margin: 10px 0 0;
-      }
+    .stage-name {
+      text-align: center; font-size: 24px; font-weight: bold;
+      color: #d308fa; margin-bottom: 5px;
+    }
 
-      .navbar {
-        background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        padding: 14px 20px;
-        border-bottom: 1px solid #d308fa44;
-        position: relative;
-      }
+    .full-name {
+      text-align: center; font-size: 14px;
+      color: #9b30d9; margin-bottom: 20px;
+    }
 
-      .navbar a {
-        color: #e8b4ff;
-        text-decoration: none;
-        font-size: 12px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        padding: 5px 10px;
-        border-radius: 20px;
-        transition: all 0.3s;
-      }
+    .badge {
+      background: linear-gradient(90deg, #4a0080, #7b30c8, #4a0080);
+      background-size: 200% auto;
+      animation: badgeShimmer 2.5s linear infinite;
+      color: #f0a0ff; font-size: 11px;
+      padding: 4px 12px; border-radius: 20px;
+      margin: 0 auto 20px; display: block;
+      text-align: center; width: fit-content;
+    }
+    @keyframes badgeShimmer {
+      from { background-position: 0% center; }
+      to   { background-position: 200% center; }
+    }
 
-      .navbar a:hover {
-        color: #ffffff;
-        background-color: #d308fa44;
-      }
+    .info-table {
+      width: 100%; border-collapse: collapse; margin-top: 10px;
+    }
+    .info-table td {
+      padding: 10px; border-bottom: 1px solid #f0a0ff; font-size: 14px;
+    }
+    .info-table td:first-child {
+      color: #9b30d9; font-weight: bold; width: 40%;
+    }
 
-      .hamburger {
-        display: none;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 5px;
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-      }
+    /* ══ FOOTER ══ */
+    footer {
+      background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+      text-align: center; padding: 48px 20px; margin-top: 60px;
+      position: relative; overflow: hidden; border-top: 1px solid #d308fa44;
+    }
+    footer::before {
+      content: ''; position: absolute; top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, #d308fa11 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .footer-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 2px solid #d308fa66; }
+    .footer-nama { color: #d308fa; font-size: 20px; font-weight: 700; letter-spacing: 4px; margin-bottom: 4px; }
+    .footer-sub  { color: #e8b4ff; font-size: 10px; letter-spacing: 6px; margin-bottom: 20px; }
+    .footer-sosmed { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
+    .footer-sosmed a {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid #d308fa66; color: #e8b4ff; text-decoration: none; transition: all 0.3s;
+    }
+    .footer-sosmed a:hover { background: #d308fa33; border-color: #d308fa; color: #fff; transform: translateY(-3px); }
+    .footer-copy { color: #9b30d966; font-size: 11px; letter-spacing: 1px; }
 
-      .hamburger span {
-        display: block;
-        width: 24px;
-        height: 2px;
-        background: #e8b4ff;
-        margin: 5px 0;
-        transition: all 0.3s;
-      }
-
+    /* ══ MOBILE ══ */
+    @media (max-width: 768px) {
+      .header h1 { font-size: 36px; }
+      .hamburger { display: block; }
       .nav-links {
-        display: flex;
-        gap: 30px;
-        align-items: center;
+        display: none; flex-direction: column; gap: 0;
+        width: 100%; max-height: 0; overflow: hidden; opacity: 0;
+        transition: max-height 0.35s cubic-bezier(.4,0,.2,1), opacity 0.3s;
       }
-
-      .profil-box {
-        max-width: 600px;
-        margin: 40px auto;
-        padding: 30px;
-        border: 1px solid #9b30d9;
-        border-radius: 15px;
-        background-color: #ffffff;
-      }
-
-      .foto-placeholder {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        background-color: #4a0080;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 20px;
-        font-size: 40px;
-        color: #f0a0ff;
-        overflow: hidden;
-      }
-
-      .stage-name {
-        text-align: center;
-        font-size: 24px;
-        font-weight: bold;
-        color: #d308fa;
-        margin-bottom: 5px;
-      }
-
-      .full-name {
-        text-align: center;
-        font-size: 14px;
-        color: #9b30d9;
-        margin-bottom: 20px;
-      }
-
-      .badge {
-        background-color: #4a0080;
-        color: #f0a0ff;
-        font-size: 11px;
-        padding: 4px 12px;
-        border-radius: 20px;
-        margin: 0 auto 20px;
-        display: block;
-        text-align: center;
-        width: fit-content;
-      }
-
-      .info-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 10px;
-      }
-
-      .info-table td {
-        padding: 10px;
-        border-bottom: 1px solid #f0a0ff;
-        font-size: 14px;
-      }
-
-      .info-table td:first-child {
-        color: #9b30d9;
-        font-weight: bold;
-        width: 40%;
-      }
-
-      /* MOBILE */
-      @media (max-width: 600px) {
-        .header h1 { font-size: 32px; letter-spacing: 4px; }
-
-        .hamburger { display: block; }
-
-        .nav-links {
-          display: none;
-          flex-direction: column;
-          gap: 0;
-          width: 100%;
-          padding: 10px 0;
-        }
-
-        
-
-        .nav-links a {
-          padding: 12px 20px;
-          border-radius: 0;
-          border-bottom: 1px solid #d308fa22;
-          width: 100%;
-          text-align: center;
-        }
-
-        .navbar { justify-content: flex-start; flex-wrap: wrap; padding: 14px 20px; }
-
-        .profil-box {
-          margin: 20px 16px;
-          padding: 20px 16px;
-        }
-
-        .foto-placeholder {
-          width: 120px;
-          height: 120px;
-          font-size: 32px;
-        }
-
-        .stage-name { font-size: 20px; }
-        .full-name { font-size: 13px; }
-        .info-table td { font-size: 13px; padding: 8px; }
-      }
-
-      .navbar a.aktif {
-        color: #ffffff;
-        background-color: #d308fa66;
-        border: 1px solid #d308fa88;
-      }
-
-      </style>
-      <link rel="stylesheet" href="animations.css">
+      .nav-links.aktif { display: flex; max-height: 400px; opacity: 1; }
+      .nav-links a { border-radius: 0; border-bottom: 1px solid #d308fa22; padding: 12px 20px; width: 100%; text-align: center; }
+      .nav-inner { flex-wrap: wrap; }
+      .profil-box { margin: 20px 16px; padding: 20px 16px; }
+      .foto-placeholder { width: 120px; height: 120px; font-size: 32px; }
+      .stage-name { font-size: 20px; }
+      .full-name { font-size: 13px; }
+      .info-table td { font-size: 13px; padding: 8px; }
+    }
+  </style>
 </head>
-  <body>
+<body>
 
-    <div class="header">
-      <img src="logo.jpeg" alt="Logo VLA25" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;">
-      <a href="members.html">← Kembali ke Members</a>
-      <h1>VLA25</h1>
-    </div>
+  <!-- HEADER -->
+  <div class="header">
+    <img src="logo.jpeg" alt="Logo VLA25" class="header-logo">
+    <p class="sub-judul">OFFICIAL FAN SITE</p>
+    <h1>VLA25</h1>
+    <p class="sub-judul">VELORA25</p>
+    <a href="members.html" class="header-back">← Kembali ke Members</a>
+  </div>
 
-    <nav class="navbar">
-      <button class="hamburger" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">VLA25</a>
+      <button class="hamburger" aria-label="Menu" id="hamburger">
+        <span></span><span></span><span></span>
       </button>
       <div class="nav-links" id="nav-links">
         <a href="index.html">Home</a>
@@ -253,85 +232,25 @@
         <a href="pengumuman.html">Pengumuman</a>
         <a href="management.html">Management</a>
       </div>
-    </nav>
-
-    <div class="profil-box fade-in">
-      <div class="foto-placeholder" id="foto">?</div>
-      <div class="stage-name" id="stage-name">-</div>
-      <div class="full-name" id="full-name">-</div>
-      <div class="badge" id="status">-</div>
-      <table class="info-table">
-        <tr>
-          <td>Generasi</td>
-          <td id="gen">-</td>
-        </tr>
-        <tr>
-          <td>Date of Birth</td>
-          <td id="dob">-</td>
-        </tr>
-        <tr>
-          <td>Face Claim</td>
-          <td id="faceclaim">-</td>
-        </tr>
-        <tr>
-          <td>TikTok</td>
-          <td id="tiktok">-</td>
-        </tr>
-      </table>
     </div>
+  </nav>
 
-    <script>
+  <!-- PROFIL -->
+  <div class="profil-box">
+    <div class="foto-placeholder" id="foto">?</div>
+    <div class="stage-name" id="stage-name">-</div>
+    <div class="full-name" id="full-name">-</div>
+    <div class="badge" id="status">-</div>
+    <table class="info-table">
+      <tr><td>Generasi</td><td id="gen">-</td></tr>
+      <tr><td>Date of Birth</td><td id="dob">-</td></tr>
+      <tr><td>Face Claim</td><td id="faceclaim">-</td></tr>
+      <tr><td>TikTok</td><td id="tiktok">-</td></tr>
+    </table>
+  </div>
 
-
-
-      const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=0&single=true&output=csv";
-
-      const params = new URLSearchParams(window.location.search);
-      const namaCari = params.get('nama');
-
-      fetch(SHEET_URL)
-        .then(res => res.text())
-        .then(csv => {
-          const baris = csv.trim().split('\n').slice(1);
-
-          baris.forEach(baris => {
-            const kolom = baris.split(',');
-            const gen = kolom[0]?.trim();
-            const fullName = kolom[1]?.trim();
-            const stageName = kolom[2]?.trim();
-            const faceclaim = kolom[3]?.trim();
-            const dob = kolom[4]?.trim();
-            const status = kolom[5]?.trim();
-            const foto = kolom[6]?.trim();
-            const tiktok = kolom[7]?.trim();
-
-            if (fullName === namaCari) {
-              document.getElementById('stage-name').textContent = stageName || fullName;
-              document.getElementById('full-name').textContent = fullName;
-              document.getElementById('gen').textContent = gen;
-              document.getElementById('status').textContent = status || '-';
-              document.getElementById('dob').textContent = dob || '?';
-              document.getElementById('faceclaim').textContent = faceclaim || '?';
-              const tiktokEl = document.getElementById('tiktok');
-            if (tiktok && tiktok !== '-') {
-             tiktokEl.innerHTML = `<a href="${tiktok}" target="_blank" style="color:#d308fa; text-decoration:none;">🎵 Lihat TikTok</a>`;
-            } else {
-             tiktokEl.textContent = '-';
-            }
-              document.title = (stageName || fullName) + ' - VLA25';
-
-              const fotoEl = document.getElementById('foto');
-              if (foto) {
-                fotoEl.innerHTML = `<img src="idcmember/${foto}" alt="${stageName}" style="width:150px; height:150px; border-radius:50%; object-fit:cover; object-position:center;">`;
-              }
-            }
-          });
-        });
-    </script>
-
-    <script src="animations.js"></script>
-
-  <footer class="footer">
+  <!-- FOOTER -->
+  <footer>
     <img src="logo.jpeg" alt="Logo VLA25" class="footer-logo">
     <div class="footer-nama">VLA25</div>
     <div class="footer-sub">VELORA25</div>
@@ -344,7 +263,54 @@
       </a>
     </div>
     <div class="footer-copy">© 2025 VLA25 · Velora25 · VNC</div>
-  <p style="color: #e8b4ff88; font-size: 10px; letter-spacing: 2px; margin: 6px 0 0; font-style: italic;">designed & built by <span style="color: #d308fa; font-weight: 700; font-style: normal; letter-spacing: 2px;">LoorenZyy</span></p>
+    <p style="color: #e8b4ff88; font-size: 10px; letter-spacing: 2px; margin: 6px 0 0; font-style: italic;">designed & built by <span style="color: #d308fa; font-weight: 700; font-style: normal; letter-spacing: 2px;">LoorenZyy</span></p>
   </footer>
+
+  <script>
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=0&single=true&output=csv";
+    const params   = new URLSearchParams(window.location.search);
+    const namaCari = params.get('nama');
+
+    fetch(SHEET_URL)
+      .then(res => res.text())
+      .then(csv => {
+        const baris = csv.trim().split('\n').slice(1);
+        baris.forEach(b => {
+          const kolom     = b.split(',');
+          const gen       = kolom[0]?.trim();
+          const fullName  = kolom[1]?.trim();
+          const stageName = kolom[2]?.trim();
+          const faceclaim = kolom[3]?.trim();
+          const dob       = kolom[4]?.trim();
+          const status    = kolom[5]?.trim();
+          const foto      = kolom[6]?.trim();
+          const tiktok    = kolom[7]?.trim();
+
+          if (fullName !== namaCari) return;
+
+          document.getElementById('stage-name').textContent = stageName || fullName;
+          document.getElementById('full-name').textContent  = fullName;
+          document.getElementById('gen').textContent        = gen || '-';
+          document.getElementById('status').textContent     = status || '-';
+          document.getElementById('dob').textContent        = dob || '?';
+          document.getElementById('faceclaim').textContent  = faceclaim || '?';
+          document.title = (stageName || fullName) + ' - VLA25';
+
+          const tiktokEl = document.getElementById('tiktok');
+          if (tiktok && tiktok !== '-') {
+            tiktokEl.innerHTML = `<a href="${tiktok}" target="_blank" style="color:#d308fa; text-decoration:none;">🎵 Lihat TikTok</a>`;
+          } else {
+            tiktokEl.textContent = '-';
+          }
+
+          if (foto) {
+            document.getElementById('foto').innerHTML =
+              `<img src="idcmember/${foto}" alt="${stageName}" style="width:150px;height:150px;border-radius:50%;object-fit:cover;object-position:center;">`;
+          }
+        });
+      });
+  </script>
+
+  <script src="animations.js"></script>
 </body>
 </html>
