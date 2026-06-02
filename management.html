@@ -411,7 +411,7 @@
           hierarki.appendChild(level);
         });
 
-        setTimeout(initReveal, 100);
+        setTimeout(function(){ (window.vla_initReveal || initReveal)(); }, 100);
       })
       .catch(() => {
         document.getElementById('hierarki').innerHTML =

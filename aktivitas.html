@@ -443,7 +443,7 @@
           grid.appendChild(kartu);
         });
 
-        setTimeout(initReveal, 100);
+        setTimeout(function(){ (window.vla_initReveal || initReveal)(); }, 100);
       })
       .catch(() => {
         grid.innerHTML = '<div class="kosong">Gagal memuat data aktivitas.</div>';

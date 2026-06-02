@@ -428,7 +428,7 @@
         return;
       }
       filtered.forEach(m => grid.appendChild(buatKartu(m)));
-      setTimeout(initReveal, 80);
+      setTimeout(function(){ (window.vla_initReveal || initReveal)(); }, 80);
     }
 
     function renderSemua() {
