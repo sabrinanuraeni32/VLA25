@@ -26,16 +26,18 @@ body.page-exit {
   transform-origin: center;
 }
 @keyframes logoPulse {
-  0%, 100% { transform: scale(1);      box-shadow: 0 0 0 0 #d308fa44; }
-  50%       { transform: scale(1.06);  box-shadow: 0 0 0 14px #d308fa00; }
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.06); }
 }
 
+/* DIRINGANKAN: box-shadow dihapus dari keyframe (trigger repaint),
+   diganti filter drop-shadow yang GPU-accelerated */
 .header h1 {
   animation: titleGlow 2.5s ease-in-out infinite alternate;
 }
 @keyframes titleGlow {
-  from { text-shadow: 0 0 10px #d308fa66, 0 0 30px #d308fa33; }
-  to   { text-shadow: 0 0 25px #d308facc, 0 0 60px #d308fa88, 0 0 90px #d308fa44; }
+  from { filter: drop-shadow(0 0 6px #d308fa66); }
+  to   { filter: drop-shadow(0 0 16px #d308facc); }
 }
 
 /* ── FLOATING PARTICLES DI HEADER ── */
@@ -48,10 +50,10 @@ body.page-exit {
   animation: floatParticle linear infinite;
 }
 @keyframes floatParticle {
-  0%   { opacity: 0;    transform: translateY(0)      scale(0.5); }
+  0%   { opacity: 0;   transform: translateY(0)      scale(0.5); }
   10%  { opacity: 0.6; }
   90%  { opacity: 0.3; }
-  100% { opacity: 0;    transform: translateY(-120px) scale(1.2); }
+  100% { opacity: 0;   transform: translateY(-120px) scale(1.2); }
 }
 
 /* ── SCROLL-TRIGGERED FADE IN (via IntersectionObserver) ── */
@@ -117,7 +119,7 @@ body.page-exit {
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-    display: flex !important; /* override display:none */
+    display: flex !important;
   }
   .nav-links.aktif {
     max-height: 400px;
@@ -142,12 +144,18 @@ body.page-exit {
   to { transform: scale(4); opacity: 0; }
 }
 
-/* ── KARTU HOVER LIFT (lebih mulus) ── */
+/* ── KARTU HOVER LIFT ──
+   will-change hanya aktif saat hover, bukan permanen,
+   supaya GPU memory tidak dipakai terus-terusan */
 .kartu, .kartu-mgmt, .kartu-pengumuman,
 .kartu-spotlight, .polaroid, .stat-box,
 .founder-card, .info-item {
   transition: transform 0.3s cubic-bezier(.22,.68,0,1.4),
               box-shadow 0.3s ease;
+}
+.kartu:hover, .kartu-mgmt:hover, .kartu-pengumuman:hover,
+.kartu-spotlight:hover, .polaroid:hover, .stat-box:hover,
+.founder-card:hover, .info-item:hover {
   will-change: transform;
 }
 
@@ -206,7 +214,9 @@ body.page-exit {
   border-color: #d308fa88 !important;
 }
 
-/* ── TOMBOL MORE PULSE ── */
+/* ── TOMBOL MORE PULSE ──
+   Diubah pakai outline/box-shadow opacity trick
+   supaya tidak trigger repaint layout */
 .tombol-more {
   animation: tombolPulse 2s ease-in-out infinite;
 }
@@ -220,7 +230,7 @@ body.page-exit {
   box-shadow: 0 8px 25px #d308fa66 !important;
 }
 
-/* ── SHIMMER HEADER LEBIH KUAT ── */
+/* ── SHIMMER HEADER ── */
 .header::after {
   content: '';
   position: absolute;
@@ -298,10 +308,10 @@ body.page-exit {
 }
 .skeleton.circle { border-radius: 50%; }
 .skeleton.teks-panjang { height: 14px; width: 70%; border-radius: 8px; }
-.skeleton.teks-pendek { height: 12px; width: 40%; border-radius: 8px; }
+.skeleton.teks-pendek  { height: 12px; width: 40%; border-radius: 8px; }
 @keyframes skeletonPulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+  50%       { opacity: 0.35; }
 }
 .skeleton:nth-child(2) { animation-delay: 0.15s; }
 .skeleton:nth-child(3) { animation-delay: 0.30s; }

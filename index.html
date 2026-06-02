@@ -38,6 +38,7 @@
       overflow: visible;
     }
 
+    /* shimmer pakai transform saja — tidak trigger layout */
     .header::before {
       content: '';
       position: absolute;
@@ -46,6 +47,7 @@
       background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
       animation: shimmer 4s ease-in-out infinite;
       pointer-events: none;
+      will-change: transform;
     }
     @keyframes shimmer {
       0%, 100% { transform: translate(0, 0); }
@@ -57,12 +59,8 @@
       border-radius: 50%;
       margin-bottom: 15px;
       object-fit: cover;
-      animation: logoPulse 3s ease-in-out infinite;
+      /* logoPulse sudah ada di animations.css — tidak perlu duplikat */
       position: relative; z-index: 1;
-    }
-    @keyframes logoPulse {
-      0%, 100% { transform: scale(1);     box-shadow: 0 0 0 0 #d308fa44; }
-      50%       { transform: scale(1.06); box-shadow: 0 0 0 14px #d308fa00; }
     }
 
     .header .sub-judul {
@@ -78,14 +76,9 @@
       letter-spacing: 6px;
       font-size: 48px;
       font-weight: 700;
-      text-shadow: 0 0 20px #d308fa88, 0 0 40px #d308fa44;
-      animation: titleGlow 2.5s ease-in-out infinite alternate;
+      /* titleGlow sudah ada di animations.css — tidak perlu duplikat */
       margin: 8px 0;
       position: relative; z-index: 1;
-    }
-    @keyframes titleGlow {
-      from { text-shadow: 0 0 10px #d308fa66, 0 0 30px #d308fa33; }
-      to   { text-shadow: 0 0 25px #d308facc, 0 0 60px #d308fa88, 0 0 90px #d308fa44; }
     }
 
     .hero-desc {
@@ -235,11 +228,11 @@
       padding: 28px 20px;
       text-align: center;
       transition: transform 0.3s cubic-bezier(.22,.68,0,1.4), box-shadow 0.3s ease;
-      will-change: transform;
     }
     .stat-box:nth-child(odd)  { transform: rotate(-1deg); }
     .stat-box:nth-child(even) { transform: rotate(1deg); }
     .stat-box:hover {
+      will-change: transform;
       transform: rotate(0deg) scale(1.05) !important;
       box-shadow: 0 8px 28px #d308fa33;
     }
@@ -273,12 +266,12 @@
       transition: transform 0.3s cubic-bezier(.22,.68,0,1.4),
                   box-shadow 0.3s ease,
                   border-color 0.3s ease;
-      will-change: transform;
       cursor: pointer;
     }
     .kartu-pengumuman:nth-child(odd)  { transform: rotate(-1.5deg); }
     .kartu-pengumuman:nth-child(even) { transform: rotate(1deg); }
     .kartu-pengumuman:hover {
+      will-change: transform;
       transform: rotate(0deg) scale(1.05) !important;
       box-shadow: 0 8px 28px #d308fa33;
       border-color: #d308fa88 !important;

@@ -16,27 +16,27 @@
     setTimeout(() => { window.location.href = href; }, 230);
   });
 
-  /* ── FLOATING PARTICLES DI HEADER ── */
+  /* ── FLOATING PARTICLES DI HEADER ──
+     Dikurangi jadi 6 partikel (dari 10).
+     Partikel di-pool sekali — tidak dibuat ulang.
+  ── */
   const header = document.querySelector('.header');
   if (header) {
-    // Kurangi jumlah partikel dari 18 → 10 biar lebih ringan
-    for (let i = 0; i < 10; i++) {
+    const PARTICLE_COUNT = 6;
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
       const p = document.createElement('span');
       p.className = 'particle';
-      const size = Math.random() * 5 + 2;
-      const left = Math.random() * 100;
-      const delay = Math.random() * 6;
-      const dur = Math.random() * 5 + 4;
-      const opacity = Math.random() * 0.5 + 0.2;
+      const size  = Math.random() * 5 + 2;
       p.style.cssText =
         `width:${size}px;height:${size}px;` +
-        `left:${left}%;` +
+        `left:${Math.random() * 100}%;` +
         `bottom:${Math.random() * 40}%;` +
-        `animation-delay:${delay}s;` +
-        `animation-duration:${dur}s;` +
-        `opacity:${opacity};`;
-      header.appendChild(p);
+        `animation-delay:${Math.random() * 6}s;` +
+        `animation-duration:${Math.random() * 5 + 4}s;`;
+      frag.appendChild(p);
     }
+    header.appendChild(frag);
   }
 
   /* ── HAMBURGER TOGGLE ── */
@@ -71,13 +71,10 @@
       `left:${e.clientX - rect.left - size / 2}px;` +
       `top:${e.clientY - rect.top - size / 2}px;`;
     btn.appendChild(ripple);
-    ripple.addEventListener('animationend', () => ripple.remove());
+    ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
   });
 
-  /* ── SCROLL-TRIGGERED REVEAL (IntersectionObserver) ──
-     Satu observer global — tidak dibuat ulang setiap panggil initReveal.
-     initReveal() hanya mendaftarkan elemen BARU yang belum terobservasi.
-  ── */
+  /* ── SCROLL-TRIGGERED REVEAL (IntersectionObserver) ── */
   const revealObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
@@ -94,38 +91,33 @@
       '.founder-card, .info-item, .section';
 
     document.querySelectorAll(selector).forEach(function (el) {
-      // Skip skeleton & elemen yang sudah diproses
       if (el.classList.contains('skeleton')) return;
       if (el.dataset.revealDone) return;
       el.dataset.revealDone = '1';
-
       el.classList.add('reveal');
-
       const parent = el.parentElement;
       if (parent && !parent.classList.contains('reveal-group')) {
         parent.classList.add('reveal-group');
       }
-
       revealObserver.observe(el);
     });
   }
 
-  // Jalankan sekali saat DOM siap
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () { setTimeout(initReveal, 100); });
   } else {
     setTimeout(initReveal, 100);
   }
 
-  // Ekspos ke global agar halaman bisa panggil setelah fetch selesai
-  // (menggantikan fetch-override yang menyebabkan lag)
   window.vla_initReveal = initReveal;
 
-  /* ── STATS COUNTER ANIMATION ── */
+  /* ── STATS COUNTER ANIMATION ──
+     MutationObserver hanya dibuat kalau elemen masih kosong/dash.
+     Kalau sudah ada angka langsung animate — tidak perlu observer.
+  ── */
   const animatedStats = new WeakSet();
 
   function animateCounter(el, target, duration) {
-    if (isNaN(target) || target <= 0) return;
     if (animatedStats.has(el)) return;
     animatedStats.add(el);
     const start = performance.now();
@@ -139,27 +131,33 @@
     requestAnimationFrame(update);
   }
 
-  function isAngkaMurni(teks) { return /^\d+$/.test(teks.trim()); }
-
   function watchStatEl(el) {
     if (animatedStats.has(el)) return;
-    const isiAwal = el.textContent.trim();
-    if (isiAwal && !isAngkaMurni(isiAwal) && isiAwal !== '-') {
+    const teks = el.textContent.trim();
+
+    // Langsung animate kalau sudah ada angka
+    if (/^\d+$/.test(teks)) {
+      const val = parseInt(teks, 10);
+      if (val > 0) animateCounter(el, val, 1100);
+      return;
+    }
+
+    // Kalau isinya bukan angka dan bukan dash, skip
+    if (teks && teks !== '-') {
       animatedStats.add(el);
       return;
     }
+
+    // Kosong / dash: tunggu konten diisi (misal setelah fetch)
     const mo = new MutationObserver(function () {
-      const teks = el.textContent.trim();
-      if (!teks || teks === '-') return;
-      if (!isAngkaMurni(teks)) { mo.disconnect(); animatedStats.add(el); return; }
-      const val = parseInt(teks, 10);
-      if (!isNaN(val) && val > 0) { mo.disconnect(); animateCounter(el, val, 1100); }
+      const t = el.textContent.trim();
+      if (!t || t === '-') return;
+      mo.disconnect();
+      if (!/^\d+$/.test(t)) { animatedStats.add(el); return; }
+      const val = parseInt(t, 10);
+      if (val > 0) animateCounter(el, val, 1100);
     });
     mo.observe(el, { childList: true, characterData: true, subtree: true });
-    if (isiAwal && isAngkaMurni(isiAwal)) {
-      const val = parseInt(isiAwal, 10);
-      if (!isNaN(val) && val > 0) { mo.disconnect(); animateCounter(el, val, 1100); }
-    }
   }
 
   function observeStats() {
@@ -175,38 +173,52 @@
   const logo = document.querySelector('.header img');
   if (logo) logo.classList.add('header-logo');
 
-  /* ── KARTU TILT EFFECT — throttled via rAF, desktop only ── */
+  /* ── KARTU TILT EFFECT — desktop only ──
+     FIX: mouseleave sebelumnya pakai capture (true) → fire di semua elemen.
+     Sekarang pakai delegasi yang benar:
+     - mousemove: throttled via rAF, sama seperti sebelumnya
+     - mouseleave: hanya listen di kartu yang sedang aktif (bukan global capture)
+  ── */
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     let tiltRAF   = null;
     let lastKartu = null;
 
+    function resetTilt(kartu) {
+      if (!kartu) return;
+      kartu.style.transform = '';
+      kartu.removeEventListener('mouseleave', onKartuLeave);
+      lastKartu = null;
+    }
+
+    function onKartuLeave() {
+      resetTilt(lastKartu);
+    }
+
     document.addEventListener('mousemove', function (e) {
-      if (tiltRAF) return; // sudah ada frame pending, skip
+      if (tiltRAF) return;
       tiltRAF = requestAnimationFrame(function () {
         tiltRAF = null;
         const kartu = e.target.closest('.kartu, .kartu-mgmt, .stat-box, .profil-box');
 
-        // Reset kartu sebelumnya kalau mouse berpindah ke elemen lain
         if (lastKartu && lastKartu !== kartu) {
-          lastKartu.style.transform = '';
-          lastKartu = null;
+          resetTilt(lastKartu);
         }
 
         if (!kartu) return;
+
+        // Pasang listener mouseleave langsung di kartu (bukan global capture)
+        if (lastKartu !== kartu) {
+          kartu.addEventListener('mouseleave', onKartuLeave);
+          lastKartu = kartu;
+        }
+
         const rect = kartu.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width  - 0.5;
         const y = (e.clientY - rect.top)  / rect.height - 0.5;
         kartu.style.transform =
           `perspective(600px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) scale(1.03)`;
-        lastKartu = kartu;
       });
     });
-
-    // Reset saat mouse keluar dari kartu
-    document.addEventListener('mouseleave', function (e) {
-      const kartu = e.target.closest('.kartu, .kartu-mgmt, .stat-box, .profil-box');
-      if (kartu) kartu.style.transform = '';
-    }, true);
   }
 
 })();
