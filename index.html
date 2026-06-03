@@ -329,8 +329,8 @@
       box-shadow: 0 6px 18px #d308fa55;
     }
     @keyframes tombolPulse {
-      0%, 100% { box-shadow: 0 4px 15px #d308fa33; }
-      50%       { box-shadow: 0 4px 25px #d308fa77; }
+      0%, 100% { filter: brightness(1)    drop-shadow(0 4px  6px #d308fa44); }
+      50%       { filter: brightness(1.08) drop-shadow(0 4px 12px #d308fa88); }
     }
 
     .spotlight-grid {
@@ -632,13 +632,20 @@
       return ((b[0]?.[0]||'') + (b[1]?.[0]||'')).toUpperCase();
     }
 
-    fetch(SHEET_MEMBER).then(r => r.text()).then(csv => {
-      const baris = csv.trim().split('\n').slice(1);
-      const gens  = new Set();
-      let count   = 0;
+    // Ketiga fetch jalan BERSAMAAN — tidak ada yang nunggu yang lain selesai
+    Promise.all([
+      fetch(SHEET_MEMBER).then(r => r.text()),
+      fetch(SHEET_PENGUMUMAN).then(r => r.text()),
+      fetch(SHEET_AKTIVITAS).then(r => r.text())
+    ]).then(([csvMember, tsvPengumuman, csvAktivitas]) => {
+
+      /* ── MEMBER ── */
+      const barisMember = csvMember.trim().split('\n').slice(1);
+      const gens = new Set();
+      let count  = 0;
       const memberFoto = {};
 
-      baris.forEach(b => {
+      barisMember.forEach(b => {
         const k = b.split(',');
         const gen = k[0]?.trim(), nama = k[1]?.trim(), stage = k[2]?.trim(), foto = k[6]?.trim();
         if (!nama) return;
@@ -649,6 +656,19 @@
         if (stage) memberFoto[stage.toLowerCase()] = info;
       });
 
+      /* ── AKTIVITAS ── */
+      const barisAktivitas = csvAktivitas.trim().split('\n').slice(1).filter(b => b.trim());
+      const frekuensi = {};
+      barisAktivitas.forEach(b => {
+        const k = b.split(','), m = k[2]?.trim();
+        if (!m) return;
+        m.split('&').forEach(nm => {
+          const key = nm.trim().toLowerCase();
+          if (key && memberFoto[key]) frekuensi[key] = (frekuensi[key]||0) + 1;
+        });
+      });
+
+      /* ── RENDER STATS ── */
       document.getElementById('stats-grid').innerHTML = `
         <div class="stat-box fade-in">
           <div class="stat-num" id="stat-member">0</div>
@@ -663,35 +683,20 @@
           <div class="stat-label">Berdiri</div>
         </div>
         <div class="stat-box fade-in">
-          <div class="stat-num" id="stat-aktivitas">—</div>
+          <div class="stat-num" id="stat-aktivitas">0</div>
           <div class="stat-label">Aktivitas</div>
         </div>
       `;
       animateCounter(document.getElementById('stat-member'), count);
       animateCounter(document.getElementById('stat-gen'), gens.size);
-      setTimeout(initReveal, 100);
+      animateCounter(document.getElementById('stat-aktivitas'), barisAktivitas.length);
 
-      fetch(SHEET_AKTIVITAS).then(r => r.text()).then(csv => {
-        const baris = csv.trim().split('\n').slice(1).filter(b => b.trim());
-        animateCounter(document.getElementById('stat-aktivitas'), baris.length);
-
-        const frekuensi = {};
-        baris.forEach(b => {
-          const k = b.split(','), m = k[2]?.trim();
-          if (!m) return;
-          m.split('&').forEach(nm => {
-            const key = nm.trim().toLowerCase();
-            if (key && memberFoto[key]) frekuensi[key] = (frekuensi[key]||0) + 1;
-          });
-        });
-
-        const sorted = Object.entries(frekuensi).sort((a,b) => b[1]-a[1]).slice(0, 3);
-        const grid   = document.getElementById('spotlight-grid');
-
-        if (!sorted.length) {
-          grid.innerHTML = '<p class="kosong">Belum ada data aktivitas.</p>';
-          return;
-        }
+      /* ── RENDER SPOTLIGHT ── */
+      const sorted = Object.entries(frekuensi).sort((a,b) => b[1]-a[1]).slice(0, 3);
+      const grid   = document.getElementById('spotlight-grid');
+      if (!sorted.length) {
+        grid.innerHTML = '<p class="kosong">Belum ada data aktivitas.</p>';
+      } else {
         grid.innerHTML = '';
         sorted.forEach(([key, jml]) => {
           const info = memberFoto[key] || { foto:'', stageName: key, namaLengkap: key };
@@ -710,41 +715,43 @@
           `;
           grid.appendChild(el);
         });
-        setTimeout(initReveal, 100);
-      });
-    });
+      }
 
-    fetch(SHEET_PENGUMUMAN).then(r => r.text()).then(tsv => {
-      const baris   = tsv.trim().split('\n').slice(1).filter(b => b.trim());
-      const terbaru = [...baris].reverse().slice(0, 3);
+      /* ── RENDER PENGUMUMAN ── */
+      const barisPengumuman = tsvPengumuman.trim().split('\n').slice(1).filter(b => b.trim());
+      const terbaru = [...barisPengumuman].reverse().slice(0, 3);
       const cont    = document.getElementById('list-pengumuman');
-
       if (!terbaru.length) {
         cont.innerHTML = '<p class="kosong">Belum ada pengumuman.</p>';
-        return;
+      } else {
+        cont.innerHTML = '';
+        terbaru.forEach(b => {
+          const k     = b.split('\t');
+          const tgl   = k[0]?.trim()||'';
+          const judul = k[1]?.trim()||'';
+          const foto  = k[3]?.trim()||'';
+          if (!judul) return;
+          const el = document.createElement('div');
+          el.className = 'kartu-pengumuman';
+          el.innerHTML = `
+            ${foto
+              ? `<img src="foto-pengumuman/${foto}" class="preview-foto" alt="${judul}">`
+              : `<div class="preview-placeholder">📢</div>`
+            }
+            <div class="tanggal">${tgl}</div>
+            <div class="judul-card">${judul}</div>
+            <button class="tombol-more" onclick="window.location='detail-pengumuman.html?judul=${encodeURIComponent(judul)}'">Selengkapnya</button>
+          `;
+          cont.appendChild(el);
+        });
       }
-      cont.innerHTML = '';
-      terbaru.forEach(b => {
-        const k      = b.split('\t');
-        const tgl    = k[0]?.trim()||'';
-        const judul  = k[1]?.trim()||'';
-        const foto   = k[3]?.trim()||'';
-        if (!judul) return;
 
-        const el = document.createElement('div');
-        el.className = 'kartu-pengumuman';
-        el.innerHTML = `
-          ${foto
-            ? `<img src="foto-pengumuman/${foto}" class="preview-foto" alt="${judul}">`
-            : `<div class="preview-placeholder">📢</div>`
-          }
-          <div class="tanggal">${tgl}</div>
-          <div class="judul-card">${judul}</div>
-          <button class="tombol-more" onclick="window.location='detail-pengumuman.html?judul=${encodeURIComponent(judul)}'">Selengkapnya</button>
-        `;
-        cont.appendChild(el);
-      });
       setTimeout(initReveal, 100);
+
+    }).catch(() => {
+      document.getElementById('stats-grid').innerHTML    = '<p class="kosong">Gagal memuat data.</p>';
+      document.getElementById('list-pengumuman').innerHTML = '<p class="kosong">Gagal memuat pengumuman.</p>';
+      document.getElementById('spotlight-grid').innerHTML  = '<p class="kosong">Gagal memuat data.</p>';
     });
 
 
