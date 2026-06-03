@@ -1,5 +1,5 @@
 /* =============================================
-   VLA25 — ANIMATIONS.CSS  (optimized)
+   VLA25 — ANIMATIONS.CSS  (optimized v3)
    ============================================= */
 
 /* ── PAGE TRANSITION ── */
@@ -19,14 +19,10 @@ body.page-exit {
   to   { opacity: 0; transform: translateY(-8px); }
 }
 
-/* ── HEADER: LOGO PULSE ──
-   Hapus animasi box-shadow (paint-heavy), ganti pakai
-   filter drop-shadow yang GPU-accelerated.
-── */
+/* ── HEADER: LOGO PULSE ── */
 .header-logo {
   animation: logoPulse 3s ease-in-out infinite;
   transform-origin: center;
-  /* Static glow — nggak perlu dianimasikan */
   filter: drop-shadow(0 0 6px #d308fa55);
 }
 @keyframes logoPulse {
@@ -34,13 +30,9 @@ body.page-exit {
   50%       { transform: scale(1.06); }
 }
 
-/* ── TITLE GLOW ──
-   Ganti multi-layer text-shadow animation (repaint tiap frame)
-   → filter brightness + drop-shadow (composite-only, GPU).
-── */
+/* ── TITLE GLOW ── */
 .header h1 {
   animation: titleGlow 2.5s ease-in-out infinite alternate;
-  /* Static base shadow biar tetap ada glow-nya */
   text-shadow: 0 0 20px #d308fa88, 0 0 40px #d308fa44;
 }
 @keyframes titleGlow {
@@ -48,14 +40,13 @@ body.page-exit {
   to   { filter: brightness(1.1) drop-shadow(0 0 18px #d308facc); }
 }
 
-/* ── FLOATING PARTICLES DI HEADER ── */
+/* ── FLOATING PARTICLES ── */
 .particle {
   position: absolute;
   border-radius: 50%;
   background: #d308fa;
   pointer-events: none;
   opacity: 0;
-  /* contain: strict agar particle nggak trigger layout seluruh page */
   contain: strict;
   animation: floatParticle linear infinite;
 }
@@ -65,12 +56,31 @@ body.page-exit {
   90%  { opacity: 0.3; }
   100% { opacity: 0;   transform: translateY(-120px) scale(1.2); }
 }
-/* Matikan partikel di mobile — nggak kelihatan, tapi makan resource */
 @media (max-width: 768px) {
   .particle { display: none; }
 }
 
-/* ── SCROLL-TRIGGERED FADE IN (via IntersectionObserver) ── */
+/* ── SHIMMER HEADER SWEEP ──
+   FIX: ganti animasi `left` → `transform: translateX`
+   `left` trigger layout tiap frame → patah2 saat scroll
+   `transform` hanya composite → mulus
+── */
+.header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, #ffffff0a, transparent);
+  animation: headerSweep 4s ease-in-out infinite;
+  pointer-events: none;
+  will-change: transform;
+}
+@keyframes headerSweep {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(370%); }
+}
+
+/* ── SCROLL-TRIGGERED FADE IN ── */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
@@ -81,7 +91,6 @@ body.page-exit {
   opacity: 1;
   transform: translateY(0);
 }
-/* Stagger untuk anak-anak dalam .reveal-group */
 .reveal-group .reveal:nth-child(1)    { transition-delay: 0.00s; }
 .reveal-group .reveal:nth-child(2)    { transition-delay: 0.07s; }
 .reveal-group .reveal:nth-child(3)    { transition-delay: 0.14s; }
@@ -95,9 +104,7 @@ body.page-exit {
 .reveal-group .reveal:nth-child(n+11) { transition-delay: 0.70s; }
 
 /* ── NAVBAR LINK UNDERLINE SLIDE ── */
-.nav-links a {
-  position: relative;
-}
+.nav-links a { position: relative; }
 .nav-links a::after {
   content: '';
   position: absolute;
@@ -108,19 +115,16 @@ body.page-exit {
   transition: width 0.3s ease, left 0.3s ease;
 }
 .nav-links a:hover::after,
-.nav-links a.aktif::after {
-  width: 80%; left: 10%;
-}
+.nav-links a.aktif::after { width: 80%; left: 10%; }
 
-/* ── HAMBURGER → X TRANSFORM ── */
+/* ── HAMBURGER → X ── */
 .hamburger.terbuka span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .hamburger.terbuka span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .hamburger.terbuka span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ── MOBILE NAV SLIDE DOWN ── */
 .nav-links {
-  transition: max-height 0.35s cubic-bezier(.4,0,.2,1),
-              opacity 0.3s ease;
+  transition: max-height 0.35s cubic-bezier(.4,0,.2,1), opacity 0.3s ease;
 }
 @media (max-width: 600px) {
   .nav-links {
@@ -129,13 +133,10 @@ body.page-exit {
     opacity: 0;
     display: flex !important;
   }
-  .nav-links.aktif {
-    max-height: 400px;
-    opacity: 1;
-  }
+  .nav-links.aktif { max-height: 400px; opacity: 1; }
 }
 
-/* ── RIPPLE EFFECT PADA TOMBOL ── */
+/* ── RIPPLE EFFECT ── */
 .tombol, .tombol-more, .filter-btn {
   position: relative;
   overflow: hidden;
@@ -153,17 +154,16 @@ body.page-exit {
 }
 
 /* ── KARTU HOVER LIFT ──
-   will-change hanya aktif saat hover, bukan permanen di semua kartu.
-   Kalau dipasang permanent di banyak elemen sekaligus, browser
-   mengalokasikan layer GPU untuk semua → justru berat.
+   FIX: transition: none by default, aktif hanya saat :hover
+   contain: layout style → isolasi reflow per kartu
 ── */
-.kartu, .kartu-mgmt, .kartu-pengumuman,
+.kartu, .kartu-mgmt,
 .kartu-spotlight, .polaroid, .stat-box,
 .founder-card, .info-item {
   transition: none;
   contain: layout style;
 }
-.kartu:hover, .kartu-mgmt:hover, .kartu-pengumuman:hover,
+.kartu:hover, .kartu-mgmt:hover,
 .kartu-spotlight:hover, .polaroid:hover, .stat-box:hover,
 .founder-card:hover, .info-item:hover {
   transition: transform 0.25s cubic-bezier(.22,.68,0,1.4),
@@ -171,10 +171,23 @@ body.page-exit {
   will-change: transform;
 }
 
-/* ── STATS COUNTER NUMBER ── */
-.stat-num {
-  transition: color 0.3s ease;
+/* ── KARTU PENGUMUMAN ──
+   Dipisah karena perlu border-color transition juga
+── */
+.kartu-pengumuman {
+  transition: none;
+  contain: layout style;
 }
+.kartu-pengumuman:hover {
+  transition: transform 0.25s cubic-bezier(.22,.68,0,1.4),
+              box-shadow 0.25s ease,
+              border-color 0.25s ease;
+  will-change: transform;
+  border-color: #d308fa88 !important;
+}
+
+/* ── STATS COUNTER NUMBER ── */
+.stat-num { transition: color 0.3s ease; }
 
 /* ── PROFIL BOX ENTRANCE ── */
 .profil-box {
@@ -185,19 +198,14 @@ body.page-exit {
   to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* ── FOTO PROFIL REVEAL ── */
+/* ── FOTO PROFIL HOVER ── */
 .foto-placeholder img, .foto-placeholder {
   transition: transform 0.4s cubic-bezier(.22,.68,0,1.4);
 }
 .foto-placeholder:hover img,
-.foto-placeholder:hover {
-  transform: scale(1.07);
-}
+.foto-placeholder:hover { transform: scale(1.07); }
 
-/* ── BADGE SHIMMER ──
-   background-position lebih ringan dari animasi gradient lain
-   karena cuma geser posisi, nggak recalculate gradient.
-── */
+/* ── BADGE SHIMMER ── */
 .badge {
   background: linear-gradient(90deg, #4a0080, #7b30c8, #4a0080);
   background-size: 200% auto;
@@ -219,22 +227,9 @@ body.page-exit {
   100% { transform: rotate(0deg)    scale(1.05); }
 }
 
-/* ── PENGUMUMAN KARTU SLIDE IN ── */
-.kartu-pengumuman {
-  transition: transform 0.35s cubic-bezier(.22,.68,0,1.4),
-              box-shadow 0.3s ease,
-              border-color 0.3s ease;
-}
-.kartu-pengumuman:hover {
-  border-color: #d308fa88 !important;
-}
-
-/* ── TOMBOL MORE PULSE ──
-   Ganti animasi box-shadow (paint) → filter drop-shadow (composite).
-── */
+/* ── TOMBOL MORE PULSE ── */
 .tombol-more {
   animation: tombolPulse 2s ease-in-out infinite;
-  /* Static base shadow */
   box-shadow: 0 4px 15px #d308fa33;
 }
 @keyframes tombolPulse {
@@ -248,22 +243,7 @@ body.page-exit {
   box-shadow: 0 8px 25px #d308fa66 !important;
 }
 
-/* ── SHIMMER HEADER (sweep light) ── */
-.header::after {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 60%; height: 100%;
-  background: linear-gradient(90deg, transparent, #ffffff0a, transparent);
-  animation: headerSweep 4s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes headerSweep {
-  0%   { left: -60%; }
-  100% { left: 160%; }
-}
-
-/* ── GARIS HIERARKI MANAGEMENT ANIMATE ── */
+/* ── GARIS HIERARKI MANAGEMENT ── */
 .garis {
   animation: garisGrow 0.6s ease both;
   transform-origin: top;
@@ -288,7 +268,7 @@ body.page-exit {
   to   { transform: scale(1); }
 }
 
-/* ── REDUCE MOTION (AKSESIBILITAS) ── */
+/* ── REDUCE MOTION ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -316,9 +296,7 @@ body.page-exit {
   }
 }
 
-/* ── LOADING SKELETON (PULSE) ──
-   Pakai opacity saja — sudah GPU-composited, nggak perlu diubah.
-── */
+/* ── LOADING SKELETON ── */
 .skeleton {
   background: #e8d5f5;
   border-radius: 12px;
@@ -357,33 +335,18 @@ body.page-exit {
   background: radial-gradient(circle, #d308fa11 0%, transparent 60%);
   pointer-events: none;
 }
-.footer-logo {
-  width: 60px; height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 12px;
-  border: 2px solid #d308fa66;
-}
-.footer-nama  { color: #d308fa; font-size: 20px; font-weight: 700; letter-spacing: 4px; margin-bottom: 4px; }
-.footer-sub   { color: #e8b4ff; font-size: 10px; letter-spacing: 6px; margin-bottom: 20px; }
-.footer-sosmed {
-  display: flex; justify-content: center;
-  gap: 12px; margin-bottom: 20px;
-}
+.footer-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 2px solid #d308fa66; }
+.footer-nama { color: #d308fa; font-size: 20px; font-weight: 700; letter-spacing: 4px; margin-bottom: 4px; }
+.footer-sub  { color: #e8b4ff; font-size: 10px; letter-spacing: 6px; margin-bottom: 20px; }
+.footer-sosmed { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
 .footer-sosmed a {
   display: flex; align-items: center; justify-content: center;
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  border: 1px solid #d308fa66;
-  color: #e8b4ff;
-  text-decoration: none;
-  font-size: 18px;
-  transition: all 0.3s;
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid #d308fa66; color: #e8b4ff;
+  text-decoration: none; font-size: 18px; transition: all 0.3s;
 }
 .footer-sosmed a:hover {
-  background: #d308fa33;
-  border-color: #d308fa;
-  color: #fff;
-  transform: translateY(-3px);
+  background: #d308fa33; border-color: #d308fa;
+  color: #fff; transform: translateY(-3px);
 }
 .footer-copy { color: #9b30d966; font-size: 11px; letter-spacing: 1px; }
