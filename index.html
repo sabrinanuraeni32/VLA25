@@ -47,8 +47,7 @@
       background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
       animation: shimmer 4s ease-in-out infinite;
       pointer-events: none;
-      will-change: transform;
-    }
+      }
     @keyframes shimmer {
       0%, 100% { transform: translate(0, 0); }
       50%       { transform: translate(10%, 10%); }
@@ -227,8 +226,10 @@
       border-radius: 15px;
       padding: 28px 20px;
       text-align: center;
-      transition: transform 0.3s cubic-bezier(.22,.68,0,1.4), box-shadow 0.3s ease;
+      transition: none;
+      contain: layout style;
     }
+    .stat-box:hover { will-change: transform; transition: transform 0.25s cubic-bezier(.22,.68,0,1.4), box-shadow 0.25s ease; }
     .stat-box:nth-child(odd)  { transform: rotate(-1deg); }
     .stat-box:nth-child(even) { transform: rotate(1deg); }
     .stat-box:hover {
@@ -263,11 +264,11 @@
       border: 1px solid #d308fa44;
       border-radius: 15px;
       padding: 14px;
-      transition: transform 0.3s cubic-bezier(.22,.68,0,1.4),
-                  box-shadow 0.3s ease,
-                  border-color 0.3s ease;
+      transition: none;
+      contain: layout style;
       cursor: pointer;
     }
+    .kartu-pengumuman:hover { will-change: transform; transition: transform 0.25s cubic-bezier(.22,.68,0,1.4), box-shadow 0.25s ease, border-color 0.25s ease; }
     .kartu-pengumuman:nth-child(odd)  { transform: rotate(-1.5deg); }
     .kartu-pengumuman:nth-child(even) { transform: rotate(1deg); }
     .kartu-pengumuman:hover {
@@ -318,21 +319,15 @@
       cursor: pointer;
       font-family: 'Quicksand', sans-serif;
       font-weight: 700;
-      transition: transform 0.3s, box-shadow 0.3s;
-      animation: tombolPulse 2s ease-in-out infinite;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 4px 15px #d308fa33;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .tombol-more:hover {
-      animation: none;
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px #d308fa55;
+      box-shadow: 0 8px 25px #d308fa66;
     }
-    @keyframes tombolPulse {
-      0%, 100% { filter: brightness(1)    drop-shadow(0 4px  6px #d308fa44); }
-      50%       { filter: brightness(1.08) drop-shadow(0 4px 12px #d308fa88); }
-    }
-
     .spotlight-grid {
       display: flex;
       flex-wrap: wrap;
@@ -348,10 +343,11 @@
       text-align: center;
       width: 120px;
       cursor: pointer;
-      transition: transform 0.3s cubic-bezier(.22,.68,0,1.4), box-shadow 0.3s ease;
-      will-change: transform;
+      transition: none;
+      contain: layout style;
       text-decoration: none;
     }
+    .kartu-spotlight:hover { will-change: transform; transition: transform 0.25s cubic-bezier(.22,.68,0,1.4), box-shadow 0.25s ease; }
     .kartu-spotlight:nth-child(odd)  { transform: rotate(-2deg); }
     .kartu-spotlight:nth-child(even) { transform: rotate(1.5deg); }
     .kartu-spotlight:hover {
