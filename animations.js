@@ -156,70 +156,11 @@
   const logo = document.querySelector('.header img');
   if (logo) logo.classList.add('header-logo');
 
-  /* ── KARTU TILT EFFECT — desktop only ──
-     FIX UTAMA:
-     1. getBoundingClientRect() di-cache saat mouseenter, bukan tiap mousemove
-     2. Tilt dimatikan saat user scroll (isScrolling flag)
-     3. Pakai pointer-events langsung ke kartu, bukan global mousemove
+  /* ── TILT EFFECT: DIHAPUS ──
+     Tilt 3D (rotateX/rotateY via mousemove) dihapus karena konflik
+     dengan CSS transition: transform pada kartu — hasilnya delay &
+     patah-patah saat scroll. Hover effect (scale + shadow) tetap
+     jalan via CSS :hover, tidak butuh JS sama sekali.
   ── */
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-
-    let isScrolling = false;
-    let scrollTimer = null;
-
-    // Flag saat scroll — tilt dimatikan sementara
-    window.addEventListener('scroll', function () {
-      isScrolling = true;
-      clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(function () { isScrolling = false; }, 150);
-    }, { passive: true });
-
-    const TILT_SELECTOR = '.kartu, .kartu-mgmt, .stat-box, .profil-box';
-
-    function attachTilt(kartu) {
-      if (kartu._tiltAttached) return;
-      kartu._tiltAttached = true;
-
-      let cachedRect = null;
-      let tiltRAF    = null;
-
-      kartu.addEventListener('mouseenter', function () {
-        // Cache rect sekali saat mouse masuk — jauh lebih murah
-        cachedRect = kartu.getBoundingClientRect();
-      });
-
-      kartu.addEventListener('mousemove', function (e) {
-        if (isScrolling || !cachedRect) return;
-        if (tiltRAF) return;
-        tiltRAF = requestAnimationFrame(function () {
-          tiltRAF = null;
-          const x = (e.clientX - cachedRect.left) / cachedRect.width  - 0.5;
-          const y = (e.clientY - cachedRect.top)  / cachedRect.height - 0.5;
-          kartu.style.transform =
-            `perspective(600px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) scale(1.03)`;
-        });
-      });
-
-      kartu.addEventListener('mouseleave', function () {
-        cachedRect = null;
-        if (tiltRAF) { cancelAnimationFrame(tiltRAF); tiltRAF = null; }
-        kartu.style.transform = '';
-      });
-    }
-
-    // Attach ke semua kartu yang sudah ada
-    function attachAllTilt() {
-      document.querySelectorAll(TILT_SELECTOR).forEach(attachTilt);
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', attachAllTilt);
-    } else {
-      attachAllTilt();
-    }
-
-    // Expose biar bisa dipanggil ulang setelah fetch selesai nambah kartu baru
-    window.vla_attachTilt = attachAllTilt;
-  }
 
 })();

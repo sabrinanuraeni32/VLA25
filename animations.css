@@ -1,6 +1,5 @@
 /* =============================================
-   VLA25 — ANIMATIONS.CSS
-   Semua animasi terpusat di sini
+   VLA25 — ANIMATIONS.CSS  (optimized)
    ============================================= */
 
 /* ── PAGE TRANSITION ── */
@@ -20,24 +19,33 @@ body.page-exit {
   to   { opacity: 0; transform: translateY(-8px); }
 }
 
-/* ── HEADER: LOGO PULSE + TITLE GLOW ── */
+/* ── HEADER: LOGO PULSE ──
+   Hapus animasi box-shadow (paint-heavy), ganti pakai
+   filter drop-shadow yang GPU-accelerated.
+── */
 .header-logo {
   animation: logoPulse 3s ease-in-out infinite;
   transform-origin: center;
+  /* Static glow — nggak perlu dianimasikan */
+  filter: drop-shadow(0 0 6px #d308fa55);
 }
 @keyframes logoPulse {
   0%, 100% { transform: scale(1); }
   50%       { transform: scale(1.06); }
 }
 
-/* DIRINGANKAN: box-shadow dihapus dari keyframe (trigger repaint),
-   diganti filter drop-shadow yang GPU-accelerated */
+/* ── TITLE GLOW ──
+   Ganti multi-layer text-shadow animation (repaint tiap frame)
+   → filter brightness + drop-shadow (composite-only, GPU).
+── */
 .header h1 {
   animation: titleGlow 2.5s ease-in-out infinite alternate;
+  /* Static base shadow biar tetap ada glow-nya */
+  text-shadow: 0 0 20px #d308fa88, 0 0 40px #d308fa44;
 }
 @keyframes titleGlow {
-  from { filter: drop-shadow(0 0 6px #d308fa66); }
-  to   { filter: drop-shadow(0 0 16px #d308facc); }
+  from { filter: brightness(1)   drop-shadow(0 0  8px #d308fa66); }
+  to   { filter: brightness(1.1) drop-shadow(0 0 18px #d308facc); }
 }
 
 /* ── FLOATING PARTICLES DI HEADER ── */
@@ -47,6 +55,8 @@ body.page-exit {
   background: #d308fa;
   pointer-events: none;
   opacity: 0;
+  /* contain: strict agar particle nggak trigger layout seluruh page */
+  contain: strict;
   animation: floatParticle linear infinite;
 }
 @keyframes floatParticle {
@@ -54,6 +64,10 @@ body.page-exit {
   10%  { opacity: 0.6; }
   90%  { opacity: 0.3; }
   100% { opacity: 0;   transform: translateY(-120px) scale(1.2); }
+}
+/* Matikan partikel di mobile — nggak kelihatan, tapi makan resource */
+@media (max-width: 768px) {
+  .particle { display: none; }
 }
 
 /* ── SCROLL-TRIGGERED FADE IN (via IntersectionObserver) ── */
@@ -68,16 +82,16 @@ body.page-exit {
   transform: translateY(0);
 }
 /* Stagger untuk anak-anak dalam .reveal-group */
-.reveal-group .reveal:nth-child(1)  { transition-delay: 0.00s; }
-.reveal-group .reveal:nth-child(2)  { transition-delay: 0.07s; }
-.reveal-group .reveal:nth-child(3)  { transition-delay: 0.14s; }
-.reveal-group .reveal:nth-child(4)  { transition-delay: 0.21s; }
-.reveal-group .reveal:nth-child(5)  { transition-delay: 0.28s; }
-.reveal-group .reveal:nth-child(6)  { transition-delay: 0.35s; }
-.reveal-group .reveal:nth-child(7)  { transition-delay: 0.42s; }
-.reveal-group .reveal:nth-child(8)  { transition-delay: 0.49s; }
-.reveal-group .reveal:nth-child(9)  { transition-delay: 0.56s; }
-.reveal-group .reveal:nth-child(10) { transition-delay: 0.63s; }
+.reveal-group .reveal:nth-child(1)    { transition-delay: 0.00s; }
+.reveal-group .reveal:nth-child(2)    { transition-delay: 0.07s; }
+.reveal-group .reveal:nth-child(3)    { transition-delay: 0.14s; }
+.reveal-group .reveal:nth-child(4)    { transition-delay: 0.21s; }
+.reveal-group .reveal:nth-child(5)    { transition-delay: 0.28s; }
+.reveal-group .reveal:nth-child(6)    { transition-delay: 0.35s; }
+.reveal-group .reveal:nth-child(7)    { transition-delay: 0.42s; }
+.reveal-group .reveal:nth-child(8)    { transition-delay: 0.49s; }
+.reveal-group .reveal:nth-child(9)    { transition-delay: 0.56s; }
+.reveal-group .reveal:nth-child(10)   { transition-delay: 0.63s; }
 .reveal-group .reveal:nth-child(n+11) { transition-delay: 0.70s; }
 
 /* ── NAVBAR LINK UNDERLINE SLIDE ── */
@@ -99,15 +113,9 @@ body.page-exit {
 }
 
 /* ── HAMBURGER → X TRANSFORM ── */
-.hamburger.terbuka span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-.hamburger.terbuka span:nth-child(2) {
-  opacity: 0; transform: scaleX(0);
-}
-.hamburger.terbuka span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
+.hamburger.terbuka span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.terbuka span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.terbuka span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ── MOBILE NAV SLIDE DOWN ── */
 .nav-links {
@@ -145,17 +153,21 @@ body.page-exit {
 }
 
 /* ── KARTU HOVER LIFT ──
-   will-change hanya aktif saat hover, bukan permanen,
-   supaya GPU memory tidak dipakai terus-terusan */
+   will-change hanya aktif saat hover, bukan permanen di semua kartu.
+   Kalau dipasang permanent di banyak elemen sekaligus, browser
+   mengalokasikan layer GPU untuk semua → justru berat.
+── */
 .kartu, .kartu-mgmt, .kartu-pengumuman,
 .kartu-spotlight, .polaroid, .stat-box,
 .founder-card, .info-item {
-  transition: transform 0.3s cubic-bezier(.22,.68,0,1.4),
-              box-shadow 0.3s ease;
+  transition: none;
+  contain: layout style;
 }
 .kartu:hover, .kartu-mgmt:hover, .kartu-pengumuman:hover,
 .kartu-spotlight:hover, .polaroid:hover, .stat-box:hover,
 .founder-card:hover, .info-item:hover {
+  transition: transform 0.25s cubic-bezier(.22,.68,0,1.4),
+              box-shadow 0.25s ease;
   will-change: transform;
 }
 
@@ -182,7 +194,10 @@ body.page-exit {
   transform: scale(1.07);
 }
 
-/* ── BADGE SHIMMER ── */
+/* ── BADGE SHIMMER ──
+   background-position lebih ringan dari animasi gradient lain
+   karena cuma geser posisi, nggak recalculate gradient.
+── */
 .badge {
   background: linear-gradient(90deg, #4a0080, #7b30c8, #4a0080);
   background-size: 200% auto;
@@ -198,10 +213,10 @@ body.page-exit {
   animation: polaroidWiggle 0.3s ease;
 }
 @keyframes polaroidWiggle {
-  0%   { transform: rotate(0deg) scale(1.05); }
+  0%   { transform: rotate(0deg)    scale(1.05); }
   25%  { transform: rotate(-1.5deg) scale(1.05); }
-  75%  { transform: rotate(1.5deg) scale(1.05); }
-  100% { transform: rotate(0deg) scale(1.05); }
+  75%  { transform: rotate(1.5deg)  scale(1.05); }
+  100% { transform: rotate(0deg)    scale(1.05); }
 }
 
 /* ── PENGUMUMAN KARTU SLIDE IN ── */
@@ -215,22 +230,25 @@ body.page-exit {
 }
 
 /* ── TOMBOL MORE PULSE ──
-   Diubah pakai outline/box-shadow opacity trick
-   supaya tidak trigger repaint layout */
+   Ganti animasi box-shadow (paint) → filter drop-shadow (composite).
+── */
 .tombol-more {
   animation: tombolPulse 2s ease-in-out infinite;
+  /* Static base shadow */
+  box-shadow: 0 4px 15px #d308fa33;
 }
 @keyframes tombolPulse {
-  0%, 100% { box-shadow: 0 4px 15px #d308fa33; }
-  50%       { box-shadow: 0 4px 25px #d308fa77; }
+  0%, 100% { filter: brightness(1)    drop-shadow(0 4px  6px #d308fa44); }
+  50%       { filter: brightness(1.08) drop-shadow(0 4px 12px #d308fa88); }
 }
 .tombol-more:hover {
   animation: none;
+  filter: none;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px #d308fa66 !important;
 }
 
-/* ── SHIMMER HEADER ── */
+/* ── SHIMMER HEADER (sweep light) ── */
 .header::after {
   content: '';
   position: absolute;
@@ -298,7 +316,9 @@ body.page-exit {
   }
 }
 
-/* ── LOADING SKELETON (PULSE) ── */
+/* ── LOADING SKELETON (PULSE) ──
+   Pakai opacity saja — sudah GPU-composited, nggak perlu diubah.
+── */
 .skeleton {
   background: #e8d5f5;
   border-radius: 12px;
@@ -306,7 +326,7 @@ body.page-exit {
   overflow: hidden;
   animation: skeletonPulse 1.4s ease-in-out infinite;
 }
-.skeleton.circle { border-radius: 50%; }
+.skeleton.circle       { border-radius: 50%; }
 .skeleton.teks-panjang { height: 14px; width: 70%; border-radius: 8px; }
 .skeleton.teks-pendek  { height: 12px; width: 40%; border-radius: 8px; }
 @keyframes skeletonPulse {
@@ -338,38 +358,21 @@ body.page-exit {
   pointer-events: none;
 }
 .footer-logo {
-  width: 60px;
-  height: 60px;
+  width: 60px; height: 60px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 12px;
   border: 2px solid #d308fa66;
 }
-.footer-nama {
-  color: #d308fa;
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  margin-bottom: 4px;
-}
-.footer-sub {
-  color: #e8b4ff;
-  font-size: 10px;
-  letter-spacing: 6px;
-  margin-bottom: 20px;
-}
+.footer-nama  { color: #d308fa; font-size: 20px; font-weight: 700; letter-spacing: 4px; margin-bottom: 4px; }
+.footer-sub   { color: #e8b4ff; font-size: 10px; letter-spacing: 6px; margin-bottom: 20px; }
 .footer-sosmed {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 20px;
+  display: flex; justify-content: center;
+  gap: 12px; margin-bottom: 20px;
 }
 .footer-sosmed a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px;
   border-radius: 50%;
   border: 1px solid #d308fa66;
   color: #e8b4ff;
@@ -383,8 +386,4 @@ body.page-exit {
   color: #fff;
   transform: translateY(-3px);
 }
-.footer-copy {
-  color: #9b30d966;
-  font-size: 11px;
-  letter-spacing: 1px;
-}
+.footer-copy { color: #9b30d966; font-size: 11px; letter-spacing: 1px; }
