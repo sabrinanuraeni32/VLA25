@@ -229,18 +229,12 @@ body.page-exit {
 
 /* ── TOMBOL MORE PULSE ── */
 .tombol-more {
-  animation: tombolPulse 2s ease-in-out infinite;
   box-shadow: 0 4px 15px #d308fa33;
-}
-@keyframes tombolPulse {
-  0%, 100% { filter: brightness(1)    drop-shadow(0 4px  6px #d308fa44); }
-  50%       { filter: brightness(1.08) drop-shadow(0 4px 12px #d308fa88); }
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .tombol-more:hover {
-  animation: none;
-  filter: none;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px #d308fa66 !important;
+  box-shadow: 0 8px 25px #d308fa66;
 }
 
 /* ── GARIS HIERARKI MANAGEMENT ── */
