@@ -1,6 +1,5 @@
 /* =============================================
-   VLA25 — ANIMATIONS.JS
-   Semua logic animasi terpusat di sini
+   VLA25 — ANIMATIONS.JS  (optimized)
    ============================================= */
 
 (function () {
@@ -16,18 +15,14 @@
     setTimeout(() => { window.location.href = href; }, 230);
   });
 
-  /* ── FLOATING PARTICLES DI HEADER ──
-     Dikurangi jadi 6 partikel (dari 10).
-     Partikel di-pool sekali — tidak dibuat ulang.
-  ── */
+  /* ── FLOATING PARTICLES DI HEADER ── */
   const header = document.querySelector('.header');
   if (header) {
-    const PARTICLE_COUNT = 6;
     const frag = document.createDocumentFragment();
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
+    for (let i = 0; i < 6; i++) {
       const p = document.createElement('span');
       p.className = 'particle';
-      const size  = Math.random() * 5 + 2;
+      const size = Math.random() * 5 + 2;
       p.style.cssText =
         `width:${size}px;height:${size}px;` +
         `left:${Math.random() * 100}%;` +
@@ -74,7 +69,7 @@
     ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
   });
 
-  /* ── SCROLL-TRIGGERED REVEAL (IntersectionObserver) ── */
+  /* ── SCROLL-TRIGGERED REVEAL ── */
   const revealObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
@@ -111,10 +106,7 @@
 
   window.vla_initReveal = initReveal;
 
-  /* ── STATS COUNTER ANIMATION ──
-     MutationObserver hanya dibuat kalau elemen masih kosong/dash.
-     Kalau sudah ada angka langsung animate — tidak perlu observer.
-  ── */
+  /* ── STATS COUNTER ANIMATION ── */
   const animatedStats = new WeakSet();
 
   function animateCounter(el, target, duration) {
@@ -134,21 +126,12 @@
   function watchStatEl(el) {
     if (animatedStats.has(el)) return;
     const teks = el.textContent.trim();
-
-    // Langsung animate kalau sudah ada angka
     if (/^\d+$/.test(teks)) {
       const val = parseInt(teks, 10);
       if (val > 0) animateCounter(el, val, 1100);
       return;
     }
-
-    // Kalau isinya bukan angka dan bukan dash, skip
-    if (teks && teks !== '-') {
-      animatedStats.add(el);
-      return;
-    }
-
-    // Kosong / dash: tunggu konten diisi (misal setelah fetch)
+    if (teks && teks !== '-') { animatedStats.add(el); return; }
     const mo = new MutationObserver(function () {
       const t = el.textContent.trim();
       if (!t || t === '-') return;
@@ -174,51 +157,69 @@
   if (logo) logo.classList.add('header-logo');
 
   /* ── KARTU TILT EFFECT — desktop only ──
-     FIX: mouseleave sebelumnya pakai capture (true) → fire di semua elemen.
-     Sekarang pakai delegasi yang benar:
-     - mousemove: throttled via rAF, sama seperti sebelumnya
-     - mouseleave: hanya listen di kartu yang sedang aktif (bukan global capture)
+     FIX UTAMA:
+     1. getBoundingClientRect() di-cache saat mouseenter, bukan tiap mousemove
+     2. Tilt dimatikan saat user scroll (isScrolling flag)
+     3. Pakai pointer-events langsung ke kartu, bukan global mousemove
   ── */
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    let tiltRAF   = null;
-    let lastKartu = null;
 
-    function resetTilt(kartu) {
-      if (!kartu) return;
-      kartu.style.transform = '';
-      kartu.removeEventListener('mouseleave', onKartuLeave);
-      lastKartu = null;
-    }
+    let isScrolling = false;
+    let scrollTimer = null;
 
-    function onKartuLeave() {
-      resetTilt(lastKartu);
-    }
+    // Flag saat scroll — tilt dimatikan sementara
+    window.addEventListener('scroll', function () {
+      isScrolling = true;
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function () { isScrolling = false; }, 150);
+    }, { passive: true });
 
-    document.addEventListener('mousemove', function (e) {
-      if (tiltRAF) return;
-      tiltRAF = requestAnimationFrame(function () {
-        tiltRAF = null;
-        const kartu = e.target.closest('.kartu, .kartu-mgmt, .stat-box, .profil-box');
+    const TILT_SELECTOR = '.kartu, .kartu-mgmt, .stat-box, .profil-box';
 
-        if (lastKartu && lastKartu !== kartu) {
-          resetTilt(lastKartu);
-        }
+    function attachTilt(kartu) {
+      if (kartu._tiltAttached) return;
+      kartu._tiltAttached = true;
 
-        if (!kartu) return;
+      let cachedRect = null;
+      let tiltRAF    = null;
 
-        // Pasang listener mouseleave langsung di kartu (bukan global capture)
-        if (lastKartu !== kartu) {
-          kartu.addEventListener('mouseleave', onKartuLeave);
-          lastKartu = kartu;
-        }
-
-        const rect = kartu.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width  - 0.5;
-        const y = (e.clientY - rect.top)  / rect.height - 0.5;
-        kartu.style.transform =
-          `perspective(600px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) scale(1.03)`;
+      kartu.addEventListener('mouseenter', function () {
+        // Cache rect sekali saat mouse masuk — jauh lebih murah
+        cachedRect = kartu.getBoundingClientRect();
       });
-    });
+
+      kartu.addEventListener('mousemove', function (e) {
+        if (isScrolling || !cachedRect) return;
+        if (tiltRAF) return;
+        tiltRAF = requestAnimationFrame(function () {
+          tiltRAF = null;
+          const x = (e.clientX - cachedRect.left) / cachedRect.width  - 0.5;
+          const y = (e.clientY - cachedRect.top)  / cachedRect.height - 0.5;
+          kartu.style.transform =
+            `perspective(600px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) scale(1.03)`;
+        });
+      });
+
+      kartu.addEventListener('mouseleave', function () {
+        cachedRect = null;
+        if (tiltRAF) { cancelAnimationFrame(tiltRAF); tiltRAF = null; }
+        kartu.style.transform = '';
+      });
+    }
+
+    // Attach ke semua kartu yang sudah ada
+    function attachAllTilt() {
+      document.querySelectorAll(TILT_SELECTOR).forEach(attachTilt);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', attachAllTilt);
+    } else {
+      attachAllTilt();
+    }
+
+    // Expose biar bisa dipanggil ulang setelah fetch selesai nambah kartu baru
+    window.vla_attachTilt = attachAllTilt;
   }
 
 })();
