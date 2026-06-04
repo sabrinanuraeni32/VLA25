@@ -12,6 +12,31 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ── VIEW TRANSITION: morph avatar → foto profil ── */
+    ::view-transition-old(member-avatar) {
+      animation: vtZoomOut 0.35s cubic-bezier(.4,0,.2,1) both;
+    }
+    ::view-transition-new(member-avatar) {
+      animation: vtZoomIn 0.45s cubic-bezier(.22,.68,0,1.2) both;
+    }
+    @keyframes vtZoomOut {
+      from { transform: scale(1);    opacity: 1; border-radius: 50%; }
+      to   { transform: scale(1.18); opacity: 0; border-radius: 50%; }
+    }
+    @keyframes vtZoomIn {
+      from { transform: scale(0.65); opacity: 0; border-radius: 50%; }
+      to   { transform: scale(1);    opacity: 1; border-radius: 50%; }
+    }
+    /* Halaman lain fade in smooth selama morph berlangsung */
+    ::view-transition-old(root) {
+      animation: none;
+      mix-blend-mode: normal;
+    }
+    ::view-transition-new(root) {
+      animation: vtPageIn 0.45s ease both;
+    }
+    @keyframes vtPageIn { from { opacity: 0; } to { opacity: 1; } }
+
     body {
       background-color: #f5e6ff;
       background-image: radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
@@ -126,6 +151,7 @@
       margin: 0 auto 20px;
       font-size: 40px; color: #f0a0ff;
       overflow: hidden;
+      view-transition-name: member-avatar;
     }
 
     .stage-name {
@@ -311,6 +337,15 @@
       });
   </script>
 
+  <script>
+    /* Cegah body-pageFadeIn bertabrakan dengan view transition */
+    if (sessionStorage.getItem('vt_member')) {
+      document.documentElement.style.setProperty('--vt-active', '1');
+      /* Clear setelah dipakai */
+      sessionStorage.removeItem('vt_member');
+      sessionStorage.removeItem('vt_foto');
+    }
+  </script>
   <script src="animations.js"></script>
 </body>
 </html>

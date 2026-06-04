@@ -6,6 +6,11 @@
 body {
   animation: pageFadeIn 0.4s ease both;
 }
+/* Saat View Transition aktif (dari members ke profil), body fade dimatikan
+   supaya tidak konflik dengan morph animation */
+:root[style*="--vt-active"] body {
+  animation: none;
+}
 @keyframes pageFadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }

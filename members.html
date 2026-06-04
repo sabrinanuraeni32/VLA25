@@ -392,8 +392,9 @@
     function buatKartu(m) {
       const el = document.createElement('div');
       el.className = 'kartu';
+      const avatarId = 'avatar-' + m.nama.replace(/\s+/g, '-').toLowerCase();
       el.innerHTML = `
-        <div class="avatar">
+        <div class="avatar" id="${avatarId}">
           ${m.foto
             ? `<img src="idcmember/${m.foto}" alt="${m.nama}">`
             : inisial(m.nama)
@@ -402,7 +403,28 @@
         <p class="nama-member">${m.nama}</p>
       `;
       el.addEventListener('click', () => {
-        window.location = `profil.html?nama=${encodeURIComponent(m.nama)}`;
+        const avatarEl = document.getElementById(avatarId);
+        const destUrl  = `profil.html?nama=${encodeURIComponent(m.nama)}`;
+
+        // Simpan info transisi untuk profil.html
+        sessionStorage.setItem('vt_member', m.nama);
+        sessionStorage.setItem('vt_foto', m.foto || '');
+
+        if (document.startViewTransition && avatarEl) {
+          // Set view-transition-name pada avatar yang diklik
+          avatarEl.style.viewTransitionName = 'member-avatar';
+
+          const transition = document.startViewTransition(() => {
+            window.location.href = destUrl;
+          });
+
+          // Kalau browser langsung navigasi sebelum finish, biarkan saja
+          transition.finished.catch(() => {});
+        } else {
+          // Fallback: animasi exit biasa
+          document.body.classList.add('page-exit');
+          setTimeout(() => { window.location.href = destUrl; }, 230);
+        }
       });
       return el;
     }
