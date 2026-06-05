@@ -19,6 +19,7 @@
       color: #4a0080;
       font-family: 'Quicksand', Arial, sans-serif;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .header {
@@ -35,7 +36,7 @@
       justify-content: center;
       padding: 60px 20px 60px;
       position: relative;
-      overflow: visible;
+      overflow: hidden;
     }
 
     /* shimmer pakai transform saja — tidak trigger layout */
@@ -461,7 +462,7 @@
       .konten { padding: 0 20px; margin: 28px auto; }
 
       .header {
-        width: 100vw !important;
+        width: 100% !important;
         height: 100vw !important;
         min-height: unset !important;
         max-height: 100vw !important;

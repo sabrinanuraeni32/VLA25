@@ -77,13 +77,13 @@
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+  }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' });
 
   function initReveal() {
     const selector =
       '.stat-box, .kartu-pengumuman, .kartu-spotlight, ' +
       '.polaroid, .kartu-mgmt, .kartu, ' +
-      '.founder-card, .info-item, .section';
+      '.founder-card, .info-item, .sosmed-card, .section';
 
     document.querySelectorAll(selector).forEach(function (el) {
       if (el.classList.contains('skeleton')) return;
@@ -156,11 +156,5 @@
   const logo = document.querySelector('.header img');
   if (logo) logo.classList.add('header-logo');
 
-  /* ── TILT EFFECT: DIHAPUS ──
-     Tilt 3D (rotateX/rotateY via mousemove) dihapus karena konflik
-     dengan CSS transition: transform pada kartu — hasilnya delay &
-     patah-patah saat scroll. Hover effect (scale + shadow) tetap
-     jalan via CSS :hover, tidak butuh JS sama sekali.
-  ── */
 
 })();
