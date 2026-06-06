@@ -1,8 +1,4 @@
-/* =============================================
-   VLA25 — ANIMATIONS.CSS  (optimized v3)
-   ============================================= */
 
-/* ── PAGE TRANSITION ── */
 body {
   animation: pageFadeIn 0.5s ease both;
 }
@@ -22,7 +18,6 @@ body.page-exit {
   to   { opacity: 0; transform: translateY(-8px); }
 }
 
-/* ── HEADER: LOGO PULSE ── */
 .header-logo {
   animation: logoPulse 3s ease-in-out infinite;
   transform-origin: center;

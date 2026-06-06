@@ -1,10 +1,7 @@
-/* =============================================
-   VLA25 — ANIMATIONS.JS  (optimized)
-   ============================================= */
 
 (function () {
 
-  /* ── PAGE TRANSITION (exit) ── */
+ 
   document.addEventListener('click', function (e) {
     const link = e.target.closest('a[href]');
     if (!link) return;
@@ -15,11 +12,10 @@
     setTimeout(() => { window.location.href = href; }, 230);
   });
 
-  /* ── FLOATING PARTICLES DI HEADER ── */
   const header = document.querySelector('.header');
   if (header) {
     const frag = document.createDocumentFragment();
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 25; i++) {
       const p = document.createElement('span');
       p.className = 'particle';
       const size = Math.random() * 5 + 2;
@@ -34,7 +30,6 @@
     header.appendChild(frag);
   }
 
-  /* ── HAMBURGER TOGGLE ── */
   const hamburger = document.querySelector('.hamburger');
   const navLinks  = document.getElementById('nav-links');
   if (hamburger && navLinks) {
@@ -45,7 +40,6 @@
     });
   }
 
-  /* ── ACTIVE NAVBAR ── */
   (function () {
     const path = window.location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('.nav-links a').forEach(a => {
@@ -53,7 +47,6 @@
     });
   })();
 
-  /* ── RIPPLE EFFECT ── */
   document.addEventListener('click', function (e) {
     const btn = e.target.closest('.tombol, .tombol-more, .filter-btn, .kartu-mgmt');
     if (!btn) return;
@@ -69,7 +62,6 @@
     ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
   });
 
-  /* ── SCROLL-TRIGGERED REVEAL ── */
   const revealObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) {
@@ -106,7 +98,6 @@
 
   window.vla_initReveal = initReveal;
 
-  /* ── STATS COUNTER ANIMATION ── */
   const animatedStats = new WeakSet();
 
   function animateCounter(el, target, duration) {
@@ -152,15 +143,8 @@
     observeStats();
   }
 
-  /* ── HEADER LOGO CLASS ── */
   const logo = document.querySelector('.header img');
   if (logo) logo.classList.add('header-logo');
 
-  /* ── TILT EFFECT: DIHAPUS ──
-     Tilt 3D (rotateX/rotateY via mousemove) dihapus karena konflik
-     dengan CSS transition: transform pada kartu — hasilnya delay &
-     patah-patah saat scroll. Hover effect (scale + shadow) tetap
-     jalan via CSS :hover, tidak butuh JS sama sekali.
-  ── */
 
 })();
