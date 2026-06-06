@@ -15,7 +15,7 @@
   const header = document.querySelector('.header');
   if (header) {
     const frag = document.createDocumentFragment();
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 50; i++) {
       const p = document.createElement('span');
       p.className = 'particle';
       const size = Math.random() * 5 + 2;
