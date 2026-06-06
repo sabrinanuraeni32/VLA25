@@ -156,5 +156,11 @@
   const logo = document.querySelector('.header img');
   if (logo) logo.classList.add('header-logo');
 
+  /* ── TILT EFFECT: DIHAPUS ──
+     Tilt 3D (rotateX/rotateY via mousemove) dihapus karena konflik
+     dengan CSS transition: transform pada kartu — hasilnya delay &
+     patah-patah saat scroll. Hover effect (scale + shadow) tetap
+     jalan via CSS :hover, tidak butuh JS sama sekali.
+  ── */
 
 })();
