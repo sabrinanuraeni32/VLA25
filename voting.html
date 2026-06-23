@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <title>Voting SSK - VLA25</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="animations.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #f5e6ff;
+      background-image:
+        radial-gradient(circle at 20% 20%, #e8b4ff 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, #c084fc 0%, transparent 50%);
+      color: #4a0080;
+      font-family: 'Quicksand', Arial, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .header {
+      position: relative;
+      z-index: 0;
+      min-height: 280px;
+      background:
+        linear-gradient(135deg, #2d005799 0%, #4a008099 40%, #7b2fa899 100%),
+        url('header-dekstop.jpeg') center/cover no-repeat;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 20px;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, #d308fa22 0%, transparent 60%);
+      animation: shimmer 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes shimmer {
+      0%, 100% { transform: translate(0, 0); }
+      50%       { transform: translate(10%, 10%); }
+    }
+
+    .header .sub-judul {
+      color: #e8b4ff;
+      letter-spacing: 8px;
+      font-size: 11px;
+      margin: 6px 0;
+      position: relative; z-index: 1;
+    }
+    .header h1 {
+      color: #d308fa;
+      letter-spacing: 4px;
+      font-size: 34px;
+      font-weight: 700;
+      margin: 8px 0;
+      position: relative; z-index: 1;
+    }
+    .hero-desc {
+      color: #c9a0e8;
+      font-size: 13px;
+      line-height: 1.8;
+      max-width: 480px;
+      margin: 10px auto 0;
+      position: relative; z-index: 1;
+    }
+
+    .navbar {
+      background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
+      display: flex;
+      justify-content: center;
+      padding: 0 20px;
+      border-bottom: 1px solid #d308fa44;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      isolation: isolate;
+    }
+    .nav-inner {
+      max-width: 1440px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+    }
+    .nav-brand {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .nav-links a {
+      color: #e8b4ff;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all 0.3s;
+      position: relative;
+      border: 1px solid transparent;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      width: 0; height: 2px;
+      background: #d308fa;
+      border-radius: 2px;
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+    .nav-links a:hover { color: #ffffff; background: #d308fa22; }
+    .nav-links a:hover::after,
+    .nav-links a.aktif::after { width: 80%; left: 10%; }
+    .nav-links a.aktif {
+      color: #ffffff;
+      background: #d308fa66;
+      border-color: #d308fa88;
+    }
+
+    .hamburger {
+      display: none;
+      background: none; border: none; cursor: pointer;
+      padding: 4px; position: relative; z-index: 2000;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: #e8b4ff; margin: 5px 0;
+      transition: all 0.3s; border-radius: 2px;
+    }
+    .hamburger.terbuka span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.terbuka span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.terbuka span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .konten {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 40px;
+    }
+
+    .konten h2 {
+      color: #4a0080;
+      letter-spacing: 2px;
+      font-size: 20px;
+      font-weight: 700;
+      border-bottom: 2px solid #f0a0ff;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* ── KARTU KUOTA ── */
+    .kuota-box {
+      background: linear-gradient(135deg, #4a0080, #7b2fa8);
+      border: 1px solid #d308fa66;
+      border-radius: 15px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      box-shadow: 0 4px 20px #d308fa33;
+    }
+    .kuota-label {
+      color: #e8b4ff;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .kuota-angka {
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .kuota-icon {
+      font-size: 32px;
+    }
+
+    .banner-habis {
+      background: #fff0fb;
+      border: 1px solid #d308fa66;
+      color: #9b30d9;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 13px;
+      margin-bottom: 24px;
+      display: none;
+      text-align: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 16px;
+    }
+
+    .kartu-vote {
+      background: linear-gradient(135deg, #4a0080, #7b2fa8);
+      border: 1px solid #d308fa66;
+      border-radius: 15px;
+      padding: 18px 14px;
+      text-align: center;
+      box-shadow: 0 4px 15px #d308fa22;
+      transition: transform 0.25s cubic-bezier(.22,.68,0,1.4), box-shadow 0.25s ease;
+    }
+    .kartu-vote:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 28px #d308fa44;
+    }
+
+    .avatar {
+      background: linear-gradient(135deg, #9b30d9, #d308fa);
+      color: #fff;
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 10px;
+      font-size: 15px; font-weight: 700;
+      box-shadow: 0 0 15px #d308fa66;
+      overflow: hidden;
+    }
+    .avatar img {
+      width: 64px; height: 64px;
+      border-radius: 50%; object-fit: cover; object-position: center;
+    }
+
+    .nama-member {
+      font-size: 12px;
+      color: #ffffff;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+    .vote-count {
+      font-size: 10px;
+      color: #e8b4ff;
+      margin-bottom: 12px;
+    }
+
+    .btn-vote {
+      background: #ffffff;
+      color: #d308fa;
+      border: none;
+      width: 100%;
+      padding: 8px 0;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+    .btn-vote:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px #ffffff55;
+    }
+    .btn-vote:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .btn-vote.berhasil {
+      background: #d308fa;
+      color: #ffffff;
+    }
+
+    .loading-dots {
+      display: inline-flex;
+      gap: 3px;
+      align-items: center;
+      justify-content: center;
+    }
+    .loading-dots span {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #d308fa;
+      animation: dotBounce 1s infinite ease-in-out both;
+    }
+    .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+    .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes dotBounce {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    .kosong, .tidak-ditemukan {
+      color: #9b30d9;
+      font-style: italic;
+      font-size: 13px;
+    }
+
+    .info-box {
+      background: #ffffff;
+      border: 1px solid #d308fa44;
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 12px;
+      color: #9b30d9;
+      margin-top: 32px;
+      line-height: 1.7;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #2d0057 0%, #4a0080 40%, #7b2fa8 100%);
+      text-align: center;
+      padding: 48px 20px;
+      margin-top: 60px;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid #d308fa44;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, #d308fa11 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .footer-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 2px solid #d308fa66; }
+    .footer-nama { color: #d308fa; font-size: 20px; font-weight: 700; letter-spacing: 4px; margin-bottom: 4px; }
+    .footer-sub  { color: #e8b4ff; font-size: 10px; letter-spacing: 6px; margin-bottom: 20px; }
+    .footer-sosmed { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
+    .footer-sosmed a {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid #d308fa66; color: #e8b4ff; text-decoration: none; transition: all 0.3s;
+    }
+    .footer-sosmed a:hover { background: #d308fa33; border-color: #d308fa; color: #fff; transform: translateY(-3px); }
+    .footer-copy { color: #9b30d966; font-size: 11px; letter-spacing: 1px; }
+
+    .skeleton {
+      background: linear-gradient(90deg, #7b2fa855 25%, #9b30d955 50%, #7b2fa855 75%);
+      background-size: 200% 100%;
+      animation: shimmerSkeleton 1.4s infinite;
+      border-radius: 15px;
+    }
+    @keyframes shimmerSkeleton {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    @media (max-width: 600px) {
+      .konten { padding: 0 20px; margin: 24px auto; }
+      .header { min-height: unset; padding: 30px 16px; }
+      .header h1 { font-size: 24px; }
+      .hero-desc { font-size: 11px; }
+
+      .hamburger { display: block; }
+      .nav-links {
+        display: none; flex-direction: column; gap: 0;
+        max-height: 0; overflow: hidden; width: 100%; opacity: 0;
+        transition: max-height 0.35s cubic-bezier(.4,0,.2,1), opacity 0.3s ease;
+      }
+      .nav-links.aktif { display: flex; max-height: 400px; opacity: 1; }
+      .nav-links a {
+        border-radius: 0; border-bottom: 1px solid #d308fa22;
+        padding: 12px 20px; width: 100%; text-align: center;
+      }
+      .nav-inner { flex-wrap: wrap; }
+
+      .kuota-box { padding: 16px 18px; }
+      .kuota-angka { font-size: 22px; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .avatar { width: 54px; height: 54px; }
+      .avatar img { width: 54px; height: 54px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <p class="sub-judul">VLA25 PRESENTS</p>
+    <h1>SSK VOTING</h1>
+    <p class="sub-judul">VELORA25</p>
+    <p class="hero-desc">Berikan dukunganmu untuk member favoritmu! Setiap orang punya 5 jatah vote per hari, bisa dibagi ke member manapun yang kamu suka. 🌸</p>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">VLA25</a>
+      <button class="hamburger" aria-label="Menu" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="members.html">Members</a>
+        <a href="aktivitas.html">Aktivitas</a>
+        <a href="pengumuman.html">Pengumuman</a>
+        <a href="management.html">Management</a>
+        <a href="voting.html" class="aktif">Voting SSK</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="konten">
+
+    <div class="kuota-box">
+      <div>
+        <div class="kuota-label">Sisa jatah vote hari ini</div>
+        <div class="kuota-angka" id="kuota-display">— / 5</div>
+      </div>
+      <div class="kuota-icon">🎫</div>
+    </div>
+
+    <div class="banner-habis" id="banner-habis">
+      Jatah vote kamu hari ini sudah habis. Balik lagi besok ya! Jatah akan reset otomatis tiap hari.
+    </div>
+
+    <h2>🗳️ Pilih Member Favoritmu</h2>
+    <div class="grid" id="grid-member">
+      <div class="kartu-vote skeleton" style="height:190px;"></div>
+      <div class="kartu-vote skeleton" style="height:190px;"></div>
+      <div class="kartu-vote skeleton" style="height:190px;"></div>
+      <div class="kartu-vote skeleton" style="height:190px;"></div>
+    </div>
+
+    <div class="info-box">
+      ℹ️ Hasil voting akan disembunyikan dan diumumkan setelah periode SSK berakhir. Setiap orang mendapat 5 jatah vote per hari yang reset otomatis pukul 00:00 WIB, dan bisa dibagikan ke member manapun secara bebas.
+    </div>
+
+  </div>
+
+  <footer>
+    <img src="logo.jpeg" alt="Logo VLA25" class="footer-logo">
+    <div class="footer-nama">VLA25</div>
+    <div class="footer-sub">VELORA25</div>
+    <div class="footer-sosmed">
+      <a href="https://www.tiktok.com/@velora25agency" target="_blank" title="TikTok">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/>
+        </svg>
+      </a>
+      <a href="https://whatsapp.com/channel/0029Vb6IoDd2ER6mPn09Jt2e" target="_blank" title="WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+      </a>
+    </div>
+    <div class="footer-copy">© 2025 VLA25 · Velora25 · VNC</div>
+    <p style="color: #e8b4ff88; font-size: 10px; letter-spacing: 2px; margin: 6px 0 0; font-style: italic;">designed & built by <span style="color: #d308fa; font-weight: 700; font-style: normal; letter-spacing: 2px;">LoorenZyy</span></p>
+  </footer>
+
+  <script>
+    /* ══════════════════════════════════════════
+       KONFIGURASI — GANTI INI SESUAI PUNYA KAMU
+       ══════════════════════════════════════════ */
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzEzJOCPBVh4icxqBHqvejLJehc2SRkRkgwzVcVcAOvUSMxpOW8QLgCJH-nIUfUFjIk/exec";
+    const SHEET_MEMBERS_SSK = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTezRUcTNN1IfbPzFmoiutnZU2KUHP2x0IkTBFdc0bOK_aypNginCvzoI_Y8AmLZ-l6VYX3tzi-BTPM/pub?gid=0&single=true&output=csv";
+
+    /* ══════════════════════════════════════════
+       DEVICE ID — "KTP sementara" buat browser ini
+       ══════════════════════════════════════════ */
+    function getDeviceId() {
+      let id = localStorage.getItem('vla25_device_id');
+      if (!id) {
+        id = (crypto.randomUUID ? crypto.randomUUID() : 'dev-' + Date.now() + '-' + Math.random().toString(36).slice(2));
+        localStorage.setItem('vla25_device_id', id);
+      }
+      return id;
+    }
+    const deviceId = getDeviceId();
+
+    /* ══════════════════════════════════════════
+       AMBIL IP PUBLIK (buat lapis kedua anti-spam)
+       ══════════════════════════════════════════ */
+    async function getPublicIp() {
+      try {
+        const r = await fetch('https://api.ipify.org?format=json');
+        const d = await r.json();
+        return d.ip || 'unknown';
+      } catch (err) {
+        return 'unknown';
+      }
+    }
+
+    let myIp = 'unknown';
+    let sisaKuota = 5;
+    let semuaMember = [];
+    let voteSesiIni = {}; // tracking klik di sesi ini (visual feedback doang)
+
+    function inisial(nama) {
+      const b = nama.replace(/[^a-zA-Z\s]/g, '').trim().split(' ');
+      return ((b[0]?.[0] || '') + (b[1]?.[0] || '')).toUpperCase();
+    }
+
+    function updateKuotaDisplay() {
+      document.getElementById('kuota-display').textContent = sisaKuota + ' / 5';
+      document.getElementById('banner-habis').style.display = sisaKuota <= 0 ? 'block' : 'none';
+      document.querySelectorAll('.btn-vote').forEach(btn => {
+        if (sisaKuota <= 0) btn.disabled = true;
+      });
+    }
+
+    function buatKartu(m) {
+      const el = document.createElement('div');
+      el.className = 'kartu-vote';
+      const safeId = m.nama.replace(/\s+/g, '-').toLowerCase();
+      el.innerHTML = `
+        <div class="avatar">
+          ${m.foto
+            ? `<img src="idcmember/${m.foto}" alt="${m.nama}">`
+            : inisial(m.nama)
+          }
+        </div>
+        <div class="nama-member">${m.nama}</div>
+        <div class="vote-count" id="vc-${safeId}">divote ${voteSesiIni[m.nama] || 0}x sesi ini</div>
+        <button class="btn-vote" id="btn-${safeId}" ${sisaKuota <= 0 ? 'disabled' : ''}>
+          Vote
+        </button>
+      `;
+      el.querySelector('.btn-vote').addEventListener('click', () => kirimVote(m.nama, safeId));
+      return el;
+    }
+
+    async function kirimVote(memberId, safeId) {
+      const btn = document.getElementById('btn-' + safeId);
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loading-dots"><span></span><span></span><span></span></span>';
+
+      try {
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify({ deviceId, memberId, ip: myIp })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          sisaKuota = data.remaining;
+          voteSesiIni[memberId] = (voteSesiIni[memberId] || 0) + 1;
+          document.getElementById('vc-' + safeId).textContent = `divote ${voteSesiIni[memberId]}x sesi ini`;
+          btn.textContent = 'Tervote ✓';
+          btn.classList.add('berhasil');
+          setTimeout(() => {
+            btn.textContent = 'Vote';
+            btn.classList.remove('berhasil');
+            btn.disabled = sisaKuota <= 0;
+          }, 900);
+        } else {
+          sisaKuota = data.remaining !== undefined ? data.remaining : sisaKuota;
+          btn.textContent = 'Vote';
+          alert(data.message || 'Vote gagal, coba lagi.');
+          btn.disabled = sisaKuota <= 0;
+        }
+        updateKuotaDisplay();
+      } catch (err) {
+        btn.textContent = 'Vote';
+        btn.disabled = sisaKuota <= 0;
+        alert('Gagal terhubung ke server. Cek koneksi internet kamu.');
+      }
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('grid-member');
+      grid.innerHTML = '';
+      if (!semuaMember.length) {
+        grid.innerHTML = '<p class="kosong">Belum ada member yang terdaftar di SSK periode ini.</p>';
+        return;
+      }
+      semuaMember.forEach(m => grid.appendChild(buatKartu(m)));
+    }
+
+    async function init() {
+      myIp = await getPublicIp();
+
+      try {
+        const cekRes = await fetch(`${APPS_SCRIPT_URL}?deviceId=${encodeURIComponent(deviceId)}&ip=${encodeURIComponent(myIp)}`);
+        const cekData = await cekRes.json();
+        if (cekData.success) sisaKuota = cekData.remaining;
+      } catch (err) {
+        sisaKuota = 5;
+      }
+      updateKuotaDisplay();
+
+      try {
+        const r = await fetch(SHEET_MEMBERS_SSK);
+        const csv = await r.text();
+        const baris = csv.trim().split('\n').slice(1);
+        baris.forEach(b => {
+          const k = b.split(',');
+          const nama = k[1]?.trim();
+          const foto = k[2]?.trim();
+          if (!nama) return;
+          semuaMember.push({ nama, foto });
+        });
+        renderGrid();
+      } catch (err) {
+        document.getElementById('grid-member').innerHTML = '<p class="kosong">Gagal memuat data member. Coba refresh halaman.</p>';
+      }
+    }
+
+    /* ── Hamburger menu ── */
+    const hamburger = document.getElementById('hamburger');
+    const navLinks   = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('terbuka');
+      navLinks.classList.toggle('aktif');
+    });
+
+    init();
+  </script>
+
+  <script src="animations.js"></script>
+</body>
+</html>
