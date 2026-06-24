@@ -11,15 +11,6 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ── PALETTE dari banner ──
-       peach sunset : #f4a56a
-       dusty rose   : #e8899a
-       sakura pink  : #f2c4ce
-       lavender     : #d4b8e0
-       gold warm    : #c9933a
-       deep plum    : #4a0080 (brand tetap)
-    */
-
     body {
       background: #fdf3f6;
       background-image:
@@ -32,7 +23,6 @@
       overflow-x: hidden;
     }
 
-    /* floating petals */
     .petal {
       position: fixed;
       top: -40px;
@@ -49,13 +39,12 @@
       100% { transform: translateY(110vh) rotate(360deg) translateX(60px); opacity: 0; }
     }
 
-    /* ── HEADER ── */
     .header {
       position: relative;
       min-height: 300px;
       background:
-        linear-gradient(160deg, #b5406099 0%, #8b254055 40%, #c9703088 100%),
-        url('header-dekstop.jpeg') center/cover no-repeat;
+        linear-gradient(160deg, #b5406077 0%, #8b254044 40%, #c9703066 100%),
+        url('header-voting.jpeg') center/cover no-repeat;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -112,7 +101,6 @@
       position: relative; z-index: 1;
     }
 
-    /* ── NAVBAR ── */
     .navbar {
       background: linear-gradient(90deg, #2d0820, #5a1a3a, #2d0820);
       display: flex;
@@ -153,7 +141,6 @@
     .hamburger.terbuka span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .hamburger.terbuka span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* ── KONTEN ── */
     .konten { max-width: 860px; margin: 52px auto; padding: 0 40px; }
 
     .section-label {
@@ -175,7 +162,6 @@
       background: linear-gradient(to right, #e8899a88, transparent);
     }
 
-    /* ── BANNER ── */
     .banner-single {
       border-radius: 20px;
       overflow: hidden;
@@ -211,7 +197,6 @@
       color: #fcd5e0aa; text-align: right;
     }
 
-    /* ── SSK DESC ── */
     .ssk-desc {
       background: linear-gradient(135deg, #fff8f9, #fffaf5);
       border: 1px solid #f2c4ce88;
@@ -229,7 +214,6 @@
     .ssk-desc p + p { margin-top: 14px; }
     .ssk-desc strong { color: #c9501a; }
 
-    /* ── TIMELINE ── */
     .timeline {
       position: relative;
       margin-bottom: 60px;
@@ -304,7 +288,6 @@
     .badge-selesai{ background: #ebebeb; color: #999;    border: 1px solid #ccc; }
     .tl-desc { font-size: 12px; color: #8b506a; line-height: 1.65; }
 
-    /* ── CTA ── */
     .cta-box {
       border-radius: 24px;
       padding: 52px 32px;
@@ -330,7 +313,6 @@
       0%,100% { transform: translate(0,0) scale(1); }
       50%      { transform: translate(5%, 8%) scale(1.05); }
     }
-    /* sakura deco di cta */
     .cta-box::after {
       content: '🌸';
       position: absolute;
@@ -383,7 +365,6 @@
       letter-spacing: 1px;
     }
 
-    /* ── FOOTER ── */
     footer {
       background: linear-gradient(135deg, #2d0820, #5a1a3a, #8b2540);
       text-align: center; padding: 48px 20px; margin-top: 60px;
@@ -408,7 +389,6 @@
     .footer-sosmed a:hover { background: #e8899a33; border-color: #e8899a; color: #fff; transform: translateY(-3px); }
     .footer-copy { color: #f2c4ce44; font-size: 11px; letter-spacing: 1px; }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       .konten { padding: 0 20px; margin: 28px auto; }
       .header { min-height: unset; padding: 36px 16px 28px; }
@@ -436,7 +416,6 @@
 </head>
 <body>
 
-  <!-- floating petals -->
   <div class="petal" style="left:8%;  animation-duration:9s;  animation-delay:0s;   font-size:14px;">🌸</div>
   <div class="petal" style="left:20%; animation-duration:12s; animation-delay:2s;   font-size:10px;">🌸</div>
   <div class="petal" style="left:38%; animation-duration:10s; animation-delay:5s;   font-size:16px;">🌸</div>
@@ -475,9 +454,8 @@
 
   <div class="konten">
 
-    <!-- BANNER -->
     <div class="banner-single" id="banner">
-      <img src="WhatsApp_Image_2026-06-24_at_20_46_58.jpeg" alt="Gadis Di Ujung Senja">
+      <img src="banner_ssk.jpeg" alt="Gadis Di Ujung Senja">
       <div class="banner-label">
         <div>
           <div class="badge-single">Single Perdana VLA25</div>
@@ -487,31 +465,29 @@
       </div>
     </div>
 
-    <!-- SSK DESC -->
     <div class="section-label"><h2>✦ Apa itu SSK?</h2></div>
     <div class="ssk-desc" id="ssk-desc">
       <p><strong>Senbatsu Sousenkyo (SSK)</strong> adalah sistem pemilihan member yang akan masuk ke dalam formasi senbatsu — lineup utama yang membawakan single resmi VLA25.</p>
       <p>Di SSK Vol. 1 ini, kamu punya kesempatan untuk menentukan siapa yang akan tampil di single perdana kami, <strong>"Gadis Di Ujung Senja"</strong>. Setiap member mengupload video promosi, lalu para fans memberikan dukungan lewat sistem voting.</p>
     </div>
 
-    <!-- TIMELINE -->
     <div class="section-label"><h2>✦ Timeline SSK Vol. 1</h2></div>
     <div class="timeline">
 
-      <div class="tl-item selesai">
+      <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-card">
           <div class="tl-tanggal">30 Juni 2026</div>
-          <div class="tl-judul">Upload Video Promosi <span class="tl-badge badge-selesai">Selesai</span></div>
+          <div class="tl-judul">Upload Video Promosi <span class="tl-badge badge-segera">Segera</span></div>
           <div class="tl-desc">Setiap member mengupload video promosi SSK mereka sebagai kampanye kepada para fans.</div>
         </div>
       </div>
 
-      <div class="tl-item aktif">
+      <div class="tl-item">
         <div class="tl-dot"></div>
         <div class="tl-card">
           <div class="tl-tanggal">1 Juli – 7 Juli 2026</div>
-          <div class="tl-judul">Voting Tahap 1 <span class="tl-badge badge-aktif">Berlangsung</span></div>
+          <div class="tl-judul">Voting Tahap 1 <span class="tl-badge badge-segera">Segera</span></div>
           <div class="tl-desc">Voting dibuka selama 7 hari. Berikan dukunganmu untuk member favorit kamu!</div>
         </div>
       </div>
@@ -545,7 +521,6 @@
 
     </div>
 
-    <!-- CTA -->
     <div class="cta-box" id="cta-box">
       <div class="cta-label">VLA25 · SSK Vol. 1 · 2026</div>
       <h3>Vote Oshi-mu Sekarang!</h3>
@@ -577,7 +552,6 @@
   </footer>
 
   <script>
-    /* ── Hamburger ── */
     const hamburger = document.getElementById('hamburger');
     const navLinks  = document.getElementById('nav-links');
     hamburger.addEventListener('click', () => {
@@ -585,7 +559,75 @@
       navLinks.classList.toggle('aktif');
     });
 
-    /* ── Scroll reveal ── */
+    // ── Timeline otomatis berdasarkan tanggal ──
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    const tl = [
+      {
+        el: document.querySelectorAll('.tl-item')[0],
+        start: new Date('2026-06-30'),
+        end:   new Date('2026-06-30'),
+        badgeEl: document.querySelectorAll('.tl-item')[0].querySelector('.tl-badge'),
+      },
+      {
+        el: document.querySelectorAll('.tl-item')[1],
+        start: new Date('2026-07-01'),
+        end:   new Date('2026-07-07'),
+        badgeEl: document.querySelectorAll('.tl-item')[1].querySelector('.tl-badge'),
+      },
+      {
+        el: document.querySelectorAll('.tl-item')[2],
+        start: new Date('2026-07-08'),
+        end:   new Date('2026-07-08'),
+        badgeEl: document.querySelectorAll('.tl-item')[2].querySelector('.tl-badge'),
+      },
+      {
+        el: document.querySelectorAll('.tl-item')[3],
+        start: new Date('2026-07-09'),
+        end:   new Date('2026-07-15'),
+        badgeEl: document.querySelectorAll('.tl-item')[3].querySelector('.tl-badge'),
+      },
+      {
+        el: document.querySelectorAll('.tl-item')[4],
+        start: new Date('2026-07-16'),
+        end:   new Date('2026-07-16'),
+        badgeEl: document.querySelectorAll('.tl-item')[4].querySelector('.tl-badge'),
+      },
+    ];
+
+    tl.forEach(item => {
+      const s = new Date(item.start); s.setHours(0,0,0,0);
+      const e = new Date(item.end);   e.setHours(0,0,0,0);
+
+      item.el.classList.remove('aktif','selesai');
+      item.el.querySelector('.tl-dot') && item.el.querySelector('.tl-dot');
+      item.badgeEl.classList.remove('badge-aktif','badge-segera','badge-selesai');
+
+      if (today > e) {
+        item.el.classList.add('selesai');
+        item.badgeEl.classList.add('badge-selesai');
+        item.badgeEl.textContent = 'Selesai';
+      } else if (today >= s && today <= e) {
+        item.el.classList.add('aktif');
+        item.badgeEl.classList.add('badge-aktif');
+        item.badgeEl.textContent = 'Berlangsung';
+      } else {
+        item.badgeEl.classList.add('badge-segera');
+        item.badgeEl.textContent = 'Segera';
+      }
+    });
+
+    // Sembunyikan CTA kalau voting tahap 1 belum/sudah lewat
+    const votingMulai  = new Date('2026-07-01');
+    const votingSelesai = new Date('2026-07-15');
+    votingMulai.setHours(0,0,0,0);
+    votingSelesai.setHours(0,0,0,0);
+    const ctaBox = document.getElementById('cta-box');
+    if (today < votingMulai || today > votingSelesai) {
+      ctaBox.style.display = 'none';
+    }
+
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
         if (e.isIntersecting) {
