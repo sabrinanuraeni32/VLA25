@@ -321,9 +321,23 @@
       .polaroid-img { font-size: 28px; }
       .polaroid-judul { font-size: 11px; }
     }
+
+  
+    /* ── PAGE TRANSITION OVERLAY ──
+       Ganti warna #fdf3f6 di bawah untuk ubah warna overlay transisi.
+       Pilihan: #fdf3f6 (pink tema), #ffffff (putih), #1a0a14 (gelap)      */
+    #page-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #fdf3f6;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    #page-overlay.fade-out { opacity: 1; pointer-events: all; }
   </style>
 </head>
 <body>
+  <div id="page-overlay"></div>
+
 
   <!-- HEADER -->
   <div class="header">
@@ -452,5 +466,24 @@
   </script>
 
   <script src="animations.js"></script>
+  <script>
+    });
+  </script>
+  <script>
+    // ── PAGE TRANSITION ──
+    const _overlay = document.getElementById('page-overlay');
+    document.querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('javascript')) return;
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        _overlay.classList.add('fade-out');
+        setTimeout(() => { window.location.href = href; }, 370);
+      });
+    });
+    window.addEventListener('pageshow', () => {
+      _overlay.classList.remove('fade-out');
+    });
+  </script>
 </body>
 </html>

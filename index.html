@@ -40,7 +40,6 @@
       overflow: hidden;
     }
 
-    /* shimmer pakai transform saja — tidak trigger layout */
     .header::before {
       content: '';
       position: absolute;
@@ -60,7 +59,6 @@
       border-radius: 50%;
       margin-bottom: 15px;
       object-fit: cover;
-      /* logoPulse sudah ada di animations.css — tidak perlu duplikat */
       position: relative; z-index: 1;
     }
 
@@ -77,7 +75,6 @@
       letter-spacing: 6px;
       font-size: 48px;
       font-weight: 700;
-      /* titleGlow sudah ada di animations.css — tidak perlu duplikat */
       margin: 8px 0;
       position: relative; z-index: 1;
     }
@@ -516,9 +513,18 @@
       .spotlight-grid { justify-content: center; }
       .kartu-spotlight { width: 100px; }
     }
+
+    #page-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #fdf3f6;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    #page-overlay.fade-out { opacity: 1; pointer-events: all; }
   </style>
 </head>
 <body>
+  <div id="page-overlay"></div>
 
   <div class="header">
     <img src="logo.jpeg" alt="Logo VLA25" class="header-logo">
@@ -632,14 +638,12 @@
       return ((b[0]?.[0]||'') + (b[1]?.[0]||'')).toUpperCase();
     }
 
-    // Ketiga fetch jalan BERSAMAAN — tidak ada yang nunggu yang lain selesai
     Promise.all([
       fetch(SHEET_MEMBER).then(r => r.text()),
       fetch(SHEET_PENGUMUMAN).then(r => r.text()),
       fetch(SHEET_AKTIVITAS).then(r => r.text())
     ]).then(([csvMember, tsvPengumuman, csvAktivitas]) => {
 
-      /* ── MEMBER ── */
       const barisMember = csvMember.trim().split('\n').slice(1);
       const gens = new Set();
       let count  = 0;
@@ -656,7 +660,6 @@
         if (stage) memberFoto[stage.toLowerCase()] = info;
       });
 
-      /* ── AKTIVITAS ── */
       const barisAktivitas = csvAktivitas.trim().split('\n').slice(1).filter(b => b.trim());
       const frekuensi = {};
       barisAktivitas.forEach(b => {
@@ -668,7 +671,6 @@
         });
       });
 
-      /* ── RENDER STATS ── */
       document.getElementById('stats-grid').innerHTML = `
         <div class="stat-box fade-in">
           <div class="stat-num" id="stat-member">0</div>
@@ -691,7 +693,6 @@
       animateCounter(document.getElementById('stat-gen'), gens.size);
       animateCounter(document.getElementById('stat-aktivitas'), barisAktivitas.length);
 
-      /* ── RENDER SPOTLIGHT ── */
       const sorted = Object.entries(frekuensi).sort((a,b) => b[1]-a[1]).slice(0, 3);
       const grid   = document.getElementById('spotlight-grid');
       if (!sorted.length) {
@@ -717,7 +718,6 @@
         });
       }
 
-      /* ── RENDER PENGUMUMAN ── */
       const barisPengumuman = tsvPengumuman.trim().split('\n').slice(1).filter(b => b.trim());
       const terbaru = [...barisPengumuman].reverse().slice(0, 3);
       const cont    = document.getElementById('list-pengumuman');
@@ -753,10 +753,25 @@
       document.getElementById('list-pengumuman').innerHTML = '<p class="kosong">Gagal memuat pengumuman.</p>';
       document.getElementById('spotlight-grid').innerHTML  = '<p class="kosong">Gagal memuat data.</p>';
     });
-
-
   </script>
 
   <script src="animations.js"></script>
+
+  <script>
+    // ── PAGE TRANSITION ──
+    const _overlay = document.getElementById('page-overlay');
+    document.querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('javascript')) return;
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        _overlay.classList.add('fade-out');
+        setTimeout(() => { window.location.href = href; }, 370);
+      });
+    });
+    window.addEventListener('pageshow', () => {
+      _overlay.classList.remove('fade-out');
+    });
+  </script>
 </body>
 </html>

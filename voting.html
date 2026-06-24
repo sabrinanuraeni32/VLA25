@@ -11,6 +11,14 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    @keyframes pageFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    body {
+      animation: pageFadeIn 0.6s ease forwards;
+    }
+
     body {
       background: #fdf3f6;
       background-image:
@@ -412,9 +420,18 @@
       .timeline { padding-left: 28px; }
       .petal { display: none; }
     }
+
+    #page-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #fdf3f6;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    #page-overlay.fade-out { opacity: 1; pointer-events: all; }
   </style>
 </head>
 <body>
+  <div id="page-overlay"></div>
 
   <div class="petal" style="left:8%;  animation-duration:9s;  animation-delay:0s;   font-size:14px;">🌸</div>
   <div class="petal" style="left:20%; animation-duration:12s; animation-delay:2s;   font-size:10px;">🌸</div>
@@ -601,7 +618,6 @@
       const e = new Date(item.end);   e.setHours(0,0,0,0);
 
       item.el.classList.remove('aktif','selesai');
-      item.el.querySelector('.tl-dot') && item.el.querySelector('.tl-dot');
       item.badgeEl.classList.remove('badge-aktif','badge-segera','badge-selesai');
 
       if (today > e) {
@@ -618,13 +634,13 @@
       }
     });
 
-    // Sembunyikan CTA kalau voting tahap 1 belum/sudah lewat
-    const votingMulai  = new Date('2026-07-01');
+    // ── CTA box: tampilkan mulai 30 Juni (hari upload video promosi) s/d akhir voting ──
+    const sskMulai     = new Date('2026-06-30');
     const votingSelesai = new Date('2026-07-15');
-    votingMulai.setHours(0,0,0,0);
+    sskMulai.setHours(0,0,0,0);
     votingSelesai.setHours(0,0,0,0);
     const ctaBox = document.getElementById('cta-box');
-    if (today < votingMulai || today > votingSelesai) {
+    if (today < sskMulai || today > votingSelesai) {
       ctaBox.style.display = 'none';
     }
 
@@ -646,5 +662,22 @@
   </script>
 
   <script src="animations.js"></script>
+
+  <script>
+    // ── PAGE TRANSITION ──
+    const _overlay = document.getElementById('page-overlay');
+    document.querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('javascript')) return;
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        _overlay.classList.add('fade-out');
+        setTimeout(() => { window.location.href = href; }, 370);
+      });
+    });
+    window.addEventListener('pageshow', () => {
+      _overlay.classList.remove('fade-out');
+    });
+  </script>
 </body>
 </html>

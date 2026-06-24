@@ -35,7 +35,6 @@
       min-height: 100vh;
     }
 
-    /* ══ HEADER ══ */
     .header {
       height: 400px;
       background-color: #4a0080;
@@ -76,7 +75,6 @@
       to   { text-shadow: 0 0 25px #d308facc, 0 0 60px #d308fa88; }
     }
 
-    /* ══ NAVBAR ══ */
     .navbar {
       background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
       display: flex; justify-content: center;
@@ -113,14 +111,12 @@
     .hamburger.terbuka span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .hamburger.terbuka span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* ══ KONTEN ══ */
     .konten {
       max-width: 1440px;
       margin: 0 auto;
       padding: 40px 40px;
     }
 
-    /* ── Filter & Search ── */
     .filter-area {
       display: flex;
       gap: 12px;
@@ -168,7 +164,6 @@
       box-shadow: 0 4px 15px #d308fa33;
     }
 
-    /* ── Section & Grid ── */
     .section-member { margin-bottom: 48px; }
     .section-member.tersembunyi { display: none; }
 
@@ -229,7 +224,6 @@
       color: #9b30d9; font-style: italic; font-size: 13px; padding: 16px 0;
     }
 
-    /* ══ FOOTER ══ */
     footer {
       background-color: #4a0080;
       text-align: center; padding: 48px 20px; margin-top: 60px;
@@ -253,7 +247,6 @@
     .footer-sosmed a:hover { background: #d308fa33; border-color: #d308fa; color: #fff; transform: translateY(-3px); }
     .footer-copy { color: #9b30d966; font-size: 11px; letter-spacing: 1px; }
 
-    /* ══ MOBILE ══ */
     @media (max-width: 768px) {
       .header h1 { font-size: 36px; }
       .hamburger { display: block; }
@@ -277,11 +270,19 @@
       .avatar img { width: 46px; height: 46px; }
       .nama-member { font-size: 10px; }
     }
+
+    #page-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #fdf3f6;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    #page-overlay.fade-out { opacity: 1; pointer-events: all; }
   </style>
 </head>
 <body>
+  <div id="page-overlay"></div>
 
-  <!-- HEADER -->
   <div class="header">
     <img src="logo.jpeg" alt="Logo VLA25" class="header-logo">
     <p class="sub-judul">OFFICIAL FAN SITE</p>
@@ -289,7 +290,6 @@
     <p class="sub-judul">VELORA25</p>
   </div>
 
-  <!-- NAVBAR -->
   <nav class="navbar">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">VLA25</a>
@@ -299,16 +299,15 @@
       <div class="nav-links" id="nav-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
-        <a href="members.html">Members</a>
+        <a href="members.html" class="aktif">Members</a>
         <a href="aktivitas.html">Aktivitas</a>
         <a href="pengumuman.html">Pengumuman</a>
         <a href="management.html">Management</a>
-         <a href="voting.html">Voting SSK</a>
+        <a href="voting.html">Voting SSK</a>
       </div>
     </div>
   </nav>
 
-  <!-- KONTEN -->
   <div class="konten">
 
     <div class="filter-area">
@@ -321,28 +320,21 @@
 
     <div class="section-member" id="section-gen1">
       <h2>⭐ Member Gen 1</h2>
-      <div class="grid" id="grid-gen1">
-        ${Array(4).fill(0).map(() => `<div class="kartu skeleton" style="height:120px;"></div>`).join('')}
-      </div>
+      <div class="grid" id="grid-gen1"></div>
     </div>
 
     <div class="section-member" id="section-gen2">
       <h2>✨ Member Gen 2</h2>
-      <div class="grid" id="grid-gen2">
-        ${Array(4).fill(0).map(() => `<div class="kartu skeleton" style="height:120px;"></div>`).join('')}
-      </div>
+      <div class="grid" id="grid-gen2"></div>
     </div>
 
     <div class="section-member" id="section-gen3">
       <h2>🌸 Member Gen 3</h2>
-      <div class="grid" id="grid-gen3">
-        ${Array(4).fill(0).map(() => `<div class="kartu skeleton" style="height:120px;"></div>`).join('')}
-      </div>
+      <div class="grid" id="grid-gen3"></div>
     </div>
 
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <img src="logo.jpeg" alt="Logo VLA25" class="footer-logo">
     <div class="footer-nama">VLA25</div>
@@ -360,11 +352,10 @@
       </a>
     </div>
     <div class="footer-copy">© 2025 VLA25 · Velora25 · VNC</div>
-  <p style="color: #e8b4ff88; font-size: 10px; letter-spacing: 2px; margin: 6px 0 0; font-style: italic;">designed & built by <span style="color: #d308fa; font-weight: 700; font-style: normal; letter-spacing: 2px;">LoorenZyy</span></p>
+    <p style="color: #e8b4ff88; font-size: 10px; letter-spacing: 2px; margin: 6px 0 0; font-style: italic;">designed & built by <span style="color: #d308fa; font-weight: 700; font-style: normal; letter-spacing: 2px;">LoorenZyy</span></p>
   </footer>
 
   <script>
-    /* ── SCROLL REVEAL (re-run setelah data dimuat) ── */
     function initReveal() {
       const obs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
@@ -380,7 +371,6 @@
       });
     }
 
-    /* ── DATA ── */
     const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRIB37AAHdM1-AU03TAyE-DZ6b7MJWZTOwsgOSvOa8V-rc4OL5wZtbObgxrXQtCP2aSkj4SeArRx1c6/pub?gid=0&single=true&output=csv";
     let semuaMember = [];
     let filterAktif = 'all';
@@ -406,23 +396,15 @@
       el.addEventListener('click', () => {
         const avatarEl = document.getElementById(avatarId);
         const destUrl  = `profil.html?nama=${encodeURIComponent(m.nama)}`;
-
-        // Simpan info transisi untuk profil.html
         sessionStorage.setItem('vt_member', m.nama);
         sessionStorage.setItem('vt_foto', m.foto || '');
-
         if (document.startViewTransition && avatarEl) {
-          // Set view-transition-name pada avatar yang diklik
           avatarEl.style.viewTransitionName = 'member-avatar';
-
           const transition = document.startViewTransition(() => {
             window.location.href = destUrl;
           });
-
-          // Kalau browser langsung navigasi sebelum finish, biarkan saja
           transition.finished.catch(() => {});
         } else {
-          // Fallback: animasi exit biasa
           document.body.classList.add('page-exit');
           setTimeout(() => { window.location.href = destUrl; }, 230);
         }
@@ -465,14 +447,12 @@
       renderSemua();
     }
 
-    /* ── Filter buttons ── */
     document.getElementById('btn-all').addEventListener('click',  () => setFilter('all'));
     document.getElementById('btn-gen1').addEventListener('click', () => setFilter('1'));
     document.getElementById('btn-gen2').addEventListener('click', () => setFilter('2'));
     document.getElementById('btn-gen3').addEventListener('click', () => setFilter('3'));
     document.getElementById('search-input').addEventListener('input', renderSemua);
 
-    /* ── Fetch ── */
     fetch(SHEET_URL)
       .then(r => r.text())
       .then(csv => {
@@ -496,5 +476,22 @@
   </script>
 
   <script src="animations.js"></script>
+
+  <script>
+    // ── PAGE TRANSITION ──
+    const _overlay = document.getElementById('page-overlay');
+    document.querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('javascript')) return;
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        _overlay.classList.add('fade-out');
+        setTimeout(() => { window.location.href = href; }, 370);
+      });
+    });
+    window.addEventListener('pageshow', () => {
+      _overlay.classList.remove('fade-out');
+    });
+  </script>
 </body>
 </html>

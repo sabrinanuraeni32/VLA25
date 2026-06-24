@@ -35,7 +35,6 @@
       min-height: 100vh;
     }
 
-    /* ══ HEADER ══ */
     .header {
       height: 400px;
       background-color: #4a0080;
@@ -95,7 +94,6 @@
       to   { text-shadow: 0 0 25px #d308facc, 0 0 60px #d308fa88; }
     }
 
-    /* ══ NAVBAR ══ */
     .navbar {
       background: linear-gradient(90deg, #1a0030, #3a0060, #1a0030);
       display: flex;
@@ -174,7 +172,6 @@
     .hamburger.terbuka span:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .hamburger.terbuka span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* ══ KONTEN ══ */
     .konten {
       max-width: 860px;
       margin: 48px auto;
@@ -202,7 +199,6 @@
       margin-bottom: 12px;
     }
 
-    /* ── Info Box ── */
     .info-box {
       display: flex;
       gap: 16px;
@@ -236,7 +232,6 @@
       font-weight: 700;
     }
 
-    /* ── Founder ── */
     .founder-grid {
       display: flex;
       gap: 16px;
@@ -271,7 +266,6 @@
       color: #fff;
     }
 
-    /* ── Sosmed ── */
     .sosmed-box {
       display: flex;
       flex-direction: column;
@@ -321,7 +315,6 @@
     }
     .sosmed-card:hover .sosmed-arrow { transform: translateX(4px); }
 
-    /* ══ FOOTER ══ */
     footer {
       background-color: #4a0080;
       text-align: center;
@@ -366,7 +359,6 @@
     }
     .footer-copy { color: #9b30d966; font-size: 11px; letter-spacing: 1px; }
 
-    /* ══ MOBILE ══ */
     @media (max-width: 768px) {
       .header h1 { font-size: 36px; }
       .hamburger { display: block; }
@@ -398,11 +390,19 @@
       .sosmed-icon { width: 44px; height: 44px; border-radius: 12px; }
       .sosmed-nama { font-size: 14px; }
     }
+
+    #page-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #fdf3f6;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    #page-overlay.fade-out { opacity: 1; pointer-events: all; }
   </style>
 </head>
 <body>
+  <div id="page-overlay"></div>
 
-  <!-- HEADER -->
   <div class="header">
     <img src="logo.jpeg" alt="Logo VLA25" class="header-logo">
     <p class="sub-judul">OFFICIAL FAN SITE</p>
@@ -410,7 +410,6 @@
     <p class="sub-judul">VELORA25</p>
   </div>
 
-  <!-- NAVBAR -->
   <nav class="navbar">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand">VLA25</a>
@@ -419,17 +418,16 @@
       </button>
       <div class="nav-links" id="nav-links">
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
+        <a href="about.html" class="aktif">About</a>
         <a href="members.html">Members</a>
         <a href="aktivitas.html">Aktivitas</a>
         <a href="pengumuman.html">Pengumuman</a>
         <a href="management.html">Management</a>
-         <a href="voting.html">Voting SSK</a>
+        <a href="voting.html">Voting SSK</a>
       </div>
     </div>
   </nav>
 
-  <!-- KONTEN -->
   <div class="konten">
 
     <div class="section">
@@ -514,7 +512,6 @@
 
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <img src="logo.jpeg" alt="Logo VLA25" class="footer-logo">
     <div class="footer-nama">VLA25</div>
@@ -532,9 +529,26 @@
       </a>
     </div>
     <div class="footer-copy">© 2025 VLA25 · Velora25 · VNC</div>
-  <p style="color: #e8b4ff88; font-size: 10px; letter-spacing: 2px; margin: 6px 0 0; font-style: italic;">designed & built by <span style="color: #d308fa; font-weight: 700; font-style: normal; letter-spacing: 2px;">LoorenZyy</span></p>
+    <p style="color: #e8b4ff88; font-size: 10px; letter-spacing: 2px; margin: 6px 0 0; font-style: italic;">designed & built by <span style="color: #d308fa; font-weight: 700; font-style: normal; letter-spacing: 2px;">LoorenZyy</span></p>
   </footer>
 
   <script src="animations.js"></script>
+
+  <script>
+    // ── PAGE TRANSITION ──
+    const _overlay = document.getElementById('page-overlay');
+    document.querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('javascript')) return;
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        _overlay.classList.add('fade-out');
+        setTimeout(() => { window.location.href = href; }, 370);
+      });
+    });
+    window.addEventListener('pageshow', () => {
+      _overlay.classList.remove('fade-out');
+    });
+  </script>
 </body>
 </html>
