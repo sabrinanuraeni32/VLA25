@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <title>Vote Oshi - VLA25</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="animations.css">
+  <link rel="icon" type="image/jpeg" href="logo.jpeg">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @keyframes pageFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    body {
+      animation: pageFadeIn 0.6s ease forwards;
+    }
+
+    body {
+      background: #fdf3f6;
+      background-image:
+        radial-gradient(ellipse at 10% 0%,   #fcd5c0 0%, transparent 45%),
+        radial-gradient(ellipse at 90% 10%,  #f2c4ce 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 100%, #d4b8e044 0%, transparent 50%);
+      color: #5a1a3a;
+      font-family: 'Quicksand', Arial, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .petal {
+      position: fixed;
+      top: -40px;
+      font-size: 18px;
+      opacity: 0;
+      pointer-events: none;
+      animation: fall linear infinite;
+      z-index: 0;
+    }
+    @keyframes fall {
+      0%   { transform: translateY(0) rotate(0deg) translateX(0);   opacity: 0; }
+      10%  { opacity: 0.7; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(110vh) rotate(360deg) translateX(60px); opacity: 0; }
+    }
+
+    .header {
+      position: relative;
+      min-height: 400px;
+      background: linear-gradient(160deg, #c97030 0%, #b54060 45%, #5a1a3a 100%);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 20px;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 120%, #f4a56a33 0%, transparent 65%);
+      animation: headerGlow 5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffe8c099 0%, #f9c78455 40%, transparent 70%);
+      filter: blur(3px);
+      animation: headerGlow 5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes headerGlow {
+      0%,100% { opacity: 0.6; }
+      50%      { opacity: 1; }
+    }
+    .cloud {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(18px);
+      background: radial-gradient(ellipse, #ffe8c0 0%, transparent 70%);
+      animation: drift linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes drift {
+      0%   { transform: translateX(-25%); }
+      100% { transform: translateX(125%); }
+    }
+    .star {
+      position: absolute;
+      color: #ffe8c0aa;
+      font-size: 10px;
+      animation: twinkle 2.8s ease-in-out infinite;
+      z-index: 1;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50%      { opacity: 1;   transform: scale(1.1); }
+    }
+    .judul-float {
+      position: relative;
+      z-index: 2;
+      animation: floatText 4.5s ease-in-out infinite;
+    }
+    @keyframes floatText {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+
+    .header .sub-judul {
+      color: #fcd5e0cc;
+      letter-spacing: 8px;
+      font-size: 10px;
+      margin: 5px 0;
+      position: relative; z-index: 1;
+      text-transform: uppercase;
+    }
+    .header h1 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #ffe8c0;
+      font-size: 34px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      margin: 6px 0;
+      position: relative; z-index: 1;
+      text-shadow: 0 2px 20px #b5406066;
+    }
+    .header h1 span {
+      font-style: normal;
+      font-weight: 700;
+      color: #fcd5e0;
+      letter-spacing: 5px;
+      font-size: 22px;
+      display: block;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .hero-desc {
+      color: #fcd5e0aa;
+      font-size: 13px;
+      line-height: 1.8;
+      max-width: 480px;
+      margin: 10px auto 0;
+      position: relative; z-index: 1;
+    }
+
+    .balik-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #fcd5e0cc;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-top: 18px;
+      position: relative;
+      z-index: 1;
+      padding: 6px 16px;
+      border: 1px solid #fcd5e044;
+      border-radius: 20px;
+      transition: all 0.25s ease;
+    }
+    .balik-link:hover {
+      color: #fff;
+      background: #e8899a33;
+      border-color: #e8899a88;
+      transform: translateY(-1px);
+    }
+
+    .navbar {
+      background: linear-gradient(90deg, #2d0820, #5a1a3a, #2d0820);
+      display: flex;
+      justify-content: center;
+      padding: 0 20px;
+      border-bottom: 1px solid #e8899a44;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      isolation: isolate;
+    }
+    .nav-inner {
+      max-width: 1440px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+    }
+    .nav-brand {
+      color: #ffe8c0;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .nav-links a {
+      color: #f2c4ce;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all 0.3s;
+      position: relative;
+      border: 1px solid transparent;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      width: 0; height: 2px;
+      background: #e8899a;
+      border-radius: 2px;
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+    .nav-links a:hover { color: #fff; background: #e8899a22; }
+    .nav-links a:hover::after,
+    .nav-links a.aktif::after { width: 80%; left: 10%; }
+    .nav-links a.aktif {
+      color: #fff;
+      background: #e8899a55;
+      border-color: #e8899a88;
+    }
+
+    .hamburger {
+      display: none;
+      background: none; border: none; cursor: pointer;
+      padding: 4px; position: relative; z-index: 2000;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: #f2c4ce; margin: 5px 0;
+      transition: all 0.3s; border-radius: 2px;
+    }
+    .hamburger.terbuka span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.terbuka span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.terbuka span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .konten {
+      max-width: 1100px;
+      margin: 48px auto;
+      padding: 0 40px;
+    }
+
+    .section-label {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 24px;
+    }
+    .section-label h2 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #5a1a3a;
+      font-size: 20px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, #e8899a88, transparent);
+    }
+
+    /* ── KARTU KUOTA ── */
+    .kuota-box {
+      background: linear-gradient(135deg, #b54060, #8b2540, #c97030);
+      border: 1px solid #e8899a66;
+      border-radius: 18px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      box-shadow: 0 8px 30px #e8899a44;
+    }
+    .kuota-label {
+      color: #fcd5e0cc;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .kuota-angka {
+      color: #ffe8c0;
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .kuota-icon {
+      font-size: 32px;
+    }
+
+    .banner-habis {
+      background: linear-gradient(135deg, #fff8f9, #fffaf5);
+      border: 1px solid #f2c4ce88;
+      color: #993c1d;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 13px;
+      margin-bottom: 24px;
+      display: none;
+      text-align: center;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 16px;
+    }
+
+    .kartu-vote {
+      background: linear-gradient(135deg, #b54060, #8b2540, #c97030);
+      border: 1px solid #e8899a55;
+      border-radius: 16px;
+      padding: 18px 14px;
+      text-align: center;
+      box-shadow: 0 4px 18px #e8899a22;
+      transition: transform 0.25s cubic-bezier(.22,.68,0,1.4), box-shadow 0.25s ease;
+    }
+    .kartu-vote:hover {
+      transform: scale(1.03);
+      box-shadow: 0 10px 28px #e8899a44;
+    }
+
+    .avatar {
+      background: linear-gradient(135deg, #c97030, #e8899a);
+      color: #fff;
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 10px;
+      font-size: 15px; font-weight: 700;
+      box-shadow: 0 0 15px #e8899a66;
+      overflow: hidden;
+    }
+    .avatar img {
+      width: 64px; height: 64px;
+      border-radius: 50%; object-fit: cover; object-position: center;
+    }
+
+    .nama-member {
+      font-size: 12px;
+      color: #ffe8c0;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+    .vote-count {
+      font-size: 10px;
+      color: #fcd5e0aa;
+      margin-bottom: 12px;
+    }
+
+    .btn-vote {
+      background: linear-gradient(135deg, #ffe8c0, #f9c784);
+      color: #5a1a3a;
+      border: none;
+      width: 100%;
+      padding: 8px 0;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+    .btn-vote:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px #c9933a88;
+    }
+    .btn-vote:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .btn-vote.berhasil {
+      background: #e8899a;
+      color: #fff;
+    }
+
+    .loading-dots {
+      display: inline-flex;
+      gap: 3px;
+      align-items: center;
+      justify-content: center;
+    }
+    .loading-dots span {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #5a1a3a;
+      animation: dotBounce 1s infinite ease-in-out both;
+    }
+    .loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+    .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+    @keyframes dotBounce {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    .kosong, .tidak-ditemukan {
+      color: #8b506a;
+      font-style: italic;
+      font-size: 13px;
+    }
+
+    .info-box {
+      background: #ffffff;
+      border: 1px solid #f2c4ce66;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 12px;
+      color: #8b506a;
+      margin-top: 32px;
+      line-height: 1.7;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #2d0820, #5a1a3a, #8b2540);
+      text-align: center;
+      padding: 48px 20px;
+      margin-top: 60px;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid #e8899a33;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, #f4a56a0a 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .footer-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; border: 2px solid #e8899a66; }
+    .footer-nama { color: #f9c784; font-size: 20px; font-weight: 700; letter-spacing: 4px; margin-bottom: 4px; }
+    .footer-sub  { color: #f2c4ce; font-size: 10px; letter-spacing: 6px; margin-bottom: 20px; }
+    .footer-sosmed { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
+    .footer-sosmed a {
+      display: flex; align-items: center; justify-content: center;
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid #e8899a55; color: #f2c4ce; text-decoration: none; transition: all 0.3s;
+    }
+    .footer-sosmed a:hover { background: #e8899a33; border-color: #e8899a; color: #fff; transform: translateY(-3px); }
+    .footer-copy { color: #f2c4ce44; font-size: 11px; letter-spacing: 1px; }
+
+    .skeleton {
+      background: linear-gradient(90deg, #e8899a33 25%, #f4a56a33 50%, #e8899a33 75%);
+      background-size: 200% 100%;
+      animation: shimmerSkeleton 1.4s infinite;
+      border-radius: 16px;
+    }
+    @keyframes shimmerSkeleton {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    #page-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #fdf3f6;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    #page-overlay.fade-out { opacity: 1; pointer-events: all; }
+
+    @media (max-width: 600px) {
+      .konten { padding: 0 20px; margin: 28px auto; }
+      .header { min-height: 600px; padding: 36px 16px; }
+      .header h1 { font-size: 26px; }
+      .header h1 span { font-size: 17px; }
+      .hero-desc { font-size: 11px; }
+
+      .hamburger { display: block; }
+      .nav-links {
+        display: none; flex-direction: column; gap: 0;
+        max-height: 0; overflow: hidden; width: 100%; opacity: 0;
+        transition: max-height 0.35s cubic-bezier(.4,0,.2,1), opacity 0.3s ease;
+      }
+      .nav-links.aktif { display: flex; max-height: 400px; opacity: 1; }
+      .nav-links a {
+        border-radius: 0; border-bottom: 1px solid #e8899a22;
+        padding: 12px 20px; width: 100%; text-align: center;
+      }
+      .nav-inner { flex-wrap: wrap; }
+
+      .kuota-box { padding: 16px 18px; }
+      .kuota-angka { font-size: 22px; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .avatar { width: 54px; height: 54px; }
+      .avatar img { width: 54px; height: 54px; }
+      .petal { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="page-overlay"></div>
+
+  <div class="petal" style="left:8%;  animation-duration:9s;  animation-delay:0s;   font-size:14px;">🌸</div>
+  <div class="petal" style="left:20%; animation-duration:12s; animation-delay:2s;   font-size:10px;">🌸</div>
+  <div class="petal" style="left:38%; animation-duration:10s; animation-delay:5s;   font-size:16px;">🌸</div>
+  <div class="petal" style="left:55%; animation-duration:8s;  animation-delay:1s;   font-size:11px;">🌸</div>
+  <div class="petal" style="left:70%; animation-duration:13s; animation-delay:3.5s; font-size:13px;">🌸</div>
+  <div class="petal" style="left:85%; animation-duration:11s; animation-delay:6s;   font-size:9px;">🌸</div>
+  <div class="petal" style="left:93%; animation-duration:9s;  animation-delay:0.5s; font-size:15px;">🌸</div>
+
+  <div class="header">
+    <div class="cloud" style="top:10%; width:200px; height:55px; opacity:0.16; animation-duration:34s; animation-delay:0s;"></div>
+    <div class="cloud" style="top:55%; width:150px; height:42px; opacity:0.12; animation-duration:42s; animation-delay:-10s;"></div>
+
+    <div class="star" style="top:16%; left:15%; animation-delay:0s;">✦</div>
+    <div class="star" style="top:26%; left:80%; animation-delay:1.2s;">✦</div>
+    <div class="star" style="top:12%; left:55%; animation-delay:2.4s;">✦</div>
+    <div class="star" style="top:34%; left:25%; animation-delay:0.8s;">✦</div>
+
+    <p class="sub-judul">VLA25 Presents</p>
+    <div class="judul-float">
+      <h1>
+        Vote Oshi-mu
+        <span>SSK VOTING</span>
+      </h1>
+    </div>
+    <p class="sub-judul">Velora25</p>
+    <p class="hero-desc">Berikan dukunganmu untuk member favoritmu! Setiap orang punya 5 jatah vote per hari, bisa dibagi ke member manapun yang kamu suka. 🌸</p>
+    <a href="voting.html" class="balik-link">← Kembali ke Voting</a>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">VLA25</a>
+      <button class="hamburger" aria-label="Menu" id="hamburger">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="members.html">Members</a>
+        <a href="aktivitas.html">Aktivitas</a>
+        <a href="pengumuman.html">Pengumuman</a>
+        <a href="management.html">Management</a>
+        <a href="voting.html" class="aktif">Voting SSK</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="konten">
+
+    <div class="kuota-box">
+      <div>
+        <div class="kuota-label">Sisa jatah vote hari ini</div>
+        <div class="kuota-angka" id="kuota-display">— / 5</div>
+      </div>
+      <div class="kuota-icon">🎫</div>
+    </div>
+
+    <div class="banner-habis" id="banner-habis">
+      Jatah vote kamu hari ini sudah habis. Balik lagi besok ya! Jatah akan reset otomatis tiap hari.
+    </div>
+
+    <div class="section-label"><h2>✦ Pilih Member Favoritmu</h2></div>
+    <div class="grid" id="grid-member">
+      <div class="kartu-vote skeleton" style="height:190px;"></div>
+      <div class="kartu-vote skeleton" style="height:190px;"></div>
+      <div class="kartu-vote skeleton" style="height:190px;"></div>
+      <div class="kartu-vote skeleton" style="height:190px;"></div>
+    </div>
+
+    <div class="info-box">
+      ℹ️ Hasil voting akan disembunyikan dan diumumkan setelah periode SSK berakhir. Setiap orang mendapat 5 jatah vote per hari yang reset otomatis pukul 00:00 WIB, dan bisa dibagikan ke member manapun secara bebas.
+    </div>
+
+  </div>
+
+  <footer>
+    <img src="logo.jpeg" alt="Logo VLA25" class="footer-logo">
+    <div class="footer-nama">VLA25</div>
+    <div class="footer-sub">VELORA25</div>
+    <div class="footer-sosmed">
+      <a href="https://www.tiktok.com/@velora25agency" target="_blank" title="TikTok">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.75a4.85 4.85 0 01-1.01-.06z"/>
+        </svg>
+      </a>
+      <a href="https://whatsapp.com/channel/0029Vb6IoDd2ER6mPn09Jt2e" target="_blank" title="WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+      </a>
+    </div>
+    <div class="footer-copy">© 2025 VLA25 · Velora25 · VNC</div>
+    <p style="color:#f2c4ce44; font-size:10px; letter-spacing:2px; margin:6px 0 0; font-style:italic;">designed & built by <span style="color:#f9c784; font-weight:700; font-style:normal; letter-spacing:2px;">LoorenZyy</span></p>
+  </footer>
+
+  <script>
+    /* ══════════════════════════════════════════
+       KONFIGURASI — GANTI INI SESUAI PUNYA KAMU
+       ══════════════════════════════════════════ */
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzEzJOCPBVh4icxqBHqvejLJehc2SRkRkgwzVcVcAOvUSMxpOW8QLgCJH-nIUfUFjIk/exec";
+    const SHEET_MEMBERS_SSK = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTezRUcTNN1IfbPzFmoiutnZU2KUHP2x0IkTBFdc0bOK_aypNginCvzoI_Y8AmLZ-l6VYX3tzi-BTPM/pub?gid=0&single=true&output=csv";
+
+    /* ══════════════════════════════════════════
+       DEVICE ID — "KTP sementara" buat browser ini
+       ══════════════════════════════════════════ */
+    function getDeviceId() {
+      let id = localStorage.getItem('vla25_device_id');
+      if (!id) {
+        id = (crypto.randomUUID ? crypto.randomUUID() : 'dev-' + Date.now() + '-' + Math.random().toString(36).slice(2));
+        localStorage.setItem('vla25_device_id', id);
+      }
+      return id;
+    }
+    const deviceId = getDeviceId();
+
+    /* ══════════════════════════════════════════
+       AMBIL IP PUBLIK (buat lapis kedua anti-spam)
+       ══════════════════════════════════════════ */
+    async function getPublicIp() {
+      try {
+        const r = await fetch('https://api.ipify.org?format=json');
+        const d = await r.json();
+        return d.ip || 'unknown';
+      } catch (err) {
+        return 'unknown';
+      }
+    }
+
+    let myIp = 'unknown';
+    let sisaKuota = 5;
+    let semuaMember = [];
+    let voteSesiIni = {}; // tracking klik di sesi ini (visual feedback doang)
+
+    function inisial(nama) {
+      const b = nama.replace(/[^a-zA-Z\s]/g, '').trim().split(' ');
+      return ((b[0]?.[0] || '') + (b[1]?.[0] || '')).toUpperCase();
+    }
+
+    function updateKuotaDisplay() {
+      document.getElementById('kuota-display').textContent = sisaKuota + ' / 5';
+      document.getElementById('banner-habis').style.display = sisaKuota <= 0 ? 'block' : 'none';
+      document.querySelectorAll('.btn-vote').forEach(btn => {
+        if (sisaKuota <= 0) btn.disabled = true;
+      });
+    }
+
+    function buatKartu(m) {
+      const el = document.createElement('div');
+      el.className = 'kartu-vote';
+      const safeId = m.nama.replace(/\s+/g, '-').toLowerCase();
+      el.innerHTML = `
+        <div class="avatar">
+          ${m.foto
+            ? `<img src="idcmember/${m.foto}" alt="${m.nama}">`
+            : inisial(m.nama)
+          }
+        </div>
+        <div class="nama-member">${m.nama}</div>
+        <div class="vote-count" id="vc-${safeId}">divote ${voteSesiIni[m.nama] || 0}x sesi ini</div>
+        <button class="btn-vote" id="btn-${safeId}" ${sisaKuota <= 0 ? 'disabled' : ''}>
+          Vote
+        </button>
+      `;
+      el.querySelector('.btn-vote').addEventListener('click', () => kirimVote(m.nama, safeId));
+      return el;
+    }
+
+    async function kirimVote(memberId, safeId) {
+      const btn = document.getElementById('btn-' + safeId);
+      btn.disabled = true;
+      btn.innerHTML = '<span class="loading-dots"><span></span><span></span><span></span></span>';
+
+      try {
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify({ deviceId, memberId, ip: myIp })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          sisaKuota = data.remaining;
+          voteSesiIni[memberId] = (voteSesiIni[memberId] || 0) + 1;
+          document.getElementById('vc-' + safeId).textContent = `divote ${voteSesiIni[memberId]}x sesi ini`;
+          btn.textContent = 'Tervote ✓';
+          btn.classList.add('berhasil');
+          setTimeout(() => {
+            btn.textContent = 'Vote';
+            btn.classList.remove('berhasil');
+            btn.disabled = sisaKuota <= 0;
+          }, 900);
+        } else {
+          sisaKuota = data.remaining !== undefined ? data.remaining : sisaKuota;
+          btn.textContent = 'Vote';
+          alert(data.message || 'Vote gagal, coba lagi.');
+          btn.disabled = sisaKuota <= 0;
+        }
+        updateKuotaDisplay();
+      } catch (err) {
+        btn.textContent = 'Vote';
+        btn.disabled = sisaKuota <= 0;
+        alert('Gagal terhubung ke server. Cek koneksi internet kamu.');
+      }
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('grid-member');
+      grid.innerHTML = '';
+      if (!semuaMember.length) {
+        grid.innerHTML = '<p class="kosong">Belum ada member yang terdaftar di SSK periode ini.</p>';
+        return;
+      }
+      semuaMember.forEach(m => grid.appendChild(buatKartu(m)));
+    }
+
+    async function init() {
+      myIp = await getPublicIp();
+
+      try {
+        const cekRes = await fetch(`${APPS_SCRIPT_URL}?deviceId=${encodeURIComponent(deviceId)}&ip=${encodeURIComponent(myIp)}`);
+        const cekData = await cekRes.json();
+        if (cekData.success) sisaKuota = cekData.remaining;
+      } catch (err) {
+        sisaKuota = 5;
+      }
+      updateKuotaDisplay();
+
+      try {
+        const r = await fetch(SHEET_MEMBERS_SSK);
+        const csv = await r.text();
+        const baris = csv.trim().split('\n').slice(1);
+        baris.forEach(b => {
+          const k = b.split(',');
+          const nama = k[1]?.trim();
+          const foto = k[2]?.trim();
+          if (!nama) return;
+          semuaMember.push({ nama, foto });
+        });
+        renderGrid();
+      } catch (err) {
+        document.getElementById('grid-member').innerHTML = '<p class="kosong">Gagal memuat data member. Coba refresh halaman.</p>';
+      }
+    }
+
+    /* ── Hamburger menu ── */
+    const hamburger = document.getElementById('hamburger');
+    const navLinks   = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('terbuka');
+      navLinks.classList.toggle('aktif');
+    });
+
+    init();
+  </script>
+
+  <script src="animations.js"></script>
+
+  <script>
+    // ── PAGE TRANSITION ──
+    const _overlay = document.getElementById('page-overlay');
+    document.querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('javascript')) return;
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        _overlay.classList.add('fade-out');
+        setTimeout(() => { window.location.href = href; }, 370);
+      });
+    });
+    window.addEventListener('pageshow', () => {
+      _overlay.classList.remove('fade-out');
+    });
+  </script>
+</body>
+</html>
