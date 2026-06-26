@@ -588,6 +588,145 @@
       .stat-angka { font-size: 22px; }
       .navbar { gap: 12px; flex-wrap: wrap; }
     }
+
+    /* ══════════════════════════
+       MEMBER TAB
+    ══════════════════════════ */
+    .member-filter-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid #d308fa66;
+      color: #9b30d9;
+      border-radius: 20px;
+      padding: 5px 16px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: 'Quicksand', Arial, sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { background: #d308fa22; border-color: #d308fa; }
+    .filter-btn.aktif { background: linear-gradient(135deg, #9b30d9, #d308fa); border-color: transparent; color: #fff; }
+
+    .member-item {
+      background: #ffffff;
+      border: 1px solid #d308fa33;
+      border-radius: 14px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      transition: box-shadow 0.2s;
+    }
+    .member-item:hover { box-shadow: 0 4px 18px #d308fa22; }
+    .member-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #9b30d9, #d308fa);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 13px; font-weight: 700;
+      overflow: hidden; flex-shrink: 0;
+      border: 2px solid #d308fa44;
+    }
+    .member-avatar img {
+      width: 44px; height: 44px;
+      border-radius: 50%; object-fit: cover;
+    }
+    .member-info { flex: 1; min-width: 0; }
+    .member-nama {
+      font-size: 13px; font-weight: 700; color: #4a0080;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .member-meta {
+      font-size: 11px; color: #b06ad4;
+      margin-top: 2px;
+    }
+    .badge-status {
+      font-size: 10px; font-weight: 700; letter-spacing: 1px;
+      padding: 3px 10px; border-radius: 20px;
+      text-transform: uppercase; flex-shrink: 0;
+    }
+    .badge-inti {
+      background: linear-gradient(135deg, #fdf3ff, #f5e0ff);
+      border: 1px solid #d308fa66;
+      color: #9b30d9;
+    }
+    .badge-trainee {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      color: #777;
+    }
+    .btn-hapus-member {
+      background: transparent;
+      border: 1px solid #f8717166;
+      color: #f87171;
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      font-family: 'Quicksand', Arial, sans-serif;
+      font-weight: 700;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .btn-hapus-member:hover { background: #fff0f0; border-color: #f87171; }
+
+    /* ══════════════════════════
+       MODAL
+    ══════════════════════════ */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: #00000066;
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 28px;
+      max-width: 360px; width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px #d308fa33;
+      border: 1px solid #d308fa22;
+    }
+    .modal-icon { font-size: 36px; margin-bottom: 12px; }
+    .modal-judul { font-size: 16px; font-weight: 700; color: #4a0080; margin-bottom: 4px; }
+    .modal-sub { font-size: 14px; font-weight: 700; color: #d308fa; margin-bottom: 10px; }
+    .modal-desc { font-size: 12px; color: #9b30d9; line-height: 1.6; margin-bottom: 20px; }
+    .modal-actions { display: flex; gap: 10px; }
+    .modal-btn-batal {
+      flex: 1; padding: 11px;
+      background: #f5f5f5; border: 1px solid #ddd;
+      border-radius: 30px; font-size: 12px; font-weight: 700;
+      letter-spacing: 1px; cursor: pointer;
+      font-family: 'Quicksand', Arial, sans-serif; color: #666;
+      transition: all 0.2s;
+    }
+    .modal-btn-batal:hover { background: #eee; }
+    .modal-btn-hapus {
+      flex: 1; padding: 11px;
+      background: linear-gradient(135deg, #f87171, #ef4444);
+      border: none; border-radius: 30px;
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      cursor: pointer; font-family: 'Quicksand', Arial, sans-serif;
+      color: #fff; box-shadow: 0 4px 14px #f8717144;
+      transition: all 0.2s;
+    }
+    .modal-btn-hapus:hover { transform: translateY(-1px); box-shadow: 0 6px 20px #f8717166; }
+    .modal-btn-hapus:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
   </style>
   <link rel="stylesheet" href="animations.css">
 </head>
@@ -632,6 +771,8 @@
       <div class="tab-nav">
         <button class="tab-btn aktif" onclick="gantiTab('pengumuman')">📢 Pengumuman</button>
         <button class="tab-btn" onclick="gantiTab('voting')">📊 Hasil Voting</button>
+        <button class="tab-btn" onclick="gantiTab('aktivitas')">🎬 Aktivitas</button>
+        <button class="tab-btn" onclick="gantiTab('member')">👥 Member</button>
       </div>
 
       <!-- TAB: PENGUMUMAN -->
@@ -725,8 +866,78 @@
         </div>
       </div>
 
+      <!-- TAB: AKTIVITAS -->
+      <div id="tab-aktivitas" class="tab-panel">
+        <div class="form-box" style="margin-top:24px;">
+          <h2>✦ Tambah Aktivitas</h2>
+
+          <div class="field">
+            <label>Tanggal</label>
+            <input type="text" id="akt-tanggal" placeholder="Contoh: 26 Juni 2026">
+          </div>
+          <div class="field">
+            <label>Judul Aktivitas</label>
+            <input type="text" id="akt-judul" placeholder="Nama event atau aktivitas...">
+          </div>
+          <div class="field">
+            <label>Member yang terlibat</label>
+            <input type="text" id="akt-member" placeholder="Contoh: Shyiela & Bintang (pisah pakai &)">
+            <p class="hint">💡 Untuk multiple member, pisah dengan &nbsp;<strong>&amp;</strong></p>
+          </div>
+          <div class="field">
+            <label>Link (opsional)</label>
+            <input type="text" id="akt-link" placeholder="https://...">
+          </div>
+
+          <button class="tombol" id="btn-akt-publish" onclick="publishAktivitas()">Publish Aktivitas ✦</button>
+          <div class="status-box" id="status-box-akt"></div>
+        </div>
+      </div>
+
+      <!-- TAB: MEMBER -->
+      <div id="tab-member" class="tab-panel">
+        <div class="form-box" style="margin-top:24px;">
+          <div class="hasil-header">
+            <h2>✦ Daftar Member</h2>
+            <div class="refresh-info">
+              <span class="last-update" id="member-last-update">Belum dimuat</span>
+              <button class="btn-refresh" id="btn-member-refresh" onclick="muatMember()">↻ Refresh</button>
+            </div>
+          </div>
+
+          <!-- Filter -->
+          <div class="member-filter-row">
+            <button class="filter-btn aktif" onclick="filterMember('semua', this)">Semua</button>
+            <button class="filter-btn" onclick="filterMember('inti', this)">Inti</button>
+            <button class="filter-btn" onclick="filterMember('trainee', this)">Trainee</button>
+          </div>
+
+          <div id="member-list">
+            <div class="skeleton-lb"></div>
+            <div class="skeleton-lb"></div>
+            <div class="skeleton-lb"></div>
+          </div>
+
+          <div class="status-box" id="status-box-member"></div>
+        </div>
+      </div>
+
     </div><!-- /form-area -->
   </div><!-- /konten -->
+
+  <!-- MODAL KONFIRMASI HAPUS -->
+  <div id="modal-hapus" class="modal-overlay" onclick="tutupModal(event)">
+    <div class="modal-box">
+      <div class="modal-icon">⚠️</div>
+      <div class="modal-judul">Hapus Member?</div>
+      <div class="modal-sub" id="modal-nama-member">—</div>
+      <p class="modal-desc">Tindakan ini akan menghapus baris dari Google Sheets dan tidak bisa dibatalkan.</p>
+      <div class="modal-actions">
+        <button class="modal-btn-batal" onclick="document.getElementById('modal-hapus').style.display='none'">Batal</button>
+        <button class="modal-btn-hapus" id="modal-btn-konfirm" onclick="konfirmasiHapus()">Hapus</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Google Identity Services -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -741,6 +952,8 @@
     const SHEET_PENGUMUMAN = 'Pengumuman';
     const SHEET_VOTELOG    = 'VoteLog';
     const SHEET_MEMBERS    = 'members';
+    const SHEET_AKTIVITAS_NAME = 'aktivitas';
+    const SHEET_MEMBER_NAME    = 'Member';
     const SCOPES = 'https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.file';
     const DRIVE_FOLDER_ID = '1NWL9N4ZWiH6Eclvomxaqg6DF-Q4hy2cb';
 
@@ -751,8 +964,12 @@
     let countdownSisa   = 30;
     let tabAktif        = 'pengumuman';
     let sudahMuatVoting = false;
+    let sudahMuatMember = false;
 
-    let fileFotoTerpilih = null; // File object yang siap diupload
+    let fileFotoTerpilih = null;
+    let memberData       = [];   // cache semua member
+    let filterAktif      = 'semua';
+    let hapusTarget      = null; // { rowIndex, nama }
 
     /* ── INIT ── */
     window.onload = function () {
@@ -818,19 +1035,17 @@
     /* ══════════════════════════════
        TAB SWITCHING
     ══════════════════════════════ */
+    const TAB_ORDER = ['pengumuman', 'voting', 'aktivitas', 'member'];
     function gantiTab(tab) {
       tabAktif = tab;
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('aktif'));
+      document.querySelectorAll('.tab-btn').forEach((b, i) => {
+        b.classList.toggle('aktif', TAB_ORDER[i] === tab);
+      });
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('aktif'));
-
-      const idx = tab === 'pengumuman' ? 0 : 1;
-      document.querySelectorAll('.tab-btn')[idx].classList.add('aktif');
       document.getElementById('tab-' + tab).classList.add('aktif');
 
-      if (tab === 'voting' && !sudahMuatVoting) {
-        muatHasil();
-        sudahMuatVoting = true;
-      }
+      if (tab === 'voting' && !sudahMuatVoting) { muatHasil(); sudahMuatVoting = true; }
+      if (tab === 'member' && !sudahMuatMember) { muatMember(); sudahMuatMember = true; }
       if (tab !== 'voting') berhentiAutoRefresh();
     }
 
@@ -1162,6 +1377,227 @@
       const el = document.getElementById('countdown');
       if (el) el.textContent = `(${countdownSisa}s)`;
     }
+
+    /* ══════════════════════════════
+       AKTIVITAS
+    ══════════════════════════════ */
+    function showStatusAkt(pesan, tipe) {
+      const box = document.getElementById('status-box-akt');
+      box.textContent = pesan;
+      box.className = 'status-box ' + tipe;
+      box.style.display = 'block';
+    }
+
+    async function publishAktivitas() {
+      const tanggal = document.getElementById('akt-tanggal').value.trim();
+      const judul   = document.getElementById('akt-judul').value.trim();
+      const member  = document.getElementById('akt-member').value.trim();
+      const link    = document.getElementById('akt-link').value.trim();
+
+      if (!judul) { showStatusAkt('Judul aktivitas wajib diisi!', 'error'); return; }
+
+      const btn = document.getElementById('btn-akt-publish');
+      btn.disabled = true;
+      showStatusAkt('Menyimpan aktivitas...', 'loading');
+
+      const baris = [[tanggal, judul, member, link || '']];
+      try {
+        const res = await fetch(
+          `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_PENGUMUMAN}/values/${encodeURIComponent(SHEET_AKTIVITAS_NAME + '!A:D')}:append?valueInputOption=USER_ENTERED`,
+          {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ values: baris })
+          }
+        );
+        if (res.ok) {
+          showStatusAkt('✓ Aktivitas berhasil dipublish!', 'sukses');
+          document.getElementById('akt-tanggal').value = '';
+          document.getElementById('akt-judul').value   = '';
+          document.getElementById('akt-member').value  = '';
+          document.getElementById('akt-link').value    = '';
+        } else {
+          const err = await res.json();
+          showStatusAkt('Gagal: ' + (err.error?.message || 'Unknown error'), 'error');
+        }
+      } catch (e) {
+        showStatusAkt('Error: ' + e.message, 'error');
+      }
+      btn.disabled = false;
+    }
+
+    /* ══════════════════════════════
+       MEMBER
+    ══════════════════════════════ */
+    function showStatusMember(pesan, tipe) {
+      const box = document.getElementById('status-box-member');
+      box.textContent = pesan;
+      box.className = 'status-box ' + tipe;
+      box.style.display = 'block';
+      setTimeout(() => { box.style.display = 'none'; }, 3000);
+    }
+
+    async function muatMember() {
+      const btn = document.getElementById('btn-member-refresh');
+      btn.disabled = true;
+      btn.textContent = '⏳';
+      document.getElementById('member-list').innerHTML =
+        '<div class="skeleton-lb"></div><div class="skeleton-lb"></div><div class="skeleton-lb"></div>';
+
+      try {
+        const res = await fetch(
+          `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_PENGUMUMAN}/values/${encodeURIComponent(SHEET_MEMBER_NAME + '!A:H')}`,
+          { headers: { Authorization: 'Bearer ' + accessToken } }
+        );
+        if (!res.ok) {
+          if (res.status === 401) { tokenClient.requestAccessToken({ prompt: '' }); return; }
+          throw new Error('Gagal fetch data member');
+        }
+        const data = await res.json();
+        const rows = (data.values || []).slice(1); // skip header row 1 (kosong) + row 2 header
+        // Row 1 kosong, Row 2 = header, data mulai row 3 → index 2 di array (slice(1) = skip baris kosong pertama)
+        // Tapi dari screenshot baris 1 kosong, baris 2 = header. Kita skip keduanya
+        const dataRows = (data.values || []).slice(2);
+
+        memberData = dataRows
+          .filter(r => r[1]?.trim()) // harus ada Full Name
+          .map((r, i) => ({
+            rowIndex: i + 3, // actual row di sheet (1-indexed, +1 kosong, +1 header, +1 offset)
+            gen:      r[0]?.trim() || '',
+            nama:     r[1]?.trim() || '',
+            stage:    r[2]?.trim() || '',
+            faceClaim:r[3]?.trim() || '',
+            dob:      r[4]?.trim() || '',
+            status:   r[5]?.trim() || '',
+            foto:     r[6]?.trim() || '',
+            tiktok:   r[7]?.trim() || '',
+          }));
+
+        renderMember();
+
+        const now = new Date().toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+        document.getElementById('member-last-update').textContent = `Update: ${now} · ${memberData.length} member`;
+      } catch (e) {
+        document.getElementById('member-list').innerHTML =
+          `<div class="hasil-kosong">⚠️ Gagal memuat: ${e.message}</div>`;
+      }
+
+      btn.disabled = false;
+      btn.textContent = '↻ Refresh';
+    }
+
+    function renderMember() {
+      const list = document.getElementById('member-list');
+      const filtered = filterAktif === 'semua'
+        ? memberData
+        : memberData.filter(m => m.status.toLowerCase() === filterAktif);
+
+      if (!filtered.length) {
+        list.innerHTML = '<div class="hasil-kosong">Tidak ada member di kategori ini.</div>';
+        return;
+      }
+
+      list.innerHTML = '';
+      filtered.forEach(m => {
+        const inisial = m.nama.replace(/[^a-zA-Z\s]/g,'').trim().split(' ')
+          .map(w => w[0]||'').slice(0,2).join('').toUpperCase();
+        const isInti = m.status.toLowerCase() === 'inti';
+
+        const item = document.createElement('div');
+        item.className = 'member-item';
+        item.innerHTML = `
+          <div class="member-avatar">
+            ${m.foto
+              ? `<img src="idcmember/${m.foto}" alt="${m.stage}" onerror="this.parentElement.textContent='${inisial}'">`
+              : inisial}
+          </div>
+          <div class="member-info">
+            <div class="member-nama">${m.nama}</div>
+            <div class="member-meta">Gen ${m.gen} · ${m.stage}${m.faceClaim ? ' · ' + m.faceClaim : ''}</div>
+          </div>
+          <span class="badge-status ${isInti ? 'badge-inti' : 'badge-trainee'}">${m.status || '—'}</span>
+          <button class="btn-hapus-member" onclick="bukaModalHapus(${m.rowIndex}, '${m.nama.replace(/'/g,"\\'")}')">✕ Hapus</button>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    function filterMember(tipe, btnEl) {
+      filterAktif = tipe;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('aktif'));
+      btnEl.classList.add('aktif');
+      renderMember();
+    }
+
+    function bukaModalHapus(rowIndex, nama) {
+      hapusTarget = { rowIndex, nama };
+      document.getElementById('modal-nama-member').textContent = nama;
+      document.getElementById('modal-hapus').classList.add('show');
+    }
+
+    function tutupModal(e) {
+      if (e.target === document.getElementById('modal-hapus')) {
+        document.getElementById('modal-hapus').classList.remove('show');
+      }
+    }
+
+    async function konfirmasiHapus() {
+      if (!hapusTarget) return;
+      const btn = document.getElementById('modal-btn-konfirm');
+      btn.disabled = true;
+      btn.textContent = '⏳';
+
+      try {
+        // Hapus row dengan batchUpdate (deleteRows)
+        // Perlu dapet sheetId dulu
+        const metaRes = await fetch(
+          `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_PENGUMUMAN}?fields=sheets.properties`,
+          { headers: { Authorization: 'Bearer ' + accessToken } }
+        );
+        const meta = await metaRes.json();
+        const sheet = meta.sheets?.find(s => s.properties.title === SHEET_MEMBER_NAME);
+        if (!sheet) throw new Error('Sheet Member tidak ditemukan');
+        const sheetId = sheet.properties.sheetId;
+
+        const res = await fetch(
+          `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_PENGUMUMAN}:batchUpdate`,
+          {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              requests: [{
+                deleteDimension: {
+                  range: {
+                    sheetId,
+                    dimension: 'ROWS',
+                    startIndex: hapusTarget.rowIndex - 1, // 0-indexed
+                    endIndex:   hapusTarget.rowIndex      // exclusive
+                  }
+                }
+              }]
+            })
+          }
+        );
+
+        if (res.ok) {
+          document.getElementById('modal-hapus').classList.remove('show');
+          showStatusMember(`✓ ${hapusTarget.nama} berhasil dihapus.`, 'sukses');
+          sudahMuatMember = false; // force reload
+          muatMember();
+        } else {
+          const err = await res.json();
+          throw new Error(err.error?.message || 'Gagal hapus');
+        }
+      } catch (e) {
+        showStatusMember('Error: ' + e.message, 'error');
+        document.getElementById('modal-hapus').classList.remove('show');
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Hapus';
+      hapusTarget = null;
+    }
+
   </script>
 
   <script src="animations.js"></script>
