@@ -323,7 +323,7 @@
     /* STAT CARDS */
     .stat-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 14px;
       margin-bottom: 24px;
     }
@@ -501,12 +501,90 @@
       100% { background-position: -200% 0; }
     }
 
+    /* ── FOTO UPLOADER ── */
+    .dropzone {
+      border: 2px dashed #d308fa66;
+      border-radius: 12px;
+      background: #fdf5ff;
+      padding: 28px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .dropzone:hover, .dropzone.drag-over {
+      border-color: #d308fa;
+      background: #f5e0ff;
+      box-shadow: 0 0 0 3px #d308fa22;
+    }
+    .dropzone input[type="file"] {
+      position: absolute; inset: 0;
+      opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .dropzone-icon { font-size: 28px; margin-bottom: 8px; }
+    .dropzone-text {
+      font-size: 12px; color: #9b30d9;
+      letter-spacing: 1px; line-height: 1.7;
+    }
+    .dropzone-text span { color: #d308fa; font-weight: 700; }
+
+    .foto-preview {
+      display: none;
+      margin-top: 12px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    .foto-preview img {
+      width: 100%; max-height: 200px;
+      object-fit: cover; display: block;
+      border-radius: 10px;
+    }
+    .foto-preview-info {
+      background: linear-gradient(135deg, #4a0080, #7b2fa8);
+      padding: 8px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-radius: 0 0 10px 10px;
+    }
+    .foto-preview-nama {
+      color: #e8b4ff; font-size: 11px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: 80%;
+    }
+    .btn-hapus-foto {
+      background: transparent; border: 1px solid #d308fa66;
+      color: #e8b4ff; border-radius: 20px; padding: 3px 10px;
+      font-size: 10px; cursor: pointer; font-family: 'Quicksand', Arial, sans-serif;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .btn-hapus-foto:hover { background: #d308fa33; border-color: #d308fa; color: #fff; }
+
+    .upload-progress {
+      display: none;
+      margin-top: 10px;
+      background: #f0e0ff;
+      border-radius: 10px;
+      height: 6px;
+      overflow: hidden;
+    }
+    .upload-progress-bar {
+      height: 6px;
+      background: linear-gradient(90deg, #9b30d9, #d308fa);
+      border-radius: 10px;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .upload-status {
+      font-size: 11px; color: #9b30d9;
+      margin-top: 6px; text-align: center;
+    }
+
     @media (max-width: 600px) {
       .header h1 { font-size: 32px; letter-spacing: 4px; }
       .konten { padding: 0 16px; margin: 24px auto; }
       .form-box { padding: 20px 16px; }
       .tab-btn { font-size: 10px; padding: 12px 14px; letter-spacing: 1px; }
-      .stat-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
       .stat-angka { font-size: 22px; }
       .navbar { gap: 12px; flex-wrap: wrap; }
     }
@@ -575,9 +653,28 @@
             <p class="hint">💡 Enter 2x = paragraf baru. Tulis bebas aja!</p>
           </div>
           <div class="field">
-            <label>Nama File Foto (opsional)</label>
-            <input type="text" id="inp-foto" placeholder="Contoh: hiring.jpg">
-            <p class="hint">Upload foto ke folder foto-pengumuman/ dulu, baru isi nama filenya di sini.</p>
+            <label>Foto (opsional)</label>
+            <div class="dropzone" id="dropzone">
+              <input type="file" id="inp-file-foto" accept="image/*">
+              <div class="dropzone-icon">🖼️</div>
+              <div class="dropzone-text">
+                Seret foto ke sini, atau <span>klik untuk pilih</span><br>
+                JPG, PNG, WEBP — maks 10MB
+              </div>
+            </div>
+            <div class="foto-preview" id="foto-preview">
+              <img id="foto-preview-img" src="" alt="preview">
+              <div class="foto-preview-info">
+                <span class="foto-preview-nama" id="foto-preview-nama"></span>
+                <button class="btn-hapus-foto" onclick="hapusFoto()">✕ Hapus</button>
+              </div>
+            </div>
+            <div class="upload-progress" id="upload-progress">
+              <div class="upload-progress-bar" id="upload-progress-bar"></div>
+            </div>
+            <div class="upload-status" id="upload-status"></div>
+            <!-- hidden: menyimpan Drive file ID setelah upload -->
+            <input type="hidden" id="inp-foto-id" value="">
           </div>
 
           <button class="tombol" id="btn-publish" onclick="publish()">Publish Pengumuman ✦</button>
@@ -613,10 +710,6 @@
               <div class="stat-label">Total Vote</div>
             </div>
             <div class="stat-card">
-              <div class="stat-angka" id="stat-voter">—</div>
-              <div class="stat-label">Voter Unik</div>
-            </div>
-            <div class="stat-card">
               <div class="stat-angka" id="stat-hari">—</div>
               <div class="stat-label">Vote Hari Ini</div>
             </div>
@@ -648,7 +741,8 @@
     const SHEET_PENGUMUMAN = 'Pengumuman';
     const SHEET_VOTELOG    = 'VoteLog';
     const SHEET_MEMBERS    = 'members';
-    const SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/spreadsheets';
+    const SCOPES = 'https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.file';
+    const DRIVE_FOLDER_ID = '1NWL9N4ZWiH6Eclvomxaqg6DF-Q4hy2cb';
 
     let tokenClient;
     let accessToken = null;
@@ -657,6 +751,8 @@
     let countdownSisa   = 30;
     let tabAktif        = 'pengumuman';
     let sudahMuatVoting = false;
+
+    let fileFotoTerpilih = null; // File object yang siap diupload
 
     /* ── INIT ── */
     window.onload = function () {
@@ -675,6 +771,22 @@
 
       const saved = sessionStorage.getItem('vla_token');
       if (saved) { accessToken = saved; tampilkanForm(); }
+
+      // Setup dropzone
+      const dz  = document.getElementById('dropzone');
+      const inp = document.getElementById('inp-file-foto');
+
+      dz.addEventListener('dragover',  e => { e.preventDefault(); dz.classList.add('drag-over'); });
+      dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+      dz.addEventListener('drop', e => {
+        e.preventDefault();
+        dz.classList.remove('drag-over');
+        const file = e.dataTransfer.files[0];
+        if (file) pilihFoto(file);
+      });
+      inp.addEventListener('change', () => {
+        if (inp.files[0]) pilihFoto(inp.files[0]);
+      });
     };
 
     function loginGoogle() {
@@ -723,6 +835,97 @@
     }
 
     /* ══════════════════════════════
+       FOTO — PILIH & PREVIEW
+    ══════════════════════════════ */
+    function pilihFoto(file) {
+      if (!file.type.startsWith('image/')) {
+        alert('File harus berupa gambar (JPG, PNG, WEBP, dll).');
+        return;
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        alert('Ukuran file maksimal 10MB.');
+        return;
+      }
+      fileFotoTerpilih = file;
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('foto-preview-img').src = e.target.result;
+        document.getElementById('foto-preview-nama').textContent = file.name;
+        document.getElementById('foto-preview').style.display = 'block';
+        document.getElementById('dropzone').style.display = 'none';
+        document.getElementById('inp-foto-id').value = '';
+        document.getElementById('upload-status').textContent = '';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function hapusFoto() {
+      fileFotoTerpilih = null;
+      document.getElementById('foto-preview').style.display = 'none';
+      document.getElementById('dropzone').style.display = 'block';
+      document.getElementById('inp-file-foto').value = '';
+      document.getElementById('inp-foto-id').value = '';
+      document.getElementById('upload-status').textContent = '';
+      document.getElementById('upload-progress').style.display = 'none';
+    }
+
+    async function uploadKeDrive(file) {
+      // Set file permissions ke public readable setelah upload
+      const progress    = document.getElementById('upload-progress');
+      const progressBar = document.getElementById('upload-progress-bar');
+      const status      = document.getElementById('upload-status');
+
+      progress.style.display = 'block';
+      progressBar.style.width = '10%';
+      status.textContent = 'Mengupload foto...';
+
+      // Upload dengan multipart ke Drive API
+      const metadata = {
+        name: file.name,
+        parents: [DRIVE_FOLDER_ID]
+      };
+
+      const form = new FormData();
+      form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+      form.append('file', file);
+
+      progressBar.style.width = '40%';
+
+      const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name,webContentLink', {
+        method: 'POST',
+        headers: { Authorization: 'Bearer ' + accessToken },
+        body: form
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error?.message || 'Upload gagal');
+      }
+
+      progressBar.style.width = '70%';
+      const data = await res.json();
+      const fileId = data.id;
+
+      // Set permission publik agar bisa ditampilkan di web
+      await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}/permissions`, {
+        method: 'POST',
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ role: 'reader', type: 'anyone' })
+      });
+
+      progressBar.style.width = '100%';
+      status.textContent = '✓ Foto berhasil diupload!';
+      setTimeout(() => { progress.style.display = 'none'; }, 1500);
+
+      // Return URL langsung yang bisa dipakai di <img>
+      return `https://drive.google.com/uc?export=view&id=${fileId}`;
+    }
+
+    /* ══════════════════════════════
        PENGUMUMAN
     ══════════════════════════════ */
     function konversiIsi(teks) {
@@ -744,15 +947,26 @@
       const tanggal = document.getElementById('inp-tanggal').value.trim();
       const judul   = document.getElementById('inp-judul').value.trim();
       const isi     = document.getElementById('inp-isi').value.trim();
-      const foto    = document.getElementById('inp-foto').value.trim();
 
       if (!judul || !isi) { showStatus('Judul dan isi wajib diisi!', 'error'); return; }
 
       const btn = document.getElementById('btn-publish');
       btn.disabled = true;
-      showStatus('Mempublish pengumuman...', 'loading');
+      showStatus('Memproses pengumuman...', 'loading');
 
-      const baris = [[tanggal, judul, konversiIsi(isi), foto]];
+      // Upload foto ke Drive kalau ada
+      let fotoUrl = '';
+      if (fileFotoTerpilih) {
+        try {
+          fotoUrl = await uploadKeDrive(fileFotoTerpilih);
+        } catch (e) {
+          showStatus('Gagal upload foto: ' + e.message, 'error');
+          btn.disabled = false;
+          return;
+        }
+      }
+
+      const baris = [[tanggal, judul, konversiIsi(isi), fotoUrl]];
       try {
         const res = await fetch(
           `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_PENGUMUMAN}/values/${encodeURIComponent(SHEET_PENGUMUMAN + '!A:D')}:append?valueInputOption=USER_ENTERED`,
@@ -764,7 +978,10 @@
         );
         if (res.ok) {
           showStatus('✓ Pengumuman berhasil dipublish!', 'sukses');
-          ['inp-tanggal','inp-judul','inp-isi','inp-foto'].forEach(id => document.getElementById(id).value = '');
+          document.getElementById('inp-tanggal').value = '';
+          document.getElementById('inp-judul').value   = '';
+          document.getElementById('inp-isi').value     = '';
+          hapusFoto();
         } else {
           const err = await res.json();
           showStatus('Gagal: ' + (err.error?.message || 'Unknown error'), 'error');
@@ -819,7 +1036,7 @@
 
         // Hitung vote per member
         const voteMap = {};
-        const deviceSet = new Set();
+        const deviceSet = new Set(); // tetap dipakai untuk tracking internal
         let voteHariIni = 0;
         const today = new Date().toLocaleDateString('id-ID', { day:'2-digit', month:'2-digit', year:'numeric' });
 
@@ -844,11 +1061,9 @@
         });
 
         const totalVote  = barisLog.length;
-        const voterUnik  = deviceSet.size;
 
         // Update stat cards
         document.getElementById('stat-total').textContent = totalVote;
-        document.getElementById('stat-voter').textContent = voterUnik;
         document.getElementById('stat-hari').textContent  = voteHariIni;
 
         // Sort leaderboard
