@@ -727,6 +727,88 @@
     }
     .modal-btn-hapus:hover { transform: translateY(-1px); box-shadow: 0 6px 20px #f8717166; }
     .modal-btn-hapus:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* MODAL EDIT — lebih lebar */
+    .modal-box-edit {
+      background: #fff;
+      border-radius: 20px;
+      padding: 28px 24px;
+      max-width: 480px; width: 94%;
+      max-height: 90vh; overflow-y: auto;
+      box-shadow: 0 20px 60px #d308fa33;
+      border: 1px solid #d308fa22;
+    }
+    .modal-edit-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #f0a0ff;
+      padding-bottom: 12px;
+    }
+    .modal-edit-judul {
+      font-size: 14px; font-weight: 700; color: #9b30d9;
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+    .modal-close-btn {
+      background: transparent; border: none;
+      font-size: 20px; color: #c084fc; cursor: pointer;
+      line-height: 1; padding: 0 4px;
+      transition: color 0.2s;
+    }
+    .modal-close-btn:hover { color: #9b30d9; }
+    .modal-edit-field { margin-bottom: 14px; }
+    .modal-edit-field label {
+      display: block; font-size: 10px; letter-spacing: 2px;
+      text-transform: uppercase; color: #9b30d9;
+      margin-bottom: 5px; font-weight: 700;
+    }
+    .modal-edit-field input,
+    .modal-edit-field select {
+      width: 100%; box-sizing: border-box;
+      background: #fdf5ff; border: 1px solid #d308fa44;
+      border-radius: 10px; color: #4a0080;
+      font-family: 'Quicksand', Arial, sans-serif;
+      font-size: 13px; padding: 9px 13px; outline: none;
+      transition: all 0.3s;
+    }
+    .modal-edit-field input:focus,
+    .modal-edit-field select:focus {
+      border-color: #d308fa; box-shadow: 0 0 0 3px #d308fa22;
+    }
+    .modal-edit-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .modal-btn-simpan {
+      flex: 1; padding: 12px;
+      background: linear-gradient(135deg, #9b30d9, #d308fa);
+      border: none; border-radius: 30px;
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      cursor: pointer; font-family: 'Quicksand', Arial, sans-serif;
+      color: #fff; box-shadow: 0 4px 14px #d308fa44;
+      transition: all 0.2s;
+    }
+    .modal-btn-simpan:hover { transform: translateY(-1px); box-shadow: 0 6px 20px #d308fa66; }
+    .modal-btn-simpan:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .modal-edit-status {
+      margin-top: 10px; font-size: 12px; text-align: center;
+      font-weight: 600; min-height: 20px;
+    }
+    .modal-edit-status.sukses { color: #15803d; }
+    .modal-edit-status.error  { color: #b91c1c; }
+    .modal-edit-status.loading{ color: #9b30d9; }
+
+    .member-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .btn-edit-member {
+      background: transparent;
+      border: 1px solid #d308fa66;
+      color: #9b30d9;
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 10px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      font-family: 'Quicksand', Arial, sans-serif;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .btn-edit-member:hover { background: #f5e6ff; border-color: #d308fa; }
   </style>
   <link rel="stylesheet" href="animations.css">
 </head>
@@ -933,9 +1015,59 @@
       <div class="modal-sub" id="modal-nama-member">—</div>
       <p class="modal-desc">Tindakan ini akan menghapus baris dari Google Sheets dan tidak bisa dibatalkan.</p>
       <div class="modal-actions">
-        <button class="modal-btn-batal" onclick="document.getElementById('modal-hapus').style.display='none'">Batal</button>
+        <button class="modal-btn-batal" onclick="document.getElementById('modal-hapus').classList.remove('show')">Batal</button>
         <button class="modal-btn-hapus" id="modal-btn-konfirm" onclick="konfirmasiHapus()">Hapus</button>
       </div>
+    </div>
+  </div>
+
+  <!-- MODAL EDIT MEMBER -->
+  <div id="modal-edit" class="modal-overlay" onclick="tutupModalEdit(event)">
+    <div class="modal-box-edit">
+      <div class="modal-edit-header">
+        <span class="modal-edit-judul">✦ Edit Member</span>
+        <button class="modal-close-btn" onclick="document.getElementById('modal-edit').classList.remove('show')">✕</button>
+      </div>
+      <div class="modal-edit-field">
+        <label>Generasi</label>
+        <input type="text" id="edit-gen" placeholder="1 / 2 / 3">
+      </div>
+      <div class="modal-edit-field">
+        <label>Full Name</label>
+        <input type="text" id="edit-nama" placeholder="Nama lengkap">
+      </div>
+      <div class="modal-edit-field">
+        <label>Stage Name</label>
+        <input type="text" id="edit-stage" placeholder="Stage name">
+      </div>
+      <div class="modal-edit-field">
+        <label>Face Claim</label>
+        <input type="text" id="edit-faceclaim" placeholder="Contoh: Zee JKT48">
+      </div>
+      <div class="modal-edit-field">
+        <label>Date of Birth</label>
+        <input type="text" id="edit-dob" placeholder="Contoh: 06 March 2014">
+      </div>
+      <div class="modal-edit-field">
+        <label>Status</label>
+        <select id="edit-status">
+          <option value="inti">inti</option>
+          <option value="Trainee">Trainee</option>
+        </select>
+      </div>
+      <div class="modal-edit-field">
+        <label>Foto (nama file)</label>
+        <input type="text" id="edit-foto" placeholder="Contoh: shyiela.jpg">
+      </div>
+      <div class="modal-edit-field">
+        <label>TikTok URL</label>
+        <input type="text" id="edit-tiktok" placeholder="https://www.tiktok.com/@...">
+      </div>
+      <div class="modal-edit-actions">
+        <button class="modal-btn-batal" onclick="document.getElementById('modal-edit').classList.remove('show')">Batal</button>
+        <button class="modal-btn-simpan" id="btn-simpan-edit" onclick="simpanEdit()">Simpan ✦</button>
+      </div>
+      <div class="modal-edit-status" id="modal-edit-status"></div>
     </div>
   </div>
 
@@ -1516,7 +1648,10 @@
             <div class="member-meta">Gen ${m.gen} · ${m.stage}${m.faceClaim ? ' · ' + m.faceClaim : ''}</div>
           </div>
           <span class="badge-status ${isInti ? 'badge-inti' : 'badge-trainee'}">${m.status || '—'}</span>
-          <button class="btn-hapus-member" onclick="bukaModalHapus(${m.rowIndex}, '${m.nama.replace(/'/g,"\\'")}')">✕ Hapus</button>
+          <div class="member-actions">
+            <button class="btn-edit-member" onclick="bukaModalEdit(${m.rowIndex})">✎ Edit</button>
+            <button class="btn-hapus-member" onclick="bukaModalHapus(${m.rowIndex}, '${m.nama.replace(/'/g,"\\'")}')">✕</button>
+          </div>
         `;
         list.appendChild(item);
       });
@@ -1539,6 +1674,93 @@
       if (e.target === document.getElementById('modal-hapus')) {
         document.getElementById('modal-hapus').classList.remove('show');
       }
+    }
+
+    function tutupModalEdit(e) {
+      if (e.target === document.getElementById('modal-edit')) {
+        document.getElementById('modal-edit').classList.remove('show');
+      }
+    }
+
+    let editTarget = null; // rowIndex member yang sedang diedit
+
+    function bukaModalEdit(rowIndex) {
+      const m = memberData.find(x => x.rowIndex === rowIndex);
+      if (!m) return;
+      editTarget = rowIndex;
+
+      document.getElementById('edit-gen').value       = m.gen;
+      document.getElementById('edit-nama').value      = m.nama;
+      document.getElementById('edit-stage').value     = m.stage;
+      document.getElementById('edit-faceclaim').value = m.faceClaim;
+      document.getElementById('edit-dob').value       = m.dob;
+      document.getElementById('edit-status').value    = m.status;
+      document.getElementById('edit-foto').value      = m.foto;
+      document.getElementById('edit-tiktok').value    = m.tiktok;
+      document.getElementById('modal-edit-status').textContent = '';
+      document.getElementById('modal-edit-status').className = 'modal-edit-status';
+
+      document.getElementById('modal-edit').classList.add('show');
+    }
+
+    async function simpanEdit() {
+      if (!editTarget) return;
+      const btn = document.getElementById('btn-simpan-edit');
+      btn.disabled = true;
+
+      const statusEl = document.getElementById('modal-edit-status');
+      statusEl.textContent = 'Menyimpan...';
+      statusEl.className = 'modal-edit-status loading';
+
+      const gen       = document.getElementById('edit-gen').value.trim();
+      const nama      = document.getElementById('edit-nama').value.trim();
+      const stage     = document.getElementById('edit-stage').value.trim();
+      const faceclaim = document.getElementById('edit-faceclaim').value.trim();
+      const dob       = document.getElementById('edit-dob').value.trim();
+      const status    = document.getElementById('edit-status').value;
+      const foto      = document.getElementById('edit-foto').value.trim();
+      const tiktok    = document.getElementById('edit-tiktok').value.trim();
+
+      if (!nama) {
+        statusEl.textContent = 'Full Name wajib diisi!';
+        statusEl.className = 'modal-edit-status error';
+        btn.disabled = false;
+        return;
+      }
+
+      // Sheets API: update range A{row}:H{row}
+      const range = `${SHEET_MEMBER_NAME}!A${editTarget}:H${editTarget}`;
+      try {
+        const res = await fetch(
+          `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_PENGUMUMAN}/values/${encodeURIComponent(range)}?valueInputOption=USER_ENTERED`,
+          {
+            method: 'PUT',
+            headers: { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ values: [[gen, nama, stage, faceclaim, dob, status, foto, tiktok]] })
+          }
+        );
+
+        if (res.ok) {
+          statusEl.textContent = '✓ Data berhasil disimpan!';
+          statusEl.className = 'modal-edit-status sukses';
+          // Update cache lokal supaya re-render langsung akurat
+          const idx = memberData.findIndex(x => x.rowIndex === editTarget);
+          if (idx !== -1) {
+            memberData[idx] = { ...memberData[idx], gen, nama, stage, faceClaim: faceclaim, dob, status, foto, tiktok };
+          }
+          renderMember();
+          setTimeout(() => {
+            document.getElementById('modal-edit').classList.remove('show');
+          }, 800);
+        } else {
+          const err = await res.json();
+          throw new Error(err.error?.message || 'Gagal simpan');
+        }
+      } catch (e) {
+        statusEl.textContent = 'Error: ' + e.message;
+        statusEl.className = 'modal-edit-status error';
+      }
+      btn.disabled = false;
     }
 
     async function konfirmasiHapus() {
