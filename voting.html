@@ -695,7 +695,7 @@
     // ── CTA box: tampilkan mulai 30 Juni (hari upload video promosi) s/d akhir voting ──
     // NONAKTIF SEMENTARA buat testing — tombol selalu muncul gak peduli tanggal.
     // Buat balikin ke mode timeline lagi, hapus aja tanda komentar di bawah:
-    
+    /*
     const sskMulai     = new Date('2026-06-30');
     const votingSelesai = new Date('2026-07-15');
     sskMulai.setHours(0,0,0,0);
@@ -704,7 +704,7 @@
     if (today < sskMulai || today > votingSelesai) {
       ctaBox.style.display = 'none';
     }
-    
+    */
 
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
