@@ -611,19 +611,39 @@
 
     /* ══════════════════════════════════════════
        DEVICE ID — "KTP sementara" buat browser ini
+       Disimpan di localStorage DAN cookie, biar kalau
+       salah satu kehapus (misal clear cache), yang satu
+       lagi masih bisa dipakai buat ngenalin device yang sama.
        ══════════════════════════════════════════ */
+    function setCookie(name, value, days) {
+      const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+      document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax`;
+    }
+
+    function getCookie(name) {
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : null;
+    }
+
     function getDeviceId() {
-      let id = localStorage.getItem('vla25_device_id');
+      // Cek localStorage dulu, kalau kosong cek cookie, kalau dua-duanya kosong baru bikin baru
+      let id = localStorage.getItem('vla25_device_id') || getCookie('vla25_device_id');
+
       if (!id) {
         id = (crypto.randomUUID ? crypto.randomUUID() : 'dev-' + Date.now() + '-' + Math.random().toString(36).slice(2));
-        localStorage.setItem('vla25_device_id', id);
       }
+
+      // Selalu sinkronkan ke dua-duanya, biar kalau salah satu kehapus, yang satu lagi masih ada
+      localStorage.setItem('vla25_device_id', id);
+      setCookie('vla25_device_id', id, 365);
+
       return id;
     }
     const deviceId = getDeviceId();
 
     /* ══════════════════════════════════════════
-       AMBIL IP PUBLIK (buat lapis kedua anti-spam)
+       AMBIL IP PUBLIK (buat catatan/audit doang,
+       TIDAK dipakai lagi untuk menentukan kuota)
        ══════════════════════════════════════════ */
     async function getPublicIp() {
       try {
